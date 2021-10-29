@@ -1,0 +1,31 @@
+Mô hình MVC 
+
+* Namespace 
+
+* Rule Project MVC 
+
+- Controller: 
+    + Tên class & tên file luôn phải giống nhau 
+    + Tên class luôn có "Controller" ở cuối cùng 
+    Ex: ProductController (ClassName) -> ProductController.php (Filename)
+        UserController (ClassName) -> UserController.php (Filename)
+
+- Models
+    + Giống Controller nhưng khác ở tên cố định là "Model"
+    Ex: UserModel (ClassName) -> UserModel.php (Filename)
+        ProductModel (ClassName) -> ProductModel.php (Filename)
+
+- View (Không bắt buộc nhưng nên)
+    - Tên của File View nên giống với tên method trong File View đó 
+    Ex: Method trong Controller là index -> tên file view sẽ là index.php 
+
+    - Tên thư mục View nên giống với Controller nhưng ở dạng số nhiều.
+    Ex: UserController -> Folder view là users 
+
+- Param Name 
+    + controller: Qui định gọi vào controller nào 
+    Controller Name 
+    Ex: UserController -> Param controller : user
+        ProductController -> Param controller : product
+    + action: Qui định gọi vào method nào. Trường hợp không có (null) -> Mặc định action là index
+Route: Từ sau dấu "?" sẽ có tên là route
