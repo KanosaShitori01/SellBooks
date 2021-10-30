@@ -24,7 +24,9 @@
     </style>
 </head>
 <body>
+   
     <ul>
+        <label for="ok">VVV</label>
         <li>
             <div class="img"><img src="Public/img/book1.jpg" alt="" srcset=""></div>
             <div class="text"><p>A</p></div>
@@ -42,5 +44,18 @@
             <div class="text"><p>D</p></div>
         </li>
     </ul>
+    
+    <form action="test.html">
+        <input id="ok" type="submit" onclick="Oke()" value="OKe">
+    </form>
+    <input type="number" onchange="change()">
 </body>
+<script>
+    function Oke(){
+        alert("VV");
+    }
+    function change(){
+        console.log("VVVVV");
+    }
+</script>
 </html>

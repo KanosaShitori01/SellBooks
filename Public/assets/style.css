@@ -549,6 +549,83 @@ input, button {
   color: #323241;
 }
 
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #0b0c30;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__pic {
+  width: 30%;
+  height: 400px;
+  margin-right: 1em;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__pic img {
+  width: 100%;
+  height: 100%;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .sp {
+  padding: 10px;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__name {
+  font-size: 35px;
+  color: #11135f;
+  font-weight: 800;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__author {
+  font-size: 20px;
+  color: #161846;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__description {
+  color: #2e3070;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__price {
+  font-size: 20px;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__price p:last-child {
+  color: #4d4f9b;
+  font-size: 30px;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__buy {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__buy .btn_ok {
+  margin-left: 1em;
+  padding: 1em 2em;
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  font-size: 17px;
+  background-color: #545ab8;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__buy .btn_ok:hover {
+  background-color: #6f77e0;
+}
+
 .main_page .main_page__part .main_page__content .cart {
   margin: 1em;
 }
@@ -566,10 +643,28 @@ input, button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   color: #1b284b;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+
+.main_page .main_page__part .main_page__content .cart .cart__content .cart__content__btn {
+  width: 100%;
+  margin-bottom: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.main_page .main_page__part .main_page__content .cart .cart__content .cart__content__btn a {
+  padding: 10px;
+  background-color: #11135f;
+  color: white;
+  border-radius: 5px;
+  margin-right: 1em;
 }
 
 .main_page .main_page__part .main_page__content .cart .cart__content .cart__content__products {
@@ -641,6 +736,7 @@ input, button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: relative;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -730,6 +826,64 @@ input, button {
 
 .main_page .main_page__part .main_page__content .cart .cart__content .cart__content__pay .cart__content__pay__btn:hover {
   background-color: #6b89db;
+}
+
+.snipper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100px;
+  height: 50px;
+  margin: 0 1em;
+  position: relative;
+}
+
+.snipper .prev, .snipper .next {
+  position: absolute;
+  cursor: pointer;
+}
+
+.snipper .prev {
+  left: 0;
+  z-index: 100000;
+}
+
+.snipper .prev.cart_p {
+  left: -30px;
+  padding: 5px;
+  background-color: #456299;
+}
+
+.snipper .next {
+  right: 0;
+}
+
+.snipper .next.cart_n {
+  right: -30px;
+  padding: 5px;
+  background-color: #456299;
+  z-index: 900000;
+}
+
+.snipper input {
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  padding: 5px 0;
+  width: 50px;
+  font-size: 18px;
+}
+
+.snipper input::-webkit-outer-spin-button, .snipper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 .footer_page {

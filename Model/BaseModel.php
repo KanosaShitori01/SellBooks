@@ -32,10 +32,7 @@
             }
             else
             $sql = "SELECT * FROM $tb WHERE $key LIKE $value";
-            
             $query = $this->Query($sql);
-            // var_dump($query);    
-            // echo $sql;
             if(!$query) return "";
             $data = [];
             while($row = mysqli_fetch_assoc($query)){

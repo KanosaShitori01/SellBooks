@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 28, 2021 lúc 11:36 AM
+-- Thời gian đã tạo: Th10 30, 2021 lúc 12:50 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
--- Phiên bản PHP: 8.0.12
+-- Phiên bản PHP: 7.3.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -63,11 +63,21 @@ INSERT INTO `author` (`id`, `name`) VALUES
 CREATE TABLE `carts` (
   `id` int(11) NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(500) NOT NULL,
   `price` float NOT NULL,
   `quantity` int(11) NOT NULL,
+  `quantity_max` int(11) NOT NULL,
   `received` tinyint(1) NOT NULL,
   `id_products` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `carts`
+--
+
+INSERT INTO `carts` (`id`, `name`, `image`, `price`, `quantity`, `quantity_max`, `received`, `id_products`) VALUES
+(34, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 1, 4, 0, 3),
+(35, 'Phật Giáo và Cuộc Sống\r\n', 'Public/img/phatgiaovacuocsong.jpg', 60000, 4, 5, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -106,18 +116,19 @@ CREATE TABLE `products` (
   `id_author` int(11) NOT NULL,
   `discount` int(11) NOT NULL,
   `created_day` date NOT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  `translator` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `price`, `image`, `description`, `id_category`, `id_author`, `discount`, `created_day`, `quantity`) VALUES
-(2, 'Phật Giáo và Cuộc Sống\r\n', 60000, 'Public/img/phatgiaovacuocsong.jpg', 'Tác phẩm “Đạo Phật và cuộc sống”  là tuyển tập những bài viết của Hòa Thượng Ấn Thuận, được trích dịch từ hai bộ sách 《佛在人間》 “Phật ở nhân gian” (quyển thứ 14) trong bộ “Diệu Vân tập”. Phần còn lại trích dịch từ bộ “Hoa Vũ Tập”. Đây là những bài nói chuyện có nội dung tư tưởng rất hay, đáng cho chúng ta học tập. Cách lý giải những vấn đề trong Phật học rất trong sáng, phù họp với thời đại chúng ta, nhất là quan điểm của giới trẻ hiện nay. Người dịch cho rằng, nó rất cần thiết cho người Phật tử Việt nam chúng ta, dù ở trong nước hay ở nước ngoài, có thể nói nó là một ý kiến tích cực cho việc hoằng dương Phật pháp trong thời hiện đại, lấy con người và xã hội con người làm chủ đề chính cho cả hai việc tu và học..', 2, 1, 0, '2021-10-26', 5),
-(3, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 100000, 'Public/img/TTTT.jpg', '', 1, 1, 0, '2021-10-27', 4),
-(4, 'Thơm Ngát Hương Lan\r\n', 115000, 'Public/img/thomngathuonglan.jpg', '', 3, 2, 0, '2021-10-27', 2),
-(5, 'SA', 250000, 'Public/img/book1.jpg', 'SASCCC', 4, 2, 0, '2021-10-27', 1);
+INSERT INTO `products` (`id`, `name`, `price`, `image`, `description`, `id_category`, `id_author`, `discount`, `created_day`, `quantity`, `translator`) VALUES
+(2, 'Phật Giáo và Cuộc Sống\r\n', 60000, 'Public/img/phatgiaovacuocsong.jpg', 'Tác phẩm “Đạo Phật và cuộc sống”  là tuyển tập những bài viết của Hòa Thượng Ấn Thuận, được trích dịch từ hai bộ sách 《佛在人間》 “Phật ở nhân gian” (quyển thứ 14) trong bộ “Diệu Vân tập”. Phần còn lại trích dịch từ bộ “Hoa Vũ Tập”. Đây là những bài nói chuyện có nội dung tư tưởng rất hay, đáng cho chúng ta học tập. Cách lý giải những vấn đề trong Phật học rất trong sáng, phù họp với thời đại chúng ta, nhất là quan điểm của giới trẻ hiện nay. Người dịch cho rằng, nó rất cần thiết cho người Phật tử Việt nam chúng ta, dù ở trong nước hay ở nước ngoài, có thể nói nó là một ý kiến tích cực cho việc hoằng dương Phật pháp trong thời hiện đại, lấy con người và xã hội con người làm chủ đề chính cho cả hai việc tu và học..', 2, 1, 0, '2021-10-26', 5, NULL),
+(3, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 100000, 'Public/img/TTTT.jpg', '', 1, 1, 0, '2021-10-27', 4, NULL),
+(4, 'Thơm Ngát Hương Lan\r\n', 115000, 'Public/img/thomngathuonglan.jpg', '', 3, 2, 0, '2021-10-27', 2, NULL),
+(5, 'SA', 250000, 'Public/img/book1.jpg', 'SASCCC', 4, 2, 0, '2021-10-27', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -182,7 +193,7 @@ ALTER TABLE `author`
 -- AUTO_INCREMENT cho bảng `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`

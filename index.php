@@ -55,6 +55,13 @@
            header("refresh:0, url=./");
        }
    }
+   if(isset($_POST['submit_buy'])){
+       if(isset($_POST['quantity'])){
+            $id = $GLOBALS['product_one'][0]['id'];
+            $quantity = $_POST['quantity'];
+            header("location: ?controller=products&action=buy&id=$id&quantity=$quantity");
+       }
+   }
    function FindAuthor($id, $author){
         $res = "";
         foreach($author as $au){
@@ -376,6 +383,7 @@
                         ';
                     }
                     else if(isset($_GET['controller']) && $_GET['controller'] == "products" && $_GET['action'] == "show"){
+                        $infor_prod = $GLOBALS['product_one'][0];
                         echo "<div class='main_page__box'>
                             <div class='main_page__content__title'>
                                 <p>Thông tin về Sách</p>
@@ -383,22 +391,40 @@
                             <div class='main_page__content__intestine'>
                                 <div class='main_page__content__infor'>
                                     <div class='main_page__content__infor__pic'>
-                                        <img src='Public/img/phatgiaovietnam.jpg' alt='' srcset=''>
+                                        <img src='${infor_prod['image']}' alt='' srcset=''>
                                     </div>
                                     <div class='main_page__content__infor__content'>
                                         <div class='infor__content__name sp'>
-                                            <p>Con Gái Đức Phật</p>
+                                            <p>${infor_prod['name']}</p>
                                         </div>
                                         <div class='infor__content__author sp'>
-                                            <p>Minh Đức Triều Tâm Ánh</p>
+                                            <p>Tác giả : ".FindAuthor($infor_prod['id_author'], $Author)."</p>
+                                        </div>
+                                        <div class='infor__content__description sp'>
+                                            <p>${infor_prod['description']}</p>
                                         </div>
                                         <div class='infor__content__price sp'>
-                                            <p>90.000đ</p>
+                                            <p>Giá bán: </p>
+                                            <p>${infor_prod['price']} đ</p>
                                         </div>
+                                        <form action='?controller=products&action=show&id=${infor_prod['id']}' method='post'>
+                                        <div class='infor__content__buy sp'>
+                                            <label>Số lượng : </label>
+                                            <div class='snipper'>
+                                                <div class='prev'><i class='fas fa-minus'></i></div>
+                                                <div class='next'><i class='fas fa-plus'></i></div>
+                                                <input type='number' value='1' name='quantity'
+                                                oninput='OnlyNum(this, ${infor_prod['quantity']})'>   
+                                            </div>
+                                             <input name='submit_buy' type='submit' class='btn_ok' value='Đặt Mua' /> 
+                                        </div>
+                                        </form>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>";
+                       
                     }
                     else if(isset($_GET['controller']) && $_GET['controller'] == "category"){
                         echo '
@@ -419,7 +445,7 @@
                                                 <p>${product_f['name']}</p>
                                             </div>
                                             <div class='product__content__author sp'>
-                                                <p>Minh Đức Triều Tâm Ánh</p>
+                                                <p>".FindAuthor($product_f['id_author'], $Author)."</p>
                                             </div>
                                             <div class='product__content__price sp'>
                                                 <p>${product_f['price']}đ</p>
@@ -434,25 +460,34 @@
                         }
                     }
                     else if(isset($_GET['controller']) && $_GET['controller'] == "cart"){
-                        if(is_array($GLOBALS['cart'])){
-                            $totalcount = count($GLOBALS['cart']);
-                        } else $totalcount = "";
+                        // if(is_array($GLOBALS['cart'])){
+                        //     $totalcount = count($GLOBALS['cart']);
+                        // } else $totalcount = "0";
                         $totalmoney = 0;
+                        $manysp = 0;
                         echo '
                         <div class="cart">
                             <div class="cart__title">
                                 <h1>Giỏ Hàng</h1>
                             </div>
                             <div class="cart__content">
+                                <div class="cart__content__btn">
+                                    <a href="?controller=cart">Cập nhật giỏ hàng</a>
+                                    <a href="./">Tiếp tục mua hàng</a>
+                                </div>
                                 <div class="cart__content__products">';
                                 if(!empty($GLOBALS['cart'])){
+                                    $quantityProd = $GLOBALS['quantityProd'];
                                     foreach($GLOBALS['cart'] as $cart){
-                                        $totalmoney += $cart['price'];
+                                        $totalquantity = $cart['price'] * $cart['quantity'];
+                                        $manysp += $cart['quantity'];
+                                        $totalmoney += $totalquantity;
+                                        // $max = $quantityProd[$cart['id_products']];
                                         echo "
                                         <div class='cart__content__products__product'>
                                             <div class='cart__content__product__left'>
                                                     <div class='cart__content__product__img'>
-                                                        <img src='Public/img/phatgiaovacuocsong.jpg' alt='' srcset=''>
+                                                        <img src='${cart['image']}' alt='' srcset=''>
                                                     </div>
                                                     <div class='cart__content__product__intro'>
                                                         <div class='cart__content__product__intro__name'>
@@ -465,14 +500,15 @@
                                                 </div>
                                             <div class='cart__content__product__right'>
                                                 <div class='cart__content__product__quantity'>
-                                                    <a href=''><i class='fas fa-minus'></i></a>
-                                                    <input type='text' maxlength='2' value='1' name='' 
-                                                    oninput='OnlyNum(this)' disabled>
-                                                    <a href=''><i class='fas fa-plus'></i></a>
+                                                    <div class='snipper'>
+                                                        <div class='prev cart_p'><i class='fas fa-minus'></i></div>
+                                                        <div class='next cart_n'><i class='fas fa-plus'></i></div>
+                                                        <input type='number' value='${cart['quantity']}' name='quantity' />   
+                                                    </div>
                                                 </div>
                                                 <div class='cart__content__product__total'>
                                                     <p>Thành Tiền</p>
-                                                    <p>${totalmoney}đ</p>
+                                                    <p>${totalquantity}đ</p>
                                                 </div>
                                             </div>
                                             <div class='cart__content__product__delete'>
@@ -491,13 +527,13 @@
                         <div class='cart__content__pay'>
                                     <div class='cart__content__pay__box'>
                                         <div class='cart__content__pay__tab'>
-                                            <p>Sản phẩm : $totalcount</p>
+                                            <p>Sản phẩm : $manysp</p>
                                         </div>
                                     <div class='cart__content__pay__tab'>
                                         <p>Tổng tiền : $totalmoney đ</p>
                                     </div>
                                     </div>";
-                           echo ($totalcount == "") ? "<a href='./' class='cart__content__pay__btn'>Mua Hàng</a>" : "<a href='' class='cart__content__pay__btn'>Mua Hàng</a>"; 
+                           echo ($manysp == "") ? "<a href='./' class='cart__content__pay__btn'>Mua Hàng</a>" : "<a href='' class='cart__content__pay__btn'>Mua Hàng</a>"; 
                         echo    "</div>
                             </div>
                         </div>
@@ -545,7 +581,6 @@
             </div>
         </div>
     </main>
-                    <!-- <a href="" aria-disabled="">vv</a> -->
     <footer class="footer_page">
         <div class="footer_page__top">
             <div class="footer_page__informations">

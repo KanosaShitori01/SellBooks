@@ -5,20 +5,29 @@
         public function showProducts(){
             return $this->getAll(self::TABLE);
         }
-
-        public function addProduct($id){
+        public function findCart($key, $value){
+            return $this->Find(self::TABLE, "", $key, $value);
+        }
+        public function updateCart($id, $data){
+            return $this->Update(self::TABLE, $id, "", "", $data);
+        }
+        public function addProduct($id, $quan){
             $Product = $this->Find("products", $id)[0];
             $setProductKey = [
                 "name" => ''.$Product['name'],
                 "price" => $Product['price'],
-                "quantity" => 1,
+                "image" => $Product['image'],
+                "quantity" => $quan,
+                "quantity_max" => $Product['quantity'],
                 "received" => 'false',
-                "id_products" => $id   
+                "id_products" => $Product['id']   
             ];
-            $this->Query("TRUNCATE TABLE carts");
+            // $this->Query("TRUNCATE TABLE carts");
             $Data = $this->Find(self::TABLE, "", "id_products", $id);
+            // var_dump($Data);
             if(isset($Data[0]["quantity"]) && $Data[0]["quantity"] > 0){
-                return $this->Update(self::TABLE, "", "id_products", $id, ["quantity" => $Data["quantity"]+=1]);
+                // echo "VVVVVVVVVVVVVVVVVVVVVVV";
+                return $this->Update(self::TABLE, "", "id_products", $id, ["quantity" => $Data[0]["quantity"]+=$quan]);
             }
             else {
                 return $this->toAdd(self::TABLE, $setProductKey);

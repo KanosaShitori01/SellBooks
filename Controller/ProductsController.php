@@ -40,5 +40,41 @@
                 "ProductOne" => $ProductMain
             ]);
         }
+        public function buy(){
+            if(isset($_GET['id']) && isset($_GET['quantity'])){
+                $id = $_GET['id'];
+                $quantity = $_GET['quantity'];
+                $productBuy = $this->productsController->findProductBID($id);
+                $cartCheck = $this->cartController->findCart("id_products", $id);
+                if($quantity > $productBuy[0]['quantity']){
+                    header("refresh: 0, url=?controller=products&action=show&id=$id");
+                }
+                else if(!empty($cartCheck) && $quantity < $productBuy[0]['quantity']){
+                    $how = $cartCheck[0]['quantity'] + $quantity;
+                    if($how > $cartCheck[0]['quantity_max']){
+                        header("refresh: 0, url=?controller=products&action=show&id=$id");
+                    }
+                    else{
+                        $this->cartController->addProduct($id, $quantity);
+                        header("location: ?controller=cart");
+                    }
+                }
+                else if($productBuy[0]['quantity'] == 1){
+                    
+                }
+                else{
+                    $this->cartController->addProduct($id, $quantity);
+                    header("location: ?controller=cart");
+                }
+                   
+                // if($quantity <= $DataWA[0]['quantity']){
+               
+                // header("location: ?controller=cart");
+                // }
+                // else header("refresh: 0, url=?controller=products&action=show&id=$id");
+            } 
+            // var_dump($quantity);
+            
+        }
     }
 ?>

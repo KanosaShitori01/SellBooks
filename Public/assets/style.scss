@@ -460,6 +460,65 @@ input, button{
                             }
                         }
                     }
+                    .main_page__content__infor{
+                        width: 100%;
+                        display: flex;
+                        color: rgb(11, 12, 48);
+                        .main_page__content__infor__pic{
+                            width: 30%;
+                            height: 400px;
+                            margin-right: 1em;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                        .main_page__content__infor__content{
+                            flex: 1;
+                            .sp{
+                                padding: 10px;
+                            }
+                            .infor__content__name{
+                                font-size: 35px;
+                                color:rgb(17, 19, 95);
+                                font-weight: 800;
+                            }
+                            .infor__content__author{
+                                font-size: 20px;
+                                color: rgb(22, 24, 70)
+                            }
+                            .infor__content__description{
+                                color: rgb(46, 48, 112)
+                            }
+                            .infor__content__price{
+                                font-size: 20px;
+                                p{
+                                    &:last-child{
+                                        color: rgb(77, 79, 155);
+                                        font-size: 30px;
+                                    }
+                                } 
+                            }
+                            .infor__content__buy{
+                                display: flex;
+                                align-items: center;
+                                .btn_ok{
+                                    margin-left: 1em;
+                                    padding: 1em 2em;
+                                    border: none;
+                                    outline: none;
+                                    color: white;
+                                    cursor: pointer;
+                                    font-size: 17px;
+                                    background-color: rgb(84, 90, 184);
+                                    &:hover{
+                                        background-color: rgb(111, 119, 224);
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
                 }
             }
             .cart{
@@ -474,8 +533,21 @@ input, button{
                 }
                 .cart__content{
                     display: flex;
+                    flex-wrap: wrap;
                     color: rgb(27, 40, 75);
                     justify-content: space-between;
+                    .cart__content__btn{
+                        width: 100%;
+                        margin-bottom: 1em;
+                        display: flex;
+                        a{
+                            padding: 10px;
+                            background-color: rgb(17, 19, 95);
+                            color: white;
+                            border-radius: 5px;
+                            margin-right: 1em;
+                        }
+                    }
                     .cart__content__products{
                         flex: 1;
                         margin-right: 10px;
@@ -520,6 +592,7 @@ input, button{
                                 margin-right: 1em;
                                 .cart__content__product__quantity{
                                     display: flex;
+                                    position: relative;
                                     justify-content: center;
                                     a{
                                         padding: 5px;
@@ -594,7 +667,50 @@ input, button{
     }
   
 }
-
+.snipper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;   
+    height: 50px;
+    margin: 0 1em;
+    position: relative;
+    .prev,.next{
+        position: absolute;
+        cursor: pointer;
+    }
+    .prev{
+        left: 0;
+        z-index: 100000;
+        &.cart_p{
+            left: -30px;
+            padding: 5px;
+            background-color: rgb(69, 98, 153);
+        }
+    }
+    .next{
+        right: 0;
+        &.cart_n{
+            right: -30px;
+            padding: 5px;
+            background-color: rgb(69, 98, 153);
+            z-index: 900000;
+        }
+    }
+    input{
+        &::-webkit-outer-spin-button, &::-webkit-inner-spin-button{
+            -webkit-appearance: none;
+        }
+        position: absolute;
+        text-align: center;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 5px 0;
+        width: 50px;
+        font-size: 18px;
+    }
+    
+}
 .footer_page{
     margin-top: 10em;
     background-color: rgb(13, 15, 68);
