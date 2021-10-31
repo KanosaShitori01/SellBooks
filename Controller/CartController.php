@@ -2,6 +2,10 @@
     class CartController extends BaseController{
         private $cartController;
         private $productController;
+        protected static $count = 0;
+        public static function changeC(){
+            return self::$count = self::$count + 1;
+        }
         public function __construct()
         {
             $this->loadModel("CartModel");
@@ -13,16 +17,17 @@
             $Carts = $this->cartController->showProducts();
             $quantiyProd = $this->productController->getAllProduct(["id, quantity"]);
             $setQuantityProd = [];
+            var_dump(self::changeC());
             foreach($quantiyProd as $prod){
                 $setQuantityProd += [$prod["id"] => $prod["quantity"]];
             }
             return $this->loadView("FrontEnd.Cart.index",[
                 "carts" => $Carts,
                 "quantityProd" => $setQuantityProd,
-                "error" => $_SESSION['error']
             ]);
         }
         public function update(){
+            // var_dump(self::$count);
             if(isset($_GET['change']) && isset($_GET['id'])){
                 $keyChange = explode(",", $_GET['id']);
                 $valChange = explode(",", $_GET['change']);
@@ -39,19 +44,19 @@
                         $this->cartController->updateCart($res["id"], [
                             "quantity" => $cartND[0]['quantity_max']
                         ]);
-                        $_SESSION['error'] = "Bạn đã vượt quá số lượng sách có thể mua được";
+                        self::changeC();
+                        header("location: ?controller=cart");
                     }
                     else{
                         $this->cartController->updateCart($res["id"], [
                             "quantity" => $res["quantity"]
                         ]);
+                        header("location: ?controller=cart");
                     }
                 }
             }
-            $this->loadView("FrontEnd.Cart.index",[
-                "error" => "Bạn đã vượt quá số lượng sách có thể mua được"
-            ]);
-            header("location: ?controller=cart");
+            // var_dump($check);
+            // return $check;
         }
         public function delete(){
             if(isset($_GET['id'])){

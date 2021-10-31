@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 31, 2021 lúc 11:34 AM
+-- Thời gian đã tạo: Th10 30, 2021 lúc 12:50 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 7.3.31
 
@@ -76,7 +76,8 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`id`, `name`, `image`, `price`, `quantity`, `quantity_max`, `received`, `id_products`) VALUES
-(40, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 4, 4, 0, 3);
+(34, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 1, 4, 0, 3),
+(35, 'Phật Giáo và Cuộc Sống\r\n', 'Public/img/phatgiaovacuocsong.jpg', 60000, 4, 5, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -192,7 +193,7 @@ ALTER TABLE `author`
 -- AUTO_INCREMENT cho bảng `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`

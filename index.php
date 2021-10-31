@@ -3,7 +3,6 @@
     require "./Controller/BaseController.php";
     require "./Core/Database.php";
     require "./Model/BaseModel.php";
-    $_SESSION['error'] = "V";
     if(isset($_GET['controller'])){
         $controllerName = ucfirst(strtolower($_REQUEST['controller'] ?? "Welcome"))."Controller";
         $actionName = strtolower($_REQUEST['action'] ?? 'index');
@@ -480,7 +479,7 @@
                         // } else $totalcount = "0";
                         $totalmoney = 0;
                         $manysp = 0;
-                        $error = $_SESSION['error'];
+                        $error = $GLOBALS['error'];
                         echo "
                         <div class='cart'>
                             <div class='cart__title'>
@@ -521,7 +520,7 @@
                                                     <div class='snipper'>
                                                         <div class='prev cart_p'><i class='fas fa-minus'></i></div>
                                                         <div class='next cart_n'><i class='fas fa-plus'></i></div>
-                                                        <input type='number' value='${cart['quantity']}' name='quantity_${cart['id_products']}' />   
+                                                        <input type='number' onchange='alert('oke')' value='${cart['quantity']}' name='quantity_${cart['id_products']}' />   
                                                     </div>
                                                 </div>
                                                 <div class='cart__content__product__total'>
