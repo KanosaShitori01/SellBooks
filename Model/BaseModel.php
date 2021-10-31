@@ -11,11 +11,13 @@
         // Functions :
         // 1. Lấy toàn bộ dữ liệu
         public function getAll($tb, $select = ["*"], $orderBy = []){
+            // var_dump($select);
             $column = implode(", ", $select);
             $orderBySome = implode(" ", $orderBy);
             if($orderBySome){
                 $sql = "SELECT $column FROM $tb ORDER BY $orderBySome";
             } else $sql = "SELECT $column FROM $tb";
+            // echo $sql;
             $query = $this->Query($sql);
             if(!$query) return "";
             $data = [];
@@ -52,7 +54,7 @@
             $sql = "UPDATE $tb SET $setData WHERE id=$id";
             else 
             $sql = "UPDATE $tb SET $setData WHERE $key=$value";
-            echo $sql;
+            // echo $sql;
             return $this->Query($sql) ?? "";
         }
         // 4. Thêm dữ liệu 

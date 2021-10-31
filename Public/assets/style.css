@@ -660,9 +660,14 @@ input, button {
 }
 
 .main_page .main_page__part .main_page__content .cart .cart__content .cart__content__btn a {
+  color: white;
+}
+
+.main_page .main_page__part .main_page__content .cart .cart__content .cart__content__btn .btn {
   padding: 10px;
   background-color: #11135f;
   color: white;
+  cursor: pointer;
   border-radius: 5px;
   margin-right: 1em;
 }

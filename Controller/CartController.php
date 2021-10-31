@@ -18,16 +18,40 @@
             }
             return $this->loadView("FrontEnd.Cart.index",[
                 "carts" => $Carts,
-                "quantityProd" => $setQuantityProd
+                "quantityProd" => $setQuantityProd,
+                "error" => $_SESSION['error']
             ]);
         }
         public function update(){
-            $allCart = $this->cartController->showProducts();
-            // if(isset($_GET))
-            // foreach($allCart as $data){
-                
-            // }
-           
+            if(isset($_GET['change']) && isset($_GET['id'])){
+                $keyChange = explode(",", $_GET['id']);
+                $valChange = explode(",", $_GET['change']);
+                $perRes = [];
+                for($i = 0; $i < count($keyChange); $i++){
+                    array_push($perRes, [
+                        "id" => $keyChange[$i],
+                        "quantity" => $valChange[$i]
+                    ]);
+                }
+                foreach($perRes as $res){
+                    $cartND = $this->cartController->findCart("id", $res['id']);
+                    if($res['quantity'] > $cartND[0]['quantity_max']){
+                        $this->cartController->updateCart($res["id"], [
+                            "quantity" => $cartND[0]['quantity_max']
+                        ]);
+                        $_SESSION['error'] = "Bạn đã vượt quá số lượng sách có thể mua được";
+                    }
+                    else{
+                        $this->cartController->updateCart($res["id"], [
+                            "quantity" => $res["quantity"]
+                        ]);
+                    }
+                }
+            }
+            $this->loadView("FrontEnd.Cart.index",[
+                "error" => "Bạn đã vượt quá số lượng sách có thể mua được"
+            ]);
+            header("location: ?controller=cart");
         }
         public function delete(){
             if(isset($_GET['id'])){

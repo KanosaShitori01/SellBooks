@@ -47,24 +47,22 @@
                 $productBuy = $this->productsController->findProductBID($id);
                 $cartCheck = $this->cartController->findCart("id_products", $id);
                 if($quantity > $productBuy[0]['quantity']){
-                    header("refresh: 0, url=?controller=products&action=show&id=$id");
+                    header("location: ?controller=products&action=show&id=$id");
                 }
                 else if(!empty($cartCheck) && $quantity < $productBuy[0]['quantity']){
                     $how = $cartCheck[0]['quantity'] + $quantity;
                     if($how > $cartCheck[0]['quantity_max']){
-                        header("refresh: 0, url=?controller=products&action=show&id=$id");
+                        header("location: ?controller=products&action=show&id=$id");
                     }
                     else{
-                        $this->cartController->addProduct($id, $quantity);
-                        header("location: ?controller=cart");
+                        $this->compleBuy($id, $quantity);
                     }
                 }
-                else if($productBuy[0]['quantity'] == 1){
-                    
+                else if($productBuy[0]["quantity"] == 1 && $quantity > 1){
+                   $this->compleBuy($id, 1);
                 }
                 else{
-                    $this->cartController->addProduct($id, $quantity);
-                    header("location: ?controller=cart");
+                   $this->compleBuy($id, $quantity);
                 }
                    
                 // if($quantity <= $DataWA[0]['quantity']){
@@ -75,6 +73,10 @@
             } 
             // var_dump($quantity);
             
+        }
+        public function compleBuy($id, $quantity){
+            $this->cartController->addProduct($id, $quantity);
+            header("location: ?controller=cart");
         }
     }
 ?>

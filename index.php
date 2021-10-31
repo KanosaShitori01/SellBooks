@@ -3,7 +3,7 @@
     require "./Controller/BaseController.php";
     require "./Core/Database.php";
     require "./Model/BaseModel.php";
-    
+    $_SESSION['error'] = "V";
     if(isset($_GET['controller'])){
         $controllerName = ucfirst(strtolower($_REQUEST['controller'] ?? "Welcome"))."Controller";
         $actionName = strtolower($_REQUEST['action'] ?? 'index');
@@ -27,6 +27,7 @@
     $newProducts = $controllerObj->Find("products", "", "created_day", "'%".$today."%'");
     $Category = $controllerObj->getAll("categories");
     $Cart = $controllerObj->getAll("carts");
+    // $Cart_idprod = $controllerObj->getAll("carts", ["id","quantity","id_products"]);
     $cart_count = (!empty($Cart)) ? count($Cart) : "0"; 
     // var_dump($dataProductsPage);
     $choice = ["", ""];
@@ -61,6 +62,20 @@
             $quantity = $_POST['quantity'];
             header("location: ?controller=products&action=buy&id=$id&quantity=$quantity");
        }
+   }
+   if(isset($_POST['update_cart'])){
+       $res = "";
+       $resSec = "";
+       foreach($Cart as $idprod){
+           if(isset($_POST["quantity_${idprod['id_products']}"])){
+               $change_val = $_POST["quantity_${idprod['id_products']}"];
+                $res .= "$change_val,";
+                $resSec .= $idprod["id"].",";
+           }
+       }
+       $setResSec = rtrim($resSec, ",");
+       $setRes = rtrim($res, ",");
+       header("location: ?controller=cart&action=update&id=$setResSec&change=$setRes");
    }
    function FindAuthor($id, $author){
         $res = "";
@@ -465,19 +480,21 @@
                         // } else $totalcount = "0";
                         $totalmoney = 0;
                         $manysp = 0;
-                        echo '
-                        <div class="cart">
-                            <div class="cart__title">
-                                <h1>Giỏ Hàng</h1>
+                        $error = $_SESSION['error'];
+                        echo "
+                        <div class='cart'>
+                            <div class='cart__title'>
+                                <h1>Giỏ Hàng $error</h1>
                             </div>
-                            <div class="cart__content">
-                                <div class="cart__content__btn">
-                                    <a href="?controller=cart">Cập nhật giỏ hàng</a>
-                                    <a href="./">Tiếp tục mua hàng</a>
+                            <div class='cart__content'>
+                                <div class='cart__content__btn'>
+                                    <label class='btn' for='update_cart'><p>Cập nhật giỏ hàng</p></label>
+                                    <label class='btn'><a href='./'>Tiếp tục mua hàng</a><label>
                                 </div>
-                                <div class="cart__content__products">';
+                                <div class='cart__content__products'>";
                                 if(!empty($GLOBALS['cart'])){
                                     $quantityProd = $GLOBALS['quantityProd'];
+                                    echo "<form action='?controller=cart' method='post'>";
                                     foreach($GLOBALS['cart'] as $cart){
                                         $totalquantity = $cart['price'] * $cart['quantity'];
                                         $manysp += $cart['quantity'];
@@ -499,11 +516,12 @@
                                                     </div>
                                                 </div>
                                             <div class='cart__content__product__right'>
+                                                <input type='submit' id='update_cart' name='update_cart' hidden/>
                                                 <div class='cart__content__product__quantity'>
                                                     <div class='snipper'>
                                                         <div class='prev cart_p'><i class='fas fa-minus'></i></div>
                                                         <div class='next cart_n'><i class='fas fa-plus'></i></div>
-                                                        <input type='number' value='${cart['quantity']}' name='quantity' />   
+                                                        <input type='number' value='${cart['quantity']}' name='quantity_${cart['id_products']}' />   
                                                     </div>
                                                 </div>
                                                 <div class='cart__content__product__total'>
@@ -516,7 +534,8 @@
                                             </div>
                                         </div>         
                                         ";
-                                    }       
+                                    }   
+                                    echo "</form>";    
                                 }else{
                                     echo "<div class=''>
                                     </div>
