@@ -49,6 +49,10 @@
         <input id="ok" type="submit" onclick="Oke()" value="OKe">
     </form>
     <input type="number" onchange="change()">
+
+    <div class="money">
+        <p>3000000000</p>
+    </div>
 </body>
 <script>
     function Oke(){
@@ -57,5 +61,25 @@
     function change(){
         console.log("VVVVV");
     }
+    let money = document.querySelector(".money p");
+    let valmoney = money.innerHTML;
+    function moneyForm(valmoney){
+        let count = 0;
+        let valtoArr = valmoney.split("");
+        let valArrRer = valtoArr.reverse();
+        for(let i = 0; i < valArrRer.length; i++){
+            if(valArrRer[i] == "0"){
+                count++;
+            }
+            if(count == 3){
+                valArrRer[i+1] += ",";
+                count = 1;  
+            }
+        }
+        let reVal = valArrRer.reverse();
+        let beStr = reVal.join("");
+        money.innerHTML = beStr;
+    }
+    moneyForm(valmoney);
 </script>
 </html>

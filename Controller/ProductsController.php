@@ -47,12 +47,14 @@
                 $productBuy = $this->productsController->findProductBID($id);
                 $cartCheck = $this->cartController->findCart("id_products", $id);
                 if($quantity > $productBuy[0]['quantity']){
-                    header("location: ?controller=products&action=show&id=$id");
+                    $this->failBuy($id);
+                    return header("location: ?controller=products&action=show&id=$id");
                 }
-                else if(!empty($cartCheck) && $quantity < $productBuy[0]['quantity']){
+                else if(!empty($cartCheck) && $quantity <= $productBuy[0]['quantity']){
                     $how = $cartCheck[0]['quantity'] + $quantity;
                     if($how > $cartCheck[0]['quantity_max']){
-                        header("location: ?controller=products&action=show&id=$id");
+                        $this->failBuy($id);
+                        return header("location: ?controller=products&action=show&id=$id");
                     }
                     else{
                         $this->compleBuy($id, $quantity);
@@ -60,20 +62,28 @@
                 }
                 else if($productBuy[0]["quantity"] == 1 && $quantity > 1){
                    $this->compleBuy($id, 1);
+                   $this->failBuy($id, true);
                 }
                 else{
                    $this->compleBuy($id, $quantity);
+                   $this->failBuy($id, true);
                 }
-                   
-                // if($quantity <= $DataWA[0]['quantity']){
-               
-                // header("location: ?controller=cart");
-                // }
-                // else header("refresh: 0, url=?controller=products&action=show&id=$id");
-            } 
-            // var_dump($quantity);
-            
+            }
         }
+        public function failBuy($id, $reset = false){
+            if($reset == false){
+                $this->productsController->alterProduct("error", "varchar(225)");
+                $this->productsController->editProduct($id, [
+                    "error" => $this->ErrBuy
+                ]);
+            }
+            else{
+                $this->productsController->editProduct($id, [
+                    "error" => ""
+                ]);
+            }
+        }
+      
         public function compleBuy($id, $quantity){
             $this->cartController->addProduct($id, $quantity);
             header("location: ?controller=cart");

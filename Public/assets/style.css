@@ -18,6 +18,10 @@ ul {
   list-style: none;
 }
 
+.error_content {
+  color: red;
+}
+
 .dropdown {
   position: absolute;
   left: 100%;
@@ -734,6 +738,7 @@ input, button {
 .main_page .main_page__part .main_page__content .cart .cart__content .cart__content__products .cart__content__products__product .cart__content__product__right {
   width: 100px;
   margin-right: 1em;
+  position: relative;
   text-align: center;
 }
 
@@ -782,6 +787,13 @@ input, button {
 
 .main_page .main_page__part .main_page__content .cart .cart__content .cart__content__products .cart__content__products__product .cart__content__product__delete a:hover {
   color: #181c99;
+}
+
+.main_page .main_page__part .main_page__content .cart .cart__content .cart__content__products .cart__content__products__product .error_content {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  font-size: 15px;
 }
 
 .main_page .main_page__part .main_page__content .cart .cart__content .cart__content__pay {

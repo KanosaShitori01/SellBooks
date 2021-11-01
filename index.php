@@ -17,6 +17,20 @@
         }catch (Throwable $e) {
             header("refresh:0, url=./");
         }
+    }else{
+        $Prod = new BaseModel;
+        $Reprod = $Prod->getAll("products");
+        $Recart = $Prod->getAll("carts");
+        foreach($Reprod as $prod){
+            $Prod->Update("products", $prod['id'], "", "", [
+                "error" => ""
+            ]);
+        }
+        foreach($Recart as $cart){
+            $Prod->Update("carts", $cart['id'], "", "", [
+                "error" => ""
+            ]);
+        }
     }
 
     $controllerObj = new BaseModel;
@@ -24,12 +38,13 @@
     $Author = $controllerObj->getAll("author");
     $today = date("Y-m");
     $newProducts = $controllerObj->Find("products", "", "created_day", "'%".$today."%'");
+    if(empty($newProducts)){
+        $newProducts = $controllerObj->getAll("products");
+    }
     $Category = $controllerObj->getAll("categories");
     $Cart = $controllerObj->getAll("carts");
-    // $Cart_idprod = $controllerObj->getAll("carts", ["id","quantity","id_products"]);
     $cart_count = (!empty($Cart)) ? count($Cart) : "0"; 
-    // var_dump($dataProductsPage);
-    $choice = ["", ""];
+    $choice = ["", ""]; 
     $selected = "SP";
    if(isset($_POST['change_cate'])){
         if(!empty($_POST['category'])) {
@@ -108,10 +123,10 @@
     <header class="heading_page">
         <div class="heading_page__navhead">
             <div class="heading_page__navhead__log login"> 
-                <a href="login.php"><i class="fas fa-user"></i> Đăng Nhập</a>
+                <a href="Sign/login.php"><i class="fas fa-user"></i> Đăng Nhập</a>
             </div>
             <div class="heading_page__navhead__log register">
-                <a href="register.php"><i class="fas fa-key"></i> Đăng Ký</a>
+                <a href="Sign/register.php"><i class="fas fa-key"></i> Đăng Ký</a>
             </div>
         </div>
         <div class="heading_page__headmain">
@@ -270,8 +285,8 @@
                                                     <div class='product__content__author sp'>
                                                         <p>".FindAuthor($prod['id_author'], $Author)."</p>
                                                     </div>
-                                                    <div class='product__content__price sp'>
-                                                        <p>${prod['price']}đ</p>
+                                                    <div class='product__content__price money sp'>
+                                                        <p class='price'>${prod['price']}đ</p>
                                                     </div>
                                                 </div></a>
                                             </div>
@@ -307,8 +322,8 @@
                                                             <div class='product__content__author sp'>
                                                                 <p>".FindAuthor($prod['id_author'], $Author)."</p>
                                                             </div>
-                                                            <div class='product__content__price sp'>
-                                                                <p>${prod['price']}đ</p>
+                                                            <div class='product__content__price money sp'>
+                                                                <p class='price'>${prod['price']}đ</p>
                                                             </div>
                                                         </div></a>
                                                     </div>
@@ -349,8 +364,8 @@
                                                             <div class='product__content__author sp'>
                                                                 <p>".FindAuthor($prod['id_author'], $Author)."</p>
                                                             </div>
-                                                            <div class='product__content__price sp'>
-                                                                <p>${prod['price']}đ</p>
+                                                            <div class='product__content__price money sp'>
+                                                                <p class='price'>${prod['price']}đ</p>
                                                             </div>
                                                         </div></a>
                                                     </div>
@@ -384,8 +399,8 @@
                                                 <div class='product__content__author sp'>
                                                     <p>".FindAuthor($prod['id_author'], $Author)."</p>
                                                 </div>
-                                                <div class='product__content__price sp'>
-                                                    <p>${prod['price']}đ</p>
+                                                <div class='product__content__price money sp'>
+                                                    <p class='price'>${prod['price']}đ</p>
                                                 </div>
                                             </div></a>
                                         </div>
@@ -417,9 +432,9 @@
                                         <div class='infor__content__description sp'>
                                             <p>${infor_prod['description']}</p>
                                         </div>
-                                        <div class='infor__content__price sp'>
+                                        <div class='infor__content__price money sp'>
                                             <p>Giá bán: </p>
-                                            <p>${infor_prod['price']} đ</p>
+                                            <p class='price'>${infor_prod['price']} đ</p>
                                         </div>
                                         <form action='?controller=products&action=show&id=${infor_prod['id']}' method='post'>
                                         <div class='infor__content__buy sp'>
@@ -431,6 +446,9 @@
                                                 oninput='OnlyNum(this, ${infor_prod['quantity']})'>   
                                             </div>
                                              <input name='submit_buy' type='submit' class='btn_ok' value='Đặt Mua' /> 
+                                        </div>
+                                        <div class='error_content'>
+                                            <p>${infor_prod['error']}</p>
                                         </div>
                                         </form>
                                     </div>
@@ -461,8 +479,8 @@
                                             <div class='product__content__author sp'>
                                                 <p>".FindAuthor($product_f['id_author'], $Author)."</p>
                                             </div>
-                                            <div class='product__content__price sp'>
-                                                <p>${product_f['price']}đ</p>
+                                            <div class='product__content__price money sp'>
+                                                <p class='price'>${product_f['price']}đ</p>
                                             </div>
                                         </div></a>
                                     </div>
@@ -473,17 +491,19 @@
                         ';
                         }
                     }
-                    else if(isset($_GET['controller']) && $_GET['controller'] == "cart"){
+                    else if(isset($_GET['controller']) && $_GET['controller'] == "cart" || $_GET['action'] == "update"){
+                        // $_SESSION['error'] = "";
                         // if(is_array($GLOBALS['cart'])){
                         //     $totalcount = count($GLOBALS['cart']);
                         // } else $totalcount = "0";
+                        // session_unset();
+                        // session_destroy();
                         $totalmoney = 0;
                         $manysp = 0;
-                        $error = $GLOBALS['error'];
                         echo "
                         <div class='cart'>
                             <div class='cart__title'>
-                                <h1>Giỏ Hàng $error</h1>
+                                <h1>Giỏ Hàng</h1>
                             </div>
                             <div class='cart__content'>
                                 <div class='cart__content__btn'>
@@ -509,8 +529,8 @@
                                                         <div class='cart__content__product__intro__name'>
                                                             <p>${cart['name']}</p>
                                                         </div>
-                                                        <div class='cart__content__product__intro__price'>
-                                                            <p>${cart['price']}đ</p>
+                                                        <div class='cart__content__product__intro__price money'>
+                                                            <p class='price'>${cart['price']}đ</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -527,6 +547,9 @@
                                                     <p>Thành Tiền</p>
                                                     <p>${totalquantity}đ</p>
                                                 </div>
+                                            </div>
+                                            <div class='error_content'>
+                                                <p>${cart['error']}</p>
                                             </div>
                                             <div class='cart__content__product__delete'>
                                                 <a href='?controller=cart&action=delete&id=${cart['id']}'><i class='fas fa-times'></i></a>
@@ -551,7 +574,7 @@
                                         <p>Tổng tiền : $totalmoney đ</p>
                                     </div>
                                     </div>";
-                           echo ($manysp == "") ? "<a href='./' class='cart__content__pay__btn'>Mua Hàng</a>" : "<a href='' class='cart__content__pay__btn'>Mua Hàng</a>"; 
+                           echo ($manysp == "") ? "<a href='./' class='cart__content__pay__btn'>Mua Hàng</a>" : "<a href='' class='cart__content__pay__btn'>Thanh Toán</a>"; 
                         echo    "</div>
                             </div>
                         </div>
@@ -579,8 +602,8 @@
                                                         <div class='product__content__author sp'>
                                                             <p>${author_name['name']}</p>
                                                         </div>
-                                                        <div class='product__content__price sp'>
-                                                            <p>${prod['price']}đ</p>
+                                                        <div class='product__content__price money sp'>
+                                                            <p class='price'>${prod['price']}đ</p>
                                                         </div>
                                                     </div></a>
                                                 </div>

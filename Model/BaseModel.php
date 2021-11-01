@@ -76,5 +76,10 @@
         public function Join($tb, $data){
             
         }
+        // 7. Thêm cột 
+        public function Alter($tb, $column, $var){
+            $sql = "ALTER TABLE $tb ADD $column $var";
+            return $this->Query($sql);
+        }   
     }
 ?>

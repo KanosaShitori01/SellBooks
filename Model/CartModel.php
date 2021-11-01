@@ -33,7 +33,9 @@
                 return $this->toAdd(self::TABLE, $setProductKey);
             }
         }
-        
+        public function alterCart($column, $val){
+            return $this->Alter(self::TABLE, $column, $val);
+        }
         public function deleteCart($id){
             return $this->delete(self::TABLE, $id);
         }

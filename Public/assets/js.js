@@ -11,6 +11,30 @@ function OnlyNum(e, max){
         e.value = "";
     }
 }
+let money = document.querySelectorAll(".money .price");
+// console.log(money);
+function moneyForm(valmoney){
+    let count = 0;
+    console.log(valmoney[0].innerHTML);
+    // valmoney.forEach((val,index)=>{
+    //     console.log(val);
+    // });
+    // let valtoArr = valmoney.split("");
+    // let valArrRer = valtoArr.reverse();
+    // for(let i = 0; i < valArrRer.length; i++){
+    //     if(valArrRer[i] == "0"){
+    //         count++;
+    //     }
+    //     if(count == 3){
+    //         valArrRer[i+1] += ",";
+    //         count = 1;  
+    //     }
+    // }
+    // let reVal = valArrRer.reverse();
+    // let beStr = reVal.join("");
+    // money.innerHTML = beStr;
+}
+moneyForm(money);
 $(document).ready(function(){
     $('#findbooks').keyup(function(){
         let query = $(this).val().trim();

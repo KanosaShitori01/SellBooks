@@ -1,10 +1,14 @@
 <?php 
+    // session_start();
     class CartController extends BaseController{
         private $cartController;
         private $productController;
-        protected static $count = 0;
-        public static function changeC(){
-            return self::$count = self::$count + 1;
+        private static $count = 0;
+        protected function set($count){
+            self::$count = $count;
+        }
+        protected function get(){
+            return self::$count;
         }
         public function __construct()
         {
@@ -17,7 +21,7 @@
             $Carts = $this->cartController->showProducts();
             $quantiyProd = $this->productController->getAllProduct(["id, quantity"]);
             $setQuantityProd = [];
-            var_dump(self::changeC());
+            // var_dump(self::changeC());
             foreach($quantiyProd as $prod){
                 $setQuantityProd += [$prod["id"] => $prod["quantity"]];
             }
@@ -41,20 +45,27 @@
                 foreach($perRes as $res){
                     $cartND = $this->cartController->findCart("id", $res['id']);
                     if($res['quantity'] > $cartND[0]['quantity_max']){
+                        $this->cartController->alterCart("error", "varchar(255)");
                         $this->cartController->updateCart($res["id"], [
-                            "quantity" => $cartND[0]['quantity_max']
+                            "quantity" => $cartND[0]['quantity_max'],
+                            "error" => $this->ErrBuy
                         ]);
-                        self::changeC();
                         header("location: ?controller=cart");
+                        break;
                     }
                     else{
                         $this->cartController->updateCart($res["id"], [
-                            "quantity" => $res["quantity"]
+                            "quantity" => $res["quantity"],
+                            "error" => ""
                         ]);
+                        // $this->clearSession();
                         header("location: ?controller=cart");
                     }
                 }
             }
+            return $this->loadView("FrontEnd.Cart.index",[
+                "error" => "OKEEEE"
+            ]);
             // var_dump($check);
             // return $check;
         }

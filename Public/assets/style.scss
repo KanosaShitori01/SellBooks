@@ -13,6 +13,9 @@ a{
 ul{
     list-style: none;
 }
+.error_content{
+    color: red;
+}
 .dropdown{
     position: absolute;
     left: 100%;
@@ -594,6 +597,7 @@ input, button{
                             .cart__content__product__right{
                                 width: 100px;
                                 margin-right: 1em;
+                                position: relative;
                                 .cart__content__product__quantity{
                                     display: flex;
                                     position: relative;
@@ -618,6 +622,7 @@ input, button{
                                     }
                                 }
                                 text-align: center;
+                               
                             }
                             .cart__content__product__delete{
                                 position: absolute;
@@ -631,6 +636,12 @@ input, button{
                                         color: rgb(24, 28, 153);
                                     }
                                 }
+                            }
+                            .error_content{
+                                position: absolute;
+                                right: 0;
+                                bottom: 10px;
+                                font-size: 15px;
                             }
                         }
                     }
