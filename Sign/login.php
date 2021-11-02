@@ -1,6 +1,11 @@
 <?php 
-    require './Core/Database.php';
-    require './Controller/BaseController.php';
+    require '../Core/Database.php';
+    require '../Controller/BaseController.php';
+    require '../Model/BaseModel.php';
+    require '../Controller/SignController.php';
+
+    $Login = new SignController;
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">

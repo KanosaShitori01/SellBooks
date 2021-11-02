@@ -73,8 +73,8 @@
             return $this->Query($sql) ?? "";
         }   
         // 6. Nhảy dữ liệu 
-        public function Join($tb, $data){
-            
+        public function AntiDuplicate($tb, $column){
+            $sql = "";
         }
         // 7. Thêm cột 
         public function Alter($tb, $column, $var){
