@@ -79,6 +79,7 @@ a{
 }
 
 .login_form .login_form__forgotpass{
+    padding-top: 1em;
     margin: -5px 0 20px 5px;
     cursor: pointer;
     color: rgb(37, 39, 134);
@@ -129,4 +130,9 @@ input[type="submit"]:hover{
 .back_btn a:hover{
     color: rgb(25, 25, 66);
     background: rgb(111, 113, 231);
+}
+.error{
+    color: red;
+    bottom: -30px;
+    position: absolute;
 }

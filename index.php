@@ -3,6 +3,7 @@
     require "./Controller/BaseController.php";
     require "./Core/Database.php";
     require "./Model/BaseModel.php";
+    // if(isset($_SESSION['user'])) echo "OKE";
     if(isset($_GET['controller'])){
         $controllerName = ucfirst(strtolower($_REQUEST['controller'] ?? "Welcome"))."Controller";
         $actionName = strtolower($_REQUEST['action'] ?? 'index');
@@ -18,6 +19,9 @@
             header("refresh:0, url=./");
         }
     }else{
+        DeleteErr();
+    }
+    function DeleteErr(){
         $Prod = new BaseModel;
         $Reprod = $Prod->getAll("products");
         $Recart = $Prod->getAll("carts");
@@ -32,7 +36,6 @@
             ]);
         }
     }
-
     $controllerObj = new BaseModel;
     $Product = $controllerObj->getAll("products");
     $Author = $controllerObj->getAll("author");
@@ -42,8 +45,10 @@
         $newProducts = $controllerObj->getAll("products");
     }
     $Category = $controllerObj->getAll("categories");
-    $Cart = $controllerObj->getAll("carts");
-    $cart_count = (!empty($Cart)) ? count($Cart) : "0"; 
+    if(isset($_SESSION['user'])){
+        $Cart = $controllerObj->Find("carts", "", "id_user", $_SESSION['user']);
+    }
+    $cart_count = (isset($Cart) && isset($_SESSION['user'])) ? count($Cart) : "0"; 
     $choice = ["", ""]; 
     $selected = "SP";
    if(isset($_POST['change_cate'])){
@@ -91,6 +96,11 @@
        $setRes = rtrim($res, ",");
        header("location: ?controller=cart&action=update&id=$setResSec&change=$setRes");
    }
+   if(isset($_GET['logout'])){
+        session_unset();
+        session_destroy();
+        header("location: ./");
+   }
    function FindAuthor($id, $author){
         $res = "";
         foreach($author as $au){
@@ -121,14 +131,33 @@
 </head>
 <body>
     <header class="heading_page">
-        <div class="heading_page__navhead">
-            <div class="heading_page__navhead__log login"> 
-                <a href="Sign/login.php"><i class="fas fa-user"></i> Đăng Nhập</a>
-            </div>
-            <div class="heading_page__navhead__log register">
-                <a href="Sign/register.php"><i class="fas fa-key"></i> Đăng Ký</a>
-            </div>
-        </div>
+        <?php
+            if(!isset($_SESSION['user'])){
+                echo "
+                <div class='heading_page__navhead'>
+                    <div class='heading_page__navhead__log login'> 
+                        <a href='Sign/login.php'><i class='fas fa-user'></i> Đăng Nhập</a>
+                    </div>
+                    <div class='heading_page__navhead__log register'>
+                        <a href='Sign/register.php'><i class='fas fa-key'></i> Đăng Ký</a>
+                    </div>
+                </div>
+                ";
+            }
+            else{
+                echo "
+                <div class='heading_page__navhead'>
+                    <div class='heading_page__navhead__log login'> 
+                        <a href='Sign/login.php'><i class='fas fa-user-circle'></i> Tài khoản</a>
+                    </div>
+                    <div class='heading_page__navhead__log register'>
+                        <a href='?logout'><i class='fas fa-door-open'></i> Đăng Xuất</a>
+                    </div>
+                </div>
+                ";
+            }
+        ?>
+       
         <div class="heading_page__headmain">
             <div class="heading_page__headmain__logo">
                 <a href="./"><img src="Public/img/LogoKQ.png" width="100%" height="100%" alt="" srcset=""></a>
@@ -264,6 +293,7 @@
             <div class="main_page__content">
                 <?php 
                     if(!isset($_GET['controller'])){
+                        DeleteErr();
                         echo '
                             <div class="main_page__box">
                                 <div class="main_page__content__title">
@@ -301,6 +331,7 @@
                             </div>
                         ';
                         foreach($Category as $cate){
+                            DeleteErr();
                             echo '
                             <div class="main_page__box">
                                 <div class="main_page__content__title">
@@ -341,7 +372,7 @@
                         // }
                     }
                     else if(isset($_GET['controller']) && $_GET['controller'] == "products" && isset($GLOBALS['key_products'])){
-                        // var_dump($GLOBALS['key_products']);
+                        DeleteErr();
                         foreach($GLOBALS['key_products'] as $product){
                             echo '
                             <div class="main_page__box">
@@ -379,6 +410,7 @@
                         }
                     }
                     else if(isset($_GET['controller']) && $_GET['controller'] == "products" && $_GET['action'] == "find"){
+                        DeleteErr();
                         echo "
                         <div class='main_page__box'>
                             <div class='main_page__content__title'>
@@ -459,6 +491,7 @@
                        
                     }
                     else if(isset($_GET['controller']) && $_GET['controller'] == "category"){
+                        DeleteErr();
                         echo '
                         <div class="main_page__box">
                             <div class="main_page__content__title">
@@ -498,6 +531,7 @@
                         // } else $totalcount = "0";
                         // session_unset();
                         // session_destroy();
+                        DeleteErr();
                         $totalmoney = 0;
                         $manysp = 0;
                         echo "
@@ -574,13 +608,14 @@
                                         <p>Tổng tiền : $totalmoney đ</p>
                                     </div>
                                     </div>";
-                           echo ($manysp == "") ? "<a href='./' class='cart__content__pay__btn'>Mua Hàng</a>" : "<a href='' class='cart__content__pay__btn'>Thanh Toán</a>"; 
+                           echo (empty($manysp)) ? "<a href='./' class='cart__content__pay__btn'>Mua Hàng</a>" : "<a href='' class='cart__content__pay__btn'>Thanh Toán</a>"; 
                         echo    "</div>
                             </div>
                         </div>
                         ";
                     }
                     else if(isset($_GET['controller']) && $_GET['controller'] == "author" && $_GET['action'] == "show"){
+                        DeleteErr();
                         foreach($GLOBALS['name_author'] as $author_name){
                             echo '
                             <div class="main_page__box">

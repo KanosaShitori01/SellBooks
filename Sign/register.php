@@ -1,3 +1,27 @@
+<?php 
+    session_start();
+    if(isset($_SESSION['user'])){
+        header("location: ../");
+    }
+    require '../Core/Database.php';
+    require '../Controller/BaseController.php';
+    require '../Model/BaseModel.php';
+    require '../Controller/SignController.php';
+    $error = "";
+    $Register = new SignController;
+    if(isset($_POST['login'])){
+        $username = "'".$_POST['username']."'";
+        $password = md5($_POST['password']);
+        $confirm = $Register->register($username, $password);
+        if(!is_array($confirm)){
+            $error = $confirm;
+        }else {
+            $dataUser = $confirm;
+            $_SESSION['user'] = $dataUser['id'];
+            header("location: ../");
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

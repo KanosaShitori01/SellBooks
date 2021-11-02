@@ -41,33 +41,37 @@
             ]);
         }
         public function buy(){
-            if(isset($_GET['id']) && isset($_GET['quantity'])){
-                $id = $_GET['id'];
-                $quantity = $_GET['quantity'];
-                $productBuy = $this->productsController->findProductBID($id);
-                $cartCheck = $this->cartController->findCart("id_products", $id);
-                if($quantity > $productBuy[0]['quantity']){
-                    $this->failBuy($id);
-                    return header("location: ?controller=products&action=show&id=$id");
-                }
-                else if(!empty($cartCheck) && $quantity <= $productBuy[0]['quantity']){
-                    $how = $cartCheck[0]['quantity'] + $quantity;
-                    if($how > $cartCheck[0]['quantity_max']){
+            if(isset($_SESSION['user'])){
+                if(isset($_GET['id']) && isset($_GET['quantity'])){
+                    $id = $_GET['id'];
+                    $quantity = $_GET['quantity'];
+                    $productBuy = $this->productsController->findProductBID($id);
+                    $cartCheck = $this->cartController->findCart("id_products", $id);
+                    if($quantity > $productBuy[0]['quantity']){
                         $this->failBuy($id);
                         return header("location: ?controller=products&action=show&id=$id");
                     }
+                    else if(!empty($cartCheck) && $quantity <= $productBuy[0]['quantity']){
+                        $how = $cartCheck[0]['quantity'] + $quantity;
+                        if($how > $cartCheck[0]['quantity_max']){
+                            $this->failBuy($id);
+                            return header("location: ?controller=products&action=show&id=$id");
+                        }
+                        else{
+                            $this->compleBuy($id, $quantity);
+                        }
+                    }
+                    else if($productBuy[0]["quantity"] == 1 && $quantity > 1){
+                    $this->compleBuy($id, 1);
+                    $this->failBuy($id, true);
+                    }
                     else{
-                        $this->compleBuy($id, $quantity);
+                    $this->compleBuy($id, $quantity);
+                    $this->failBuy($id, true);
                     }
                 }
-                else if($productBuy[0]["quantity"] == 1 && $quantity > 1){
-                   $this->compleBuy($id, 1);
-                   $this->failBuy($id, true);
-                }
-                else{
-                   $this->compleBuy($id, $quantity);
-                   $this->failBuy($id, true);
-                }
+            }else{
+                header("location: ./Sign/login.php");
             }
         }
         public function failBuy($id, $reset = false){

@@ -18,7 +18,8 @@
             $this->productController = new ProductModel;
         }
         public function index(){
-            $Carts = $this->cartController->showProducts();
+            $Carts = (isset($_SESSION['user'])) ? $this->cartController->findCart("id_user", $_SESSION['user']) : "";
+            // var_dump($Carts);
             $quantiyProd = $this->productController->getAllProduct(["id, quantity"]);
             $setQuantityProd = [];
             // var_dump(self::changeC());

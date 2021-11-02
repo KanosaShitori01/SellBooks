@@ -9,8 +9,8 @@
             $login_now = $this->signController->findUser($username, $password);
             return $login_now;
         }
-        public function register(){
-
+        public function register($username, $password){
+            $register_now = $this->signControler->createUser();
         }
     }
 ?>

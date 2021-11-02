@@ -1,9 +1,12 @@
 <?php 
+    session_start();
+    if(isset($_SESSION['user'])){
+        header("location: ../");
+    }
     require '../Core/Database.php';
     require '../Controller/BaseController.php';
     require '../Model/BaseModel.php';
     require '../Controller/SignController.php';
-    session_start();
     $error = "";
     $Login = new SignController;
     if(isset($_POST['login'])){
@@ -40,18 +43,25 @@
                 <input type="text" name="username" id="" required>
                 <span></span>
                 <label for="">Tên Đăng Nhập</label>
+                <div class="error">
+                    <?php echo ($error == "nf") ? "Không tìm thấy tên tài khoản" : ""; ?>
+                </div>
             </div>
             <div class="login_form__txtfield">
                 <input type="password" name="password" id="" required>
                 <span></span>
                 <label for="">Mật Khẩu</label>
+                <div class="error">
+                    <?php echo ($error == "wp") ? "Sai mật khẩu" : ""; ?>
+                </div>
             </div>
+           
             <div class="login_form__forgotpass">
                 <span>Quên mật khẩu? </span>
             </div>
             <input type="submit" name="login" value="Đăng Nhập" id="">
             <div class="login_form__signup_link">
-                <span>Chưa có tài khoản? </span> <a href="">Đăng Ký</a>
+                <span>Chưa có tài khoản? </span> <a href="register.php">Đăng Ký</a>
             </div>
         </form>
     </div>

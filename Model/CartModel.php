@@ -2,9 +2,6 @@
     class CartModel extends BaseModel{
         const TABLE = "carts";
 
-        public function showProducts(){
-            return $this->getAll(self::TABLE);
-        }
         public function findCart($key, $value){
             return $this->Find(self::TABLE, "", $key, $value);
         }
@@ -20,7 +17,8 @@
                 "quantity" => $quan,
                 "quantity_max" => $Product['quantity'],
                 "received" => 'false',
-                "id_products" => $Product['id']   
+                "id_products" => $Product['id'],
+                "id_user" => $_SESSION['user']
             ];
             // $this->Query("TRUNCATE TABLE carts");
             $Data = $this->Find(self::TABLE, "", "id_products", $id);

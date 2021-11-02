@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 02, 2021 lúc 07:52 AM
+-- Thời gian đã tạo: Th10 02, 2021 lúc 01:21 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 8.0.12
 
@@ -69,6 +69,7 @@ CREATE TABLE `carts` (
   `quantity_max` int(11) NOT NULL,
   `received` tinyint(1) NOT NULL,
   `id_products` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
   `error` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -76,8 +77,8 @@ CREATE TABLE `carts` (
 -- Đang đổ dữ liệu cho bảng `carts`
 --
 
-INSERT INTO `carts` (`id`, `name`, `image`, `price`, `quantity`, `quantity_max`, `received`, `id_products`, `error`) VALUES
-(52, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 4, 4, 0, 3, '');
+INSERT INTO `carts` (`id`, `name`, `image`, `price`, `quantity`, `quantity_max`, `received`, `id_products`, `id_user`, `error`) VALUES
+(59, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 3, 4, 0, 3, 1, '');
 
 -- --------------------------------------------------------
 
@@ -201,7 +202,7 @@ ALTER TABLE `author`
 -- AUTO_INCREMENT cho bảng `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`

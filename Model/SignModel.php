@@ -6,9 +6,8 @@
         }
         public function findUser($name, $pass){
             $error = [
-                "err_username" => "Wrong username",
-                "err_password" => "Wrong Password",
-                "err_notfound" => "NOT FOUND"
+                "err_password" => "wp",
+                "err_notfound" => "nf"
             ];
             
             $checkU = $this->Find(self::TABLE, "", "username", $name);
@@ -17,6 +16,16 @@
             }else return $error["err_notfound"];
         }
         public function createUser($name, $pass, $gmail, $code){
+            $error = [
+                "username" => "ue",
+                "gmail" => "ge",
+                "pass" => "wp"
+            ];
+            $name = $this->Find(self::TABLE, "", "username", $name);
+            $gmail = $this->Find(self::TABLE, "", "gmail", $gmail);
+            if(empty($name) && empty($gmail)){
+                
+            }
             $this->toAdd(self::TABLE, [
                 "username" => $name,
                 "password" => $pass,
