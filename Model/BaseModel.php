@@ -72,11 +72,7 @@
             $sql = "DELETE FROM $tb WHERE id=$id";
             return $this->Query($sql) ?? "";
         }   
-        // 6. Nhảy dữ liệu 
-        public function AntiDuplicate($tb, $column){
-            $sql = "";
-        }
-        // 7. Thêm cột 
+        // 6. Thêm cột 
         public function Alter($tb, $column, $var){
             $sql = "ALTER TABLE $tb ADD $column $var";
             return $this->Query($sql);

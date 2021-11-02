@@ -3,9 +3,21 @@
     require '../Controller/BaseController.php';
     require '../Model/BaseModel.php';
     require '../Controller/SignController.php';
-
+    session_start();
+    $error = "";
     $Login = new SignController;
-    
+    if(isset($_POST['login'])){
+        $username = "'".$_POST['username']."'";
+        $password = md5($_POST['password']);
+        $confirm = $Login->login($username, $password);
+        if(!is_array($confirm)){
+            $error = $confirm;
+        }else {
+            $dataUser = $confirm;
+            $_SESSION['user'] = $dataUser['id'];
+            header("location: ../");
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,12 +30,12 @@
     <script src="https://kit.fontawesome.com/728b560bcb.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="back_btn">
+    <!-- <div class="back_btn">
         <a href="./"><i class="fas fa-arrow-left"></i></a>
-    </div>
+    </div> -->
     <div class="login_form">
         <h1>Đăng Nhập</h1>
-        <form action="" method="post">
+        <form action="<?=$_SERVER["PHP_SELF"]?>" method="post">
             <div class="login_form__txtfield">
                 <input type="text" name="username" id="" required>
                 <span></span>
@@ -43,7 +55,7 @@
             </div>
         </form>
     </div>
-   
 </body>
+<script src="../Public/assets/js.js"></script>
 </html>
 

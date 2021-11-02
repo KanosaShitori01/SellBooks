@@ -9,8 +9,11 @@
             }
             require (self::VIEW_FOLDER_NAME.'/'.str_replace('.', '/', $viewPath).'.php');
         }
-        protected function loadModel($modelPath){
-            return require (self::MODEL_FOLDER_NAME.'/'.$modelPath.'.php');
+        protected function loadModel($modelPath, $in = false){
+            if($in == false){
+                return require (self::MODEL_FOLDER_NAME.'/'.$modelPath.'.php');
+            }
+            else return require ("../".self::MODEL_FOLDER_NAME.'/'.$modelPath.'.php');
         }
         protected function clearSession(){
             session_unset();

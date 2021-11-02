@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 02, 2021 lúc 05:41 AM
+-- Thời gian đã tạo: Th10 02, 2021 lúc 07:52 AM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
--- Phiên bản PHP: 7.3.31
+-- Phiên bản PHP: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -77,7 +77,7 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`id`, `name`, `image`, `price`, `quantity`, `quantity_max`, `received`, `id_products`, `error`) VALUES
-(52, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 1, 4, 0, 3, '');
+(52, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 4, 4, 0, 3, '');
 
 -- --------------------------------------------------------
 
@@ -151,7 +151,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `gmail`, `code_gmail`, `admin`) VALUES
-(1, 'admin', '93c674bbea62adf2a5d70252e612cccd', 'openniceqn9@gmail.com', 53975, 0);
+(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'openniceqn9@gmail.com', 53975, 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
