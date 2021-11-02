@@ -9,17 +9,17 @@
     require '../Controller/SignController.php';
     $error = "";
     $Register = new SignController;
-    if(isset($_POST['login'])){
-        $username = "'".$_POST['username']."'";
-        $password = md5($_POST['password']);
-        $confirm = $Register->register($username, $password);
-        if(!is_array($confirm)){
-            $error = $confirm;
-        }else {
-            $dataUser = $confirm;
-            $_SESSION['user'] = $dataUser['id'];
-            header("location: ../");
-        }
+    if(isset($_POST['register'])){
+        // $username = "'".$_POST['username']."'";
+        // $password = md5($_POST['password']);
+        // $confirm = $Register->register($username, $password);
+        // if(!is_array($confirm)){
+        //     $error = $confirm;
+        // }else {
+        //     $dataUser = $confirm;
+        //     $_SESSION['user'] = $dataUser['id'];
+        //     header("location: ../");
+        // }
     }
 ?>
 <!DOCTYPE html>
@@ -64,7 +64,7 @@
                 <span></span>
                 <label for="">Nhập Lại Mật Khẩu</label>
             </div>
-            <input type="submit" name="login" value="Đăng Ký" id="">
+            <input type="submit" name="register" value="Đăng Ký" id="">
             <div class="login_form__signup_link">
                 <span>Đã có tài khoản? </span> <a href="">Đăng Nhập</a>
             </div>
