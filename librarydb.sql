@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 02, 2021 lúc 01:21 PM
+-- Thời gian đã tạo: Th10 03, 2021 lúc 03:14 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
--- Phiên bản PHP: 8.0.12
+-- Phiên bản PHP: 7.3.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -144,15 +144,18 @@ CREATE TABLE `users` (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `gmail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `code_gmail` mediumint(9) NOT NULL,
-  `admin` tinyint(1) NOT NULL
+  `tel` varchar(10) NOT NULL,
+  `admin` tinyint(1) NOT NULL,
+  `checkU` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `gmail`, `code_gmail`, `admin`) VALUES
-(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'openniceqn9@gmail.com', 53975, 0);
+INSERT INTO `users` (`id`, `username`, `password`, `gmail`, `code_gmail`, `tel`, `admin`, `checkU`) VALUES
+(20, 'Admin_BRUH', '202cb962ac59075b964b07152d234b70', 'openniceqn009@gmail.com', 943901, '0337294740', 0, 1),
+(23, 'Kanosa', '93c674bbea62adf2a5d70252e612cccd', 'surushitoriqn1@gmail.com', 622852, '0339190580', 0, 1);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -220,7 +223,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -7,9 +7,10 @@ if (window.history.replaceState) {
 }
 function OnlyNum(e, max){
     e.value = e.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
-    if(e.value > max){
-        e.value = "";
-    }
+    // let str = e.value.length;
+    // if(str > max){
+    //     e.value = "";
+    // }
 }
 let money = document.querySelectorAll(".money .price");
 // console.log(money);

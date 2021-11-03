@@ -27,10 +27,13 @@
             return $data;
         }
         // 2. Tìm dữ liệu 
-        public function Find($tb, $id = "", $key = "", $value = ""){
+        public function Find($tb, $id = "", $key = "", $value = "", $findOnce = false){
             // var_dump($find);
             if($key === "" || $value === ""){
             $sql = "SELECT * FROM $tb WHERE id=$id";
+            }
+            else if($findOnce){
+            $sql = "SELECT * FROM $tb WHERE $key = $value";
             }
             else
             $sql = "SELECT * FROM $tb WHERE $key LIKE $value";

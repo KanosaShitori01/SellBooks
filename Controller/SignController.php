@@ -9,8 +9,28 @@
             $login_now = $this->signController->findUser($username, $password);
             return $login_now;
         }
-        public function register($username, $password){
-            $register_now = $this->signControler->createUser();
+        public function register($username, $password, $re_password, $tel, $gmail, $code){
+            $register_now =$this->signController->createUser($username, $password, $re_password, $tel, $gmail, $code);
+            return $register_now;
+        }
+        public function confirmation($code, $id, $tp = false){
+            $confirm_now = $this->signController->CodeConfirmation($code, $id);
+            if(!empty($confirm_now) && !$tp){
+                $acp = $this->signController->Accept($confirm_now[0]['id']);
+                return ($acp) ? $confirm_now[0] : false;
+            }else if(!empty($confirm_now) && $tp){
+                return true;
+            } 
+            else return false;
+        }
+        public function updateUser($id, $data){
+            return $this->signController->updateUser($id, $data);
+        }
+        public function checkMail($mail){
+            return $this->signController->findUserQ("gmail", $mail);
+        }
+        public function findUser($key, $val){
+            return $this->signController->findUserQ($key, $val);
         }
     }
 ?>

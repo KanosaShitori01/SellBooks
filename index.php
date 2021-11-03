@@ -7,7 +7,7 @@
     if(isset($_GET['controller'])){
         $controllerName = ucfirst(strtolower($_REQUEST['controller'] ?? "Welcome"))."Controller";
         $actionName = strtolower($_REQUEST['action'] ?? 'index');
-        if (file_exists("./Controller/$controllerName.php")) 
+        if (file_exists("./Controller/$controllerName.php") && $controllerName !== "SignController") 
             require "./Controller/$controllerName.php";
         else
             header("refresh: 0, url=./");

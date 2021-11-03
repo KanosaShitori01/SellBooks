@@ -3,13 +3,13 @@
         const TABLE = "carts";
 
         public function findCart($key, $value){
-            return $this->Find(self::TABLE, "", $key, $value);
+            return $this->Find(self::TABLE, "", $key, $value, true);
         }
         public function updateCart($id, $data){
             return $this->Update(self::TABLE, $id, "", "", $data);
         }
         public function addProduct($id, $quan){
-            $Product = $this->Find("products", $id)[0];
+            $Product = $this->Find("products", $id, true)[0];
             $setProductKey = [
                 "name" => ''.$Product['name'],
                 "price" => $Product['price'],
@@ -21,7 +21,7 @@
                 "id_user" => $_SESSION['user']
             ];
             // $this->Query("TRUNCATE TABLE carts");
-            $Data = $this->Find(self::TABLE, "", "id_products", $id);
+            $Data = $this->Find(self::TABLE, "", "id_products", $id, true);
             // var_dump($Data);
             if(isset($Data[0]["quantity"]) && $Data[0]["quantity"] > 0){
                 // echo "VVVVVVVVVVVVVVVVVVVVVVV";

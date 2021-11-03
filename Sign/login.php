@@ -15,7 +15,7 @@
         $confirm = $Login->login($username, $password);
         if(!is_array($confirm)){
             $error = $confirm;
-        }else {
+        }else{
             $dataUser = $confirm;
             $_SESSION['user'] = $dataUser['id'];
             header("location: ../");
@@ -33,9 +33,9 @@
     <script src="https://kit.fontawesome.com/728b560bcb.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- <div class="back_btn">
+    <div class="back_btn">
         <a href="./"><i class="fas fa-arrow-left"></i></a>
-    </div> -->
+    </div>
     <div class="login_form">
         <h1>Đăng Nhập</h1>
         <form action="<?=$_SERVER["PHP_SELF"]?>" method="post">
@@ -44,7 +44,7 @@
                 <span></span>
                 <label for="">Tên Đăng Nhập</label>
                 <div class="error">
-                    <?php echo ($error == "nf") ? "Không tìm thấy tên tài khoản" : ""; ?>
+                    <?php echo ($error == "nf") ? "(*) Không tìm thấy tên tài khoản" : ""; ?>
                 </div>
             </div>
             <div class="login_form__txtfield">
@@ -52,12 +52,12 @@
                 <span></span>
                 <label for="">Mật Khẩu</label>
                 <div class="error">
-                    <?php echo ($error == "wp") ? "Sai mật khẩu" : ""; ?>
+                    <?php echo ($error == "wp") ? "(*) Sai mật khẩu" : ""; ?>
                 </div>
             </div>
            
             <div class="login_form__forgotpass">
-                <span>Quên mật khẩu? </span>
+                <a href="forgotpass.php">Quên mật khẩu?</a>
             </div>
             <input type="submit" name="login" value="Đăng Nhập" id="">
             <div class="login_form__signup_link">
