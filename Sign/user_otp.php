@@ -9,14 +9,16 @@
     require '../Controller/SignController.php';
     $error = "";
     $CodeConfirmation = new SignController;
+    // var_dump($_SESSION['userZ']);
     if(isset($_POST['confirm'])){
         $code = $_POST['otp'];
-        $confirm = $CodeConfirmation->confirmation($code, $id);
+        $confirm = $CodeConfirmation->confirmation($code, $_SESSION['userZ']);
         var_dump($confirm);
         if(empty($confirm)){
             $error = "wc";
         }else{
             $dataUser = $confirm;
+            unset($_SESSION['userZ']);
             $_SESSION['user'] = $dataUser['id'];
             header("location: ../");
         }

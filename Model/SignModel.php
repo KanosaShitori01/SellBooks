@@ -7,6 +7,9 @@
         public function findUserQ($key, $value){
             return $this->Find(self::TABLE, "", $key, "'".$value."'", true);
         }
+        public function showInfor($id){
+            return $this->Find(self::TABLE, $id, true); 
+        }
         public function findUser($name, $pass){
             $error = [
                 "err_password" => "wp",

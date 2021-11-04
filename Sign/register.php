@@ -2,7 +2,7 @@
     session_start();
     if(isset($_SESSION['user'])){
         header("location: ../");
-    }
+    }else if(isset($_SESSION['userZ'])) header("location: user_otp.php");
     require '../Core/Database.php';
     require '../Controller/BaseController.php';
     require '../Model/BaseModel.php';
@@ -22,8 +22,8 @@
             $error = $confirm;
         }else {
             sendCodeMail($gmail, $code);
-            $login = $Register->login($username, $password);
-            $_SESSION['userZ'] = $login[0]["id"];
+            $user_un = $Register->findUser("username", $username);
+            $_SESSION['userZ'] = $user_un[0]["id"];
             header("location: user_otp.php");
         }
     }
@@ -39,9 +39,9 @@
     <script src="https://kit.fontawesome.com/728b560bcb.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- <div class="back_btn">
+    <div class="back_btn">
         <a href="./"><i class="fas fa-arrow-left"></i></a>
-    </div> -->
+    </div>
     <div class="login_form">
         <h1>Đăng Ký</h1>
         <form action="" method="post">

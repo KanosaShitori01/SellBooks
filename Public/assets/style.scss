@@ -677,7 +677,92 @@ input, button{
                         }
                     }
                 }
-            }        
+            }    
+            .main_page__manager{
+                background-color: rgb(54, 79, 129);
+                display: flex;
+                .main_page__manager__list{
+                    width: 20%;
+                    ul{
+                        list-style: none;
+                        li{
+                            width: 100%;
+                            &.title_list{
+                                padding: 1em;
+                                font-size: 18px;
+                                background-color: rgb(42, 66, 112);
+                            }
+                            a{
+                                padding: 1em;
+                                display: block;
+                                border-bottom: 3px solid rgb(11, 12, 48);
+                                color: white;
+                                &:hover{
+                                    background: rgb(81, 112, 175);
+                                }
+                            }
+                        }
+                    }
+                }
+                .main_page__manager__box{
+                    color: rgb(11, 12, 48);
+                    flex: 1;
+                    height: 600px;
+                    background-color: rgb(205, 222, 255);
+                    .main_page__manager__title{
+                        padding: 1em;
+                        background-color: rgb(73, 103, 168);
+                        text-transform: uppercase;
+                        color: rgb(231, 232, 255);
+                    }
+                    .main_page__manager__content{
+                        padding: 2em;
+                        .main_page__manager__infor{
+                            width: 100%;
+                            .main_page__manager__infor__tab{
+                                display: flex;
+                                align-items: center;
+                                margin-bottom: 2em;
+                                .tab__label{
+                                    width: 22%;
+                                    font-size: 20px;
+                                }
+                                .tab__input{
+                                    flex: 1;
+                                    input{
+                                        border-radius: 5px;
+                                        width: 100%;
+                                        border: none;
+                                        color: white;
+                                        outline: none;
+                                        background: rgba(35, 64, 126, .5);
+                                        padding: 10px;
+                                    }
+                                    .error_text{
+                                        margin-top: 10px;
+                                        color: red; 
+                                    }
+                                }
+                            }
+                        }
+                        .main_page__manager__change{
+                            input{
+                                cursor: pointer;
+                                background-color: rgb(134, 161, 221);
+                                padding: 1em 3em;
+                                border: none;
+                                outline: none;
+                                font-size: 17px;
+                                margin-right: 1em;
+                                &:hover{
+                                    background-color: rgb(105, 134, 196);
+                                    color: white;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
   

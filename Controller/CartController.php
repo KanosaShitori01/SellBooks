@@ -3,13 +3,6 @@
     class CartController extends BaseController{
         private $cartController;
         private $productController;
-        private static $count = 0;
-        protected function set($count){
-            self::$count = $count;
-        }
-        protected function get(){
-            return self::$count;
-        }
         public function __construct()
         {
             $this->loadModel("CartModel");

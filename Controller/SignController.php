@@ -15,9 +15,10 @@
         }
         public function confirmation($code, $id, $tp = false){
             $confirm_now = $this->signController->CodeConfirmation($code, $id);
+            // var_dump($confirm_now);
             if(!empty($confirm_now) && !$tp){
-                $acp = $this->signController->Accept($confirm_now[0]['id']);
-                return ($acp) ? $confirm_now[0] : false;
+                $acp = $this->signController->Accept($confirm_now['id']);
+                return ($acp) ? $confirm_now : false;
             }else if(!empty($confirm_now) && $tp){
                 return true;
             } 

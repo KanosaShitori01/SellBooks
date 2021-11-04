@@ -9,7 +9,7 @@
             return $this->Find(self::TABLE, $id);
         }
         public function findProductBN($key, $value){
-            return $this->Find(self::TABLE, "", $key, $value, true);
+            return $this->Find(self::TABLE, "", $key, $value);
         }
         public function alterProduct($column, $val){
             return $this->Alter(self::TABLE, $column, $val);

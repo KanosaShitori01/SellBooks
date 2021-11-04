@@ -3,7 +3,7 @@
     require "./Controller/BaseController.php";
     require "./Core/Database.php";
     require "./Model/BaseModel.php";
-    // if(isset($_SESSION['user'])) echo "OKE";
+    if(isset($_SESSION['userZ'])) header("location: Sign/user_otp.php");
     if(isset($_GET['controller'])){
         $controllerName = ucfirst(strtolower($_REQUEST['controller'] ?? "Welcome"))."Controller";
         $actionName = strtolower($_REQUEST['action'] ?? 'index');
@@ -148,7 +148,7 @@
                 echo "
                 <div class='heading_page__navhead'>
                     <div class='heading_page__navhead__log login'> 
-                        <a href='Sign/login.php'><i class='fas fa-user-circle'></i> Tài khoản</a>
+                        <a href='?controller=user'><i class='fas fa-user-circle'></i> Tài khoản</a>
                     </div>
                     <div class='heading_page__navhead__log register'>
                         <a href='?logout'><i class='fas fa-door-open'></i> Đăng Xuất</a>
@@ -524,14 +524,14 @@
                         ';
                         }
                     }
-                    else if(isset($_GET['controller']) && $_GET['controller'] == "cart" || $_GET['action'] == "update"){
+                    else if(isset($_GET['controller']) && $_GET['controller'] == "cart"){
                         // $_SESSION['error'] = "";
                         // if(is_array($GLOBALS['cart'])){
                         //     $totalcount = count($GLOBALS['cart']);
                         // } else $totalcount = "0";
                         // session_unset();
                         // session_destroy();
-                        DeleteErr();
+                        // DeleteErr();
                         $totalmoney = 0;
                         $manysp = 0;
                         echo "
@@ -649,6 +649,30 @@
                                 </div>
                             ';
                         }
+                    }
+                    else if(isset($_GET['controller']) && $_GET['controller'] == "user"){
+                        $user = $GLOBALS['user'];
+                        // var_dump($user);
+                        echo "
+                        <div class='main_page__manager'>
+                            <div class='main_page__manager__list'>
+                                <ul>
+                                    <li class='title_list'><i class='fas fa-user-circle'></i> <span> Tài khoản </span></li>
+                                    <li><a href='?controller=user'>Thông tin cá nhân</a></li>
+                                    <li><a href='?controller=user&action=myorder'>Đơn hàng của bạn</a></li>
+                                    <li><a href='?controller=user&action=security'>Đổi mật khẩu</a></li>
+                                </ul>
+                            </div>
+                            <div class='main_page__manager__box'>
+                                <div class='main_page__manager__title'>
+                                    <h2>${user['title']}</h2>
+                                </div>
+                                <div class='main_page__manager__content'>
+                                    ${user['output']}
+                                </div>
+                            </div>
+                        </div>
+                        ";
                     }
                     else{
                         echo $GLOBALS['introduce'];  

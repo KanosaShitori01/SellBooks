@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 03, 2021 lúc 03:14 PM
+-- Thời gian đã tạo: Th10 04, 2021 lúc 12:34 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 7.3.31
 
@@ -67,7 +67,6 @@ CREATE TABLE `carts` (
   `price` float NOT NULL,
   `quantity` int(11) NOT NULL,
   `quantity_max` int(11) NOT NULL,
-  `received` tinyint(1) NOT NULL,
   `id_products` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `error` varchar(255) DEFAULT NULL
@@ -77,8 +76,8 @@ CREATE TABLE `carts` (
 -- Đang đổ dữ liệu cho bảng `carts`
 --
 
-INSERT INTO `carts` (`id`, `name`, `image`, `price`, `quantity`, `quantity_max`, `received`, `id_products`, `id_user`, `error`) VALUES
-(59, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 3, 4, 0, 3, 1, '');
+INSERT INTO `carts` (`id`, `name`, `image`, `price`, `quantity`, `quantity_max`, `id_products`, `id_user`, `error`) VALUES
+(60, 'Phật Giáo và Cuộc Sống\r\n', 'Public/img/phatgiaovacuocsong.jpg', 60000, 3, 5, 2, 30, '');
 
 -- --------------------------------------------------------
 
@@ -154,8 +153,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `gmail`, `code_gmail`, `tel`, `admin`, `checkU`) VALUES
-(20, 'Admin_BRUH', '202cb962ac59075b964b07152d234b70', 'openniceqn009@gmail.com', 943901, '0337294740', 0, 1),
-(23, 'Kanosa', '93c674bbea62adf2a5d70252e612cccd', 'surushitoriqn1@gmail.com', 622852, '0339190580', 0, 1);
+(30, 'KanosaShitori0011', '17225f2346a7f6eaa6d6d92876d1cd72', 'openniceqn0@gmail.com', 611299, '0337294740', 0, 1),
+(31, 'Kanosa', '17225f2346a7f6eaa6d6d92876d1cd72', 'surushitoriqn1@gmail.com', 448885, '0339190580', 0, 1),
+(32, 'Admin_BRUH', '17225f2346a7f6eaa6d6d92876d1cd72', 'tranchauqn9@gmail.com', 847221, '0378565203', 0, 1);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -205,7 +205,7 @@ ALTER TABLE `author`
 -- AUTO_INCREMENT cho bảng `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
@@ -223,7 +223,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

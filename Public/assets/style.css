@@ -845,6 +845,117 @@ input, button {
   background-color: #6b89db;
 }
 
+.main_page .main_page__part .main_page__content .main_page__manager {
+  background-color: #364f81;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__list {
+  width: 20%;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__list ul {
+  list-style: none;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__list ul li {
+  width: 100%;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__list ul li.title_list {
+  padding: 1em;
+  font-size: 18px;
+  background-color: #2a4270;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__list ul li a {
+  padding: 1em;
+  display: block;
+  border-bottom: 3px solid #0b0c30;
+  color: white;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__list ul li a:hover {
+  background: #5170af;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box {
+  color: #0b0c30;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 600px;
+  background-color: #cddeff;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__title {
+  padding: 1em;
+  background-color: #4967a8;
+  text-transform: uppercase;
+  color: #e7e8ff;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content {
+  padding: 2em;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor {
+  width: 100%;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 2em;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab .tab__label {
+  width: 22%;
+  font-size: 20px;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab .tab__input {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab .tab__input input {
+  border-radius: 5px;
+  width: 100%;
+  border: none;
+  color: white;
+  outline: none;
+  background: rgba(35, 64, 126, 0.5);
+  padding: 10px;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab .tab__input .error_text {
+  margin-top: 10px;
+  color: red;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__change input {
+  cursor: pointer;
+  background-color: #86a1dd;
+  padding: 1em 3em;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  margin-right: 1em;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__change input:hover {
+  background-color: #6986c4;
+  color: white;
+}
+
 .snipper {
   display: -webkit-box;
   display: -ms-flexbox;

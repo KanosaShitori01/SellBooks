@@ -2,7 +2,7 @@
     session_start();
     if(isset($_SESSION['user'])){
         header("location: ../");
-    }
+    }else if(isset($_SESSION['userZ'])) header("location: user_otp.php");
     require '../Core/Database.php';
     require '../Controller/BaseController.php';
     require '../Model/BaseModel.php';
