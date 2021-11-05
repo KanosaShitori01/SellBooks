@@ -10,6 +10,7 @@
     require './sendmail.php';
 
     $error = "";
+    $dis = "";
     $Register = new SignController;
     if(isset($_POST['register'])){
         $username = $_POST['username'];
@@ -21,6 +22,7 @@
         if(is_string($confirm)){    
             $error = $confirm;
         }else {
+            $dis = "disabled";
             sendCodeMail($gmail, $code);
             $user_un = $Register->findUser("username", $username);
             $_SESSION['userZ'] = $user_un[0]["id"];
@@ -88,7 +90,7 @@
                     <?php echo ($error == "wp") ? "<p>(*) Mật khẩu không trùng khớp</p>" : ""; ?>
                 </div>
             </div>
-            <input type="submit" name="register" value="Đăng Ký" id="">
+            <input type="submit" name="register" <?= $dis ?> value="Đăng Ký" id="">
             <div class="login_form__signup_link">
                 <span>Đã có tài khoản? </span> <a href="login.php">Đăng Nhập</a>
             </div>

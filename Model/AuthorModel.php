@@ -1,4 +1,5 @@
 <?php 
+
     class AuthorModel extends BaseModel{
         const TABLE = "author";
         public function getAllAu(){

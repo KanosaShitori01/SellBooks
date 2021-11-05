@@ -12,7 +12,6 @@
         }
         public function index(){
             $Carts = (isset($_SESSION['user'])) ? $this->cartController->findCart("id_user", $_SESSION['user']) : "";
-            // var_dump($Carts);
             $quantiyProd = $this->productController->getAllProduct(["id, quantity"]);
             $setQuantityProd = [];
             // var_dump(self::changeC());
@@ -38,10 +37,11 @@
                 }
                 foreach($perRes as $res){
                     $cartND = $this->cartController->findCart("id", $res['id']);
-                    if($res['quantity'] > $cartND[0]['quantity_max']){
+                    $productND = $this->productController->findProductBID($cartND[0]['id_products']);
+                    if($res['quantity'] > $productND[0]['quantity']){
                         $this->cartController->alterCart("error", "varchar(255)");
                         $this->cartController->updateCart($res["id"], [
-                            "quantity" => $cartND[0]['quantity_max'],
+                            "quantity" => $productND[0]['quantity'],
                             "error" => $this->ErrBuy
                         ]);
                         header("location: ?controller=cart");

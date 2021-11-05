@@ -46,39 +46,43 @@
                     $id = $_GET['id'];
                     $quantity = $_GET['quantity'];
                     $productBuy = $this->productsController->findProductBID($id);
-                    $cartCheck = $this->cartController->findCart("id_products", $id);
+                    $cartCheck = $this->cartController->findCart("", "", "mul", [
+                        "id_user" => $_SESSION['user'],
+                        "id_products" => $id
+                    ]);
+                    // var_dump($productBuy[0]['quantity']);
                     if($quantity > $productBuy[0]['quantity']){
-                        $this->failBuy($id);
+                        $this->failBuy($id, "Số lượng đã đạt mức tối đa. Quý khách vui lòng liên hệ email hoặc hotline để được tư vấn và hỗ trợ tốt nhất.");
                         return header("location: ?controller=products&action=show&id=$id");
                     }
                     else if(!empty($cartCheck) && $quantity <= $productBuy[0]['quantity']){
                         $how = $cartCheck[0]['quantity'] + $quantity;
-                        if($how > $cartCheck[0]['quantity_max']){
-                            $this->failBuy($id);
+                        if($how > $productBuy[0]['quantity']){
+                            $this->failBuy($id, "Số lượng đã đạt mức tối đa. Quý khách vui lòng liên hệ email hoặc hotline để được tư vấn và hỗ trợ tốt nhất.");
                             return header("location: ?controller=products&action=show&id=$id");
                         }
                         else{
-                            $this->compleBuy($id, $quantity);
+                            $this->compleBuy($id, $quantity, $_SESSION['user']);
                         }
                     }
                     else if($productBuy[0]["quantity"] == 1 && $quantity > 1){
-                    $this->compleBuy($id, 1);
-                    $this->failBuy($id, true);
+                    $this->compleBuy($id, 1, $_SESSION['user']);
+                    // $this->failBuy($id, "", true);
                     }
                     else{
-                    $this->compleBuy($id, $quantity);
-                    $this->failBuy($id, true);
+                    $this->compleBuy($id, $quantity, $_SESSION['user']);
+                    // $this->failBuy($id, "", true);
                     }
                 }
             }else{
                 header("location: ./Sign/login.php");
             }
         }
-        public function failBuy($id, $reset = false){
+        public function failBuy($id, $err, $reset = false){
             if($reset == false){
                 $this->productsController->alterProduct("error", "varchar(225)");
                 $this->productsController->editProduct($id, [
-                    "error" => $this->ErrBuy
+                    "error" => $err
                 ]);
             }
             else{
@@ -87,9 +91,8 @@
                 ]);
             }
         }
-      
-        public function compleBuy($id, $quantity){
-            $this->cartController->addProduct($id, $quantity);
+        public function compleBuy($id, $quantity, $id_u){
+            $this->cartController->addProduct($id, $quantity, $id_u);
             header("location: ?controller=cart");
         }
     }

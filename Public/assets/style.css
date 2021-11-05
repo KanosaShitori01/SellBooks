@@ -887,6 +887,7 @@ input, button {
       -ms-flex: 1;
           flex: 1;
   height: 600px;
+  overflow-y: auto;
   background-color: #cddeff;
 }
 
@@ -924,6 +925,7 @@ input, button {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+  position: relative;
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab .tab__input input {
@@ -937,8 +939,14 @@ input, button {
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab .tab__input .error_text {
-  margin-top: 10px;
+  position: absolute;
+  bottom: -30px;
+  font-size: 20px;
   color: red;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__change {
+  margin-top: 3em;
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__change input {
@@ -954,6 +962,164 @@ input, button {
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__change input:hover {
   background-color: #6986c4;
   color: white;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order {
+  width: 100%;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__order__fail {
+  text-align: center;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: rgba(35, 63, 124, 0.4);
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card .main_page__manager__card__img {
+  width: 10%;
+  height: 100px;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card .main_page__manager__card__img img {
+  width: 100%;
+  height: 100%;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card .main_page__manager__card__content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card .main_page__manager__card__content .main_page__manager__card__content__text {
+  color: #252c6b;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card .main_page__manager__card__content .main_page__manager__card__content__process {
+  color: #97ff97;
+  margin-right: 10px;
+}
+
+.main_page .main_page__part .main_page__content .pay_box {
+  color: #0b0c30;
+  font-size: 20px;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__title a {
+  padding: 10px;
+  background-color: #0b0c30;
+  color: white;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__report {
+  margin-bottom: 1em;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__report .pay_box__report__input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 10px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__report .pay_box__report__input .pay_box__report__input__tab {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__report .pay_box__report__input .pay_box__report__input__tab input {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__report .pay_box__report__input .pay_box__report__input__label {
+  width: 16%;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__infor .pay_box__infor__title {
+  font-size: 25px;
+  color: #2b2e81;
+  border-bottom: 2px solid #4c4edb;
+  padding: 15px 0;
+  border-top: 2px solid #151646;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__infor .pay_box__infor__content .pay_box__infor__tab {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1em;
+  background-color: #0e0f38;
+  color: white;
+  border-bottom: 3px solid #70a9ff;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__infor .pay_box__infor__content .pay_box__infor__tab .pay_box__infor__tab_more {
+  text-align: right;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__infor .pay_box__infor__content .total {
+  margin-top: 1em;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__btn input {
+  width: 300px;
+  font-size: 25px;
+  padding: 1em 3em;
+  color: white;
+  background-color: #252774;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  margin-top: 3em;
+}
+
+.main_page .main_page__part .main_page__content .pay_box .pay_box__btn input:hover {
+  background-color: #46499b;
 }
 
 .snipper {

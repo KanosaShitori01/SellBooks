@@ -1,4 +1,5 @@
 <?php 
+
     class SignModel extends BaseModel{
         const TABLE = "users";
         public function checkData(){

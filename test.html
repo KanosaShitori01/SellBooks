@@ -46,7 +46,7 @@
     </ul>
     
     <form action="test.html">
-        <input id="ok" type="submit" onclick="Oke()" value="OKe">
+        <input id="ok" type="submit" onclick="Oke(this)" value="OKe">
     </form>
     <input type="number" onchange="change()">
 
@@ -55,8 +55,9 @@
     </div>
 </body>
 <script>
-    function Oke(){
-        alert("VV");
+    function Oke(e){
+        e.preventDefault();
+        console.log(e);
     }
     function change(){
         console.log("VVVVV");

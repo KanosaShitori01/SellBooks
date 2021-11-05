@@ -10,6 +10,7 @@
     require './sendmail.php';
 
     $error = "";
+    $dis = "";
     $HelpPass = new SignController;
     if(isset($_POST['conf_acc'])){
         $gmail = $_POST['gmail'];
@@ -32,6 +33,7 @@
         if(!$User_code){
             $error = "wc";
         }else{
+            $dis = "disabled";
             $_SESSION['userC'] = $User[0]['id'];
             header("location: changepass.php");
         }
@@ -65,7 +67,7 @@
                         echo ($error == "wg") ? "<p>(*) Gmail đã được sử dụng</p>" : ""; 
                 echo    "</div>";
             echo   "</div>
-                    <input class='forgot_submit' type='submit' name='conf_acc' value='Tiếp tục' id=''>
+                    <input class='forgot_submit' type='submit' name='conf_acc' $dis value='Tiếp tục' id=''>
                 </form>
             </div>
             ";
@@ -83,7 +85,7 @@
                 echo ($error == "wc") ? "<p>(*) Mã xác nhận không hợp lệ</p>" : ""; 
                 echo    "</div>
                     </div>
-                    <input class='forgot_submit' type='submit' name='conf_code' value='Tiếp tục' id=''>
+                    <input class='forgot_submit' type='submit' name='conf_code' $dis value='Tiếp tục' id=''>
                 </form>
             </div>
             ";

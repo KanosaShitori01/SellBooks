@@ -1,4 +1,5 @@
 <?php 
+//  require './index.php';
     class BaseModel extends Database{
         protected $conn; 
         public function __construct()
@@ -71,8 +72,11 @@
             return $this->Query($sql) ?? "";
         }
         // 5. Xóa dữ liệu 
-        public function Delete($tb, $id){
+        public function Delete($tb, $id = "", $mul = false, $key = "", $val = ""){
+            if(!$mul)
             $sql = "DELETE FROM $tb WHERE id=$id";
+            else $sql = "DELETE FROM $tb WHERE $key = $val";
+            
             return $this->Query($sql) ?? "";
         }   
         // 6. Thêm cột 
@@ -80,5 +84,20 @@
             $sql = "ALTER TABLE $tb ADD $column $var";
             return $this->Query($sql);
         }   
+        public function FindMul($tb, $keys){
+            $setData = [];
+            foreach($keys as $dataKey => $dataVal){
+                array_push($setData, "$dataKey = '".$dataVal."'");
+            }
+            $setData = implode(" AND ", $setData);
+            $sql = "SELECT * FROM $tb WHERE $setData";                                                                 
+            $query = $this->Query($sql);
+            if(!$query) return "";
+            $data = [];
+            while($row = mysqli_fetch_assoc($query)){
+                array_push($data, $row);
+            }
+            return $data ?? "";                                                                
+        }
     }
 ?>

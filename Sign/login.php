@@ -8,6 +8,7 @@
     require '../Model/BaseModel.php';
     require '../Controller/SignController.php';
     $error = "";
+    $dis = "";
     $Login = new SignController;
     if(isset($_POST['login'])){
         $username = "'".$_POST['username']."'";
@@ -16,6 +17,7 @@
         if(!is_array($confirm)){
             $error = $confirm;
         }else{
+            $dis = "disabled";
             $dataUser = $confirm;
             $_SESSION['user'] = $dataUser['id'];
             header("location: ../");
@@ -59,7 +61,7 @@
             <div class="login_form__forgotpass">
                 <a href="forgotpass.php">Quên mật khẩu?</a>
             </div>
-            <input type="submit" name="login" value="Đăng Nhập" id="">
+            <input type="submit" name="login" value="Đăng Nhập" <?= $dis ?>>
             <div class="login_form__signup_link">
                 <span>Chưa có tài khoản? </span> <a href="register.php">Đăng Ký</a>
             </div>

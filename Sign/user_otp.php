@@ -8,6 +8,7 @@
     require '../Model/BaseModel.php';
     require '../Controller/SignController.php';
     $error = "";
+    $dis = "";
     $CodeConfirmation = new SignController;
     // var_dump($_SESSION['userZ']);
     if(isset($_POST['confirm'])){
@@ -17,6 +18,7 @@
         if(empty($confirm)){
             $error = "wc";
         }else{
+            $dis = "disabled";
             $dataUser = $confirm;
             unset($_SESSION['userZ']);
             $_SESSION['user'] = $dataUser['id'];
@@ -49,7 +51,7 @@
                     <?php echo ($error == "wc") ? "<p>Mã xác nhận không chính xác!</p>" : ""; ?>
                 </div>
             </div>
-            <input class="forgot_submit" type="submit" name="confirm" value="Tiếp tục" id="">
+            <input class="forgot_submit" type="submit" name="confirm" <?= $dis ?> value="Tiếp tục" id="">
         </form>
     </div>
 </body>

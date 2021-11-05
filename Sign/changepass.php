@@ -8,6 +8,7 @@
     require '../Model/BaseModel.php';
     require '../Controller/SignController.php';
     $error = "";
+    $dis = "";
     $Log = new SignController;
     if(isset($_POST['changepass'])){
         $password = md5($_POST['password']);
@@ -15,6 +16,7 @@
         if($password !== $re_password){
             $error = "wp";
         }else{
+            $dis = "disabled";
             $changepass = $Log->updateUser($_SESSION['userC'], [
                 "password" => $password
             ]);
@@ -55,7 +57,7 @@
                 <label for="">Nhập lại mật khẩu mới</label>
                
             </div>
-            <input class="forgot_submit" type="submit" name="changepass" value="Xác Nhận" id="">
+            <input class="forgot_submit" type="submit" name="changepass" <?= $dis ?> value="Xác Nhận" id="">
         </form>
     </div>
 </body>

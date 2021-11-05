@@ -9,6 +9,7 @@ include "../PHPMailer/src/SMTP.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 $code = rand(999999, 111111);
+
 function sendCodeMail($gmail_to, $code){
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
     try {

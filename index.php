@@ -130,6 +130,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
+
     <header class="heading_page">
         <?php
             if(!isset($_SESSION['user'])){
@@ -184,7 +185,7 @@
                 </div> -->
                 <form action="<?=$_SERVER["PHP_SELF"]?>" method="post">
                     <div class="heading_page__headmain__search__input">
-                        <input id="findbooks" type="text" name="namebook" placeholder="Nhập tên sách bạn cần tìm..." id="">
+                        <input id="findbooks" type="text" name="namebook" required placeholder="Nhập tên sách bạn cần tìm..." id="">
                         <div class="heading_page__headmain__search__res" id="result">
                         </div>
                     </div>
@@ -525,13 +526,6 @@
                         }
                     }
                     else if(isset($_GET['controller']) && $_GET['controller'] == "cart"){
-                        // $_SESSION['error'] = "";
-                        // if(is_array($GLOBALS['cart'])){
-                        //     $totalcount = count($GLOBALS['cart']);
-                        // } else $totalcount = "0";
-                        // session_unset();
-                        // session_destroy();
-                        // DeleteErr();
                         $totalmoney = 0;
                         $manysp = 0;
                         echo "
@@ -608,11 +602,14 @@
                                         <p>Tổng tiền : $totalmoney đ</p>
                                     </div>
                                     </div>";
-                           echo (empty($manysp)) ? "<a href='./' class='cart__content__pay__btn'>Mua Hàng</a>" : "<a href='' class='cart__content__pay__btn'>Thanh Toán</a>"; 
+                           echo (empty($manysp)) ? "<a href='./' class='cart__content__pay__btn'>Mua Hàng</a>" : "<a href='?controller=pay' class='cart__content__pay__btn'>Thanh Toán</a>"; 
                         echo    "</div>
                             </div>
                         </div>
                         ";
+                    }
+                    else if(isset($_GET['controller']) && $_GET['controller'] == "pay"){
+                        echo $GLOBALS['pay_form'];
                     }
                     else if(isset($_GET['controller']) && $_GET['controller'] == "author" && $_GET['action'] == "show"){
                         DeleteErr();
@@ -659,7 +656,7 @@
                                 <ul>
                                     <li class='title_list'><i class='fas fa-user-circle'></i> <span> Tài khoản </span></li>
                                     <li><a href='?controller=user'>Thông tin cá nhân</a></li>
-                                    <li><a href='?controller=user&action=myorder'>Đơn hàng của bạn</a></li>
+                                    <li><a href='?controller=user&action=myorder'>Lịch sử đơn hàng</a></li>
                                     <li><a href='?controller=user&action=security'>Đổi mật khẩu</a></li>
                                 </ul>
                             </div>
@@ -732,7 +729,8 @@
                   </div>
             </div>
             <div class="footer_page__plugin">
-                <iframe data-width="170" height="300px" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fkinhsachkimquy&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                <iframe data-width="170" height="300px" 
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fkinhsachkimquy&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
             </div>
         </div>
         <div class="footer_page__copyright">
