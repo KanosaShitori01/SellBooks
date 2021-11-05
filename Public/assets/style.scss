@@ -773,11 +773,12 @@ input, button{
                                 text-align: center;
                             }
                             .main_page__manager__card{
+                                margin-bottom: 1em;
                                 display: flex;
                                 background-color: rgba(35, 63, 124, .4);
                                 .main_page__manager__card__img{
                                     width: 10%;
-                                    height: 100px;
+                                    height: 120px;
                                     img{
                                         width: 100%;
                                         height: 100%;
@@ -792,6 +793,7 @@ input, button{
                                     font-size: 20px;
                                     .main_page__manager__card__content__text{
                                         color: rgb(37, 44, 107);
+                                        font-weight: 600;
                                     }
                                     .main_page__manager__card__content__process{
                                         color: rgb(151, 255, 151);

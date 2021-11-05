@@ -5,16 +5,25 @@
     class UserController extends BaseController{
         private $userController;
         private $orderController;
+        private $productController;
         private $url = "?controller=user";
         public function __construct()
         {  
             $this->loadModel("SignModel");
             $this->loadModel("PayModel");
+            $this->loadModel("ProductModel");
             $this->userController = new SignModel;
             $this->orderController = new PayModel;
+            $this->productController = new ProductModel;
         }
         private function checkDataU($key, $value){
-            return ($this->userController->findUserQ($key, $value)) ? true : false;
+            $userPresent = $this->userController->findUserQ("id", $_SESSION['user'])[0];
+            if($userPresent['username'] == $value || $userPresent['gmail'] == $value 
+            || $userPresent['tel'] == $value) 
+            return true;
+            if(empty($this->userController->findUserQ($key, $value))) 
+                return true;
+            else return false;
         }
         public function index(){
             $error_text = "";
@@ -31,8 +40,8 @@
                 <input type='submit' name='cancel' value='Hủy'>
                 ";
                 if(isset($_POST['confirm_change'])){
-                    if($this->checkDataU("username",$_POST['username']) && $this->checkDataU("gmail", $_POST['gmail'])
-                    && strlen($_POST['tel']) == 10 && $this->emailValid($_POST['gmail'])){
+                    if($this->checkDataU("username",$_POST['username']) && $this->checkDataU("gmail", $_POST['gmail']) &&
+                    $this->checkDataU("tel", $_POST['tel']) && strlen($_POST['tel']) == 10 && $this->emailValid($_POST['gmail'])){
                         $pass = md5($_POST['password']);
                         if($user['password'] === $pass) {
                         $this->userController->UpdateUser($user['id'], [
@@ -109,7 +118,7 @@
                     array_push($dataOrder, $cart);
                 }
             }
-            var_dump($dataOrder);
+            // var_dump($dataOrder);
             if(empty($dataOrder))
             $output = "
             <div class='main_page__manager__order'>
@@ -118,26 +127,28 @@
                 </div>
             </div>
             ";  else{
+           
             $output .= "<div class='main_page__manager__order'>";
                     foreach($dataOrder as $order){
-                    $process = ($order['orderU'] == 1) ? "Đã nhận hàng" : "Đang giao hàng";
-                    // $output .= "
-                    //     <div class='main_page__manager__card'>
-                    //         <div class='main_page__manager__card__img'>
-                    //             <img src='${order['image']}' />
-                    //         </div>
-                    //         <div class='main_page__manager__card__content'>
-                    //             <div class='main_page__manager__card__content__text'>
-                    //                 <p>${order['name']}</p>
-                    //                 <p>Giá: ${order['price']}đ</p>
-                    //                 <p>Số lượng: ${order['quantity']}</p>
-                    //             </div>
-                    //             <div class='main_page__manager__card__content__process'>
-                    //                 $process
-                    //             </div>
-                    //         </div>
-                    //     </div>
-                    // ";
+                        $productsOf = $this->productController->findProductBID($order['id_product'])[0];
+                        $process = ($order == 1) ? "Đã nhận hàng" : "Đang giao hàng";
+                        $output .= "
+                            <div class='main_page__manager__card'>
+                                <div class='main_page__manager__card__img'>
+                                    <img src='${productsOf['image']}' />
+                                </div>
+                                <div class='main_page__manager__card__content'>
+                                    <div class='main_page__manager__card__content__text'>
+                                        <p>${productsOf['name']}</p>
+                                        <p>Giá: ${order['totalmoney']}đ</p>
+                                        <p>Số lượng: ${order['quantity']}</p>
+                                    </div>
+                                    <div class='main_page__manager__card__content__process'>
+                                        $process
+                                    </div>
+                                </div>
+                            </div>
+                        ";
                     }
             $output .= "</div>";
             }

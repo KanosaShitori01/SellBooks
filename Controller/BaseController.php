@@ -1,4 +1,14 @@
 <?php 
+    // PHP mailer
+    if(isset($_GET['controller'])){
+    include "./PHPMailer/src/PHPMailer.php";
+    include "./PHPMailer/src/Exception.php";
+    include "./PHPMailer/src/OAuth.php";
+    include "./PHPMailer/src/POP3.php";
+    include "./PHPMailer/src/SMTP.php";
+    }
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
     class BaseController{
         const VIEW_FOLDER_NAME = 'View';
         const MODEL_FOLDER_NAME = 'Model';
@@ -25,5 +35,35 @@
             if (preg_match ("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+\.[A-Za-z]{2,6}$/", $string)) 
             return true; 
         } 
+        public function sendCodeMail($gmail_to, $title, $content){
+           
+
+            $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+                try {
+                    //Server settings
+                    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+                    $mail->isSMTP();                                      // Set mailer to use SMTP
+                    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+                    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+                    $mail->Username = 'tranchauqn9@gmail.com';                 // SMTP username
+                    $mail->Password = 'sxcmggxcigpfxooa';                           // SMTP password
+                    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+                    $mail->Port = 587;                                    // TCP port to connect to
+                
+                    //Recipients
+                    $mail->setFrom('tranchauqn9@gmail.com', 'Kinh Sach Kim Quy');
+                    $mail->addAddress(''.$gmail_to, 'Guest');   
+                    $mail->addCC('tranchauqn9@gmail.com');
+
+                    $mail->Subject = "$title";
+                    $mail->Body    = "$content";
+                  
+                
+                    $mail->send();
+                    return "YES";
+                } catch (Exception $e) {
+                    return 'Message could not be sent. Mailer Error: '. $mail->ErrorInfo;
+                }
+        }
     }
 ?>

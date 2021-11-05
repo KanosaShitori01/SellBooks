@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 05, 2021 lúc 10:25 AM
+-- Thời gian đã tạo: Th10 02, 2021 lúc 01:21 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
--- Phiên bản PHP: 7.3.31
+-- Phiên bản PHP: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -66,9 +66,10 @@ CREATE TABLE `carts` (
   `image` varchar(500) NOT NULL,
   `price` float NOT NULL,
   `quantity` int(11) NOT NULL,
+  `quantity_max` int(11) NOT NULL,
+  `received` tinyint(1) NOT NULL,
   `id_products` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `orderU` tinyint(1) NOT NULL,
   `error` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -76,11 +77,8 @@ CREATE TABLE `carts` (
 -- Đang đổ dữ liệu cho bảng `carts`
 --
 
-INSERT INTO `carts` (`id`, `name`, `image`, `price`, `quantity`, `id_products`, `id_user`, `orderU`, `error`) VALUES
-(77, 'Phật Giáo và Cuộc Sống\r\n', 'Public/img/phatgiaovacuocsong.jpg', 60000, 8, 2, 32, 0, ''),
-(78, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 4, 3, 32, 0, ''),
-(87, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 4, 3, 33, 0, ''),
-(88, 'Thơm Ngát Hương Lan\r\n', 'Public/img/thomngathuonglan.jpg', 115000, 3, 4, 33, 0, '');
+INSERT INTO `carts` (`id`, `name`, `image`, `price`, `quantity`, `quantity_max`, `received`, `id_products`, `id_user`, `error`) VALUES
+(59, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 3, 4, 0, 3, 1, '');
 
 -- --------------------------------------------------------
 
@@ -102,31 +100,6 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 (2, 'Kinh'),
 (3, 'Sách Phật Giáo'),
 (4, 'Từ Điển Phật Giáo');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `myorder`
---
-
-CREATE TABLE `myorder` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `id_product` int(11) NOT NULL,
-  `name_user` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `totalmoney` float NOT NULL,
-  `address` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tel` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gmail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `myorder`
---
-
-INSERT INTO `myorder` (`id`, `id_user`, `id_product`, `name_user`, `quantity`, `totalmoney`, `address`, `tel`, `gmail`) VALUES
-(31, 31, 3, 'Nga nga', 1, 100000, 'Tổ 1 khu vực 93', '0337294740', 'surushitoriqn1@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -154,9 +127,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `price`, `image`, `description`, `id_category`, `id_author`, `discount`, `created_day`, `quantity`, `translator`, `error`) VALUES
-(2, 'Phật Giáo và Cuộc Sống\r\n', 60000, 'Public/img/phatgiaovacuocsong.jpg', 'Tác phẩm “Đạo Phật và cuộc sống”  là tuyển tập những bài viết của Hòa Thượng Ấn Thuận, được trích dịch từ hai bộ sách 《佛在人間》 “Phật ở nhân gian” (quyển thứ 14) trong bộ “Diệu Vân tập”. Phần còn lại trích dịch từ bộ “Hoa Vũ Tập”. Đây là những bài nói chuyện có nội dung tư tưởng rất hay, đáng cho chúng ta học tập. Cách lý giải những vấn đề trong Phật học rất trong sáng, phù họp với thời đại chúng ta, nhất là quan điểm của giới trẻ hiện nay. Người dịch cho rằng, nó rất cần thiết cho người Phật tử Việt nam chúng ta, dù ở trong nước hay ở nước ngoài, có thể nói nó là một ý kiến tích cực cho việc hoằng dương Phật pháp trong thời hiện đại, lấy con người và xã hội con người làm chủ đề chính cho cả hai việc tu và học..', 2, 1, 0, '2021-10-26', 9, NULL, ''),
+(2, 'Phật Giáo và Cuộc Sống\r\n', 60000, 'Public/img/phatgiaovacuocsong.jpg', 'Tác phẩm “Đạo Phật và cuộc sống”  là tuyển tập những bài viết của Hòa Thượng Ấn Thuận, được trích dịch từ hai bộ sách 《佛在人間》 “Phật ở nhân gian” (quyển thứ 14) trong bộ “Diệu Vân tập”. Phần còn lại trích dịch từ bộ “Hoa Vũ Tập”. Đây là những bài nói chuyện có nội dung tư tưởng rất hay, đáng cho chúng ta học tập. Cách lý giải những vấn đề trong Phật học rất trong sáng, phù họp với thời đại chúng ta, nhất là quan điểm của giới trẻ hiện nay. Người dịch cho rằng, nó rất cần thiết cho người Phật tử Việt nam chúng ta, dù ở trong nước hay ở nước ngoài, có thể nói nó là một ý kiến tích cực cho việc hoằng dương Phật pháp trong thời hiện đại, lấy con người và xã hội con người làm chủ đề chính cho cả hai việc tu và học..', 2, 1, 0, '2021-10-26', 5, NULL, ''),
 (3, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 100000, 'Public/img/TTTT.jpg', '', 1, 1, 0, '2021-10-27', 4, NULL, ''),
-(4, 'Thơm Ngát Hương Lan\r\n', 115000, 'Public/img/thomngathuonglan.jpg', '', 3, 2, 0, '2021-10-27', 7, NULL, ''),
+(4, 'Thơm Ngát Hương Lan\r\n', 115000, 'Public/img/thomngathuonglan.jpg', '', 3, 2, 0, '2021-10-27', 2, NULL, ''),
 (5, 'SA', 250000, 'Public/img/book1.jpg', 'SASCCC', 4, 2, 0, '2021-10-27', 1, NULL, '');
 
 -- --------------------------------------------------------
@@ -171,19 +144,15 @@ CREATE TABLE `users` (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `gmail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `code_gmail` mediumint(9) NOT NULL,
-  `tel` varchar(10) NOT NULL,
-  `admin` tinyint(1) NOT NULL,
-  `checkU` tinyint(1) NOT NULL
+  `admin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `gmail`, `code_gmail`, `tel`, `admin`, `checkU`) VALUES
-(30, 'KanosaShitori0011', '17225f2346a7f6eaa6d6d92876d1cd72', 'openniceqn0@gmail.com', 611299, '0337294740', 0, 1),
-(31, 'Kanosa', '17225f2346a7f6eaa6d6d92876d1cd72', 'surushitoriqn1@gmail.com', 448885, '0337294740', 0, 1),
-(33, 'admin23', '17225f2346a7f6eaa6d6d92876d1cd72', 'tranchauqn9@gmail.com', 963180, '0378565203', 0, 1);
+INSERT INTO `users` (`id`, `username`, `password`, `gmail`, `code_gmail`, `admin`) VALUES
+(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'openniceqn9@gmail.com', 53975, 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -205,12 +174,6 @@ ALTER TABLE `carts`
 -- Chỉ mục cho bảng `categories`
 --
 ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `myorder`
---
-ALTER TABLE `myorder`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -239,19 +202,13 @@ ALTER TABLE `author`
 -- AUTO_INCREMENT cho bảng `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT cho bảng `myorder`
---
-ALTER TABLE `myorder`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
@@ -263,7 +220,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

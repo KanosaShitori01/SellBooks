@@ -11,7 +11,7 @@
             return $this->Update(self::TABLE, $id, "", "", $data);
         }
         public function addProduct($id, $quan, $id_u){
-            $Product = $this->Find("products", $id, true)[0];
+            $Product = $this->Find("products", $id, "", "", true)[0];
             $setProductKey = [
                 "name" => ''.$Product['name'],
                 "price" => $Product['price'],

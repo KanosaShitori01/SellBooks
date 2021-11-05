@@ -9,7 +9,7 @@
             return $this->Find(self::TABLE, "", $key, "'".$value."'", true);
         }
         public function showInfor($id){
-            return $this->Find(self::TABLE, $id, true); 
+            return $this->Find(self::TABLE, $id, "", "", true); 
         }
         public function findUser($name, $pass){
             $error = [
@@ -17,7 +17,7 @@
                 "err_notfound" => "nf"
             ];
             
-            $checkU = $this->Find(self::TABLE, "", "username", $name);
+            $checkU = $this->Find(self::TABLE, "", "username", $name, true);
             if(!empty($checkU) && $checkU[0]['checkU']){
                 return ($pass === $checkU[0]['password']) ? $checkU[0] : $error["err_password"];
             }else return $error["err_notfound"];
@@ -31,9 +31,9 @@
                 "tel_2" => "te"
             ];
             // echo "$name, $pass, $re_pass, $tel, $gmail, $cosde";
-            $nameC = $this->Find(self::TABLE, "", "username", "'".$name."'");
-            $gmailC = $this->Find(self::TABLE, "", "gmail", "'".$gmail."'");
-            $telC = $this->Find(self::TABLE, "", "tel", "'".$tel."'");
+            $nameC = $this->Find(self::TABLE, "", "username", "'".$name."'", true);
+            $gmailC = $this->Find(self::TABLE, "", "gmail", "'".$gmail."'", true);
+            $telC = $this->Find(self::TABLE, "", "tel", "'".$tel."'", true);
             if(!empty($nameC)){
                 return $error["username"];
             }else if(!empty($gmailC)){
@@ -57,7 +57,7 @@
             }
         }
         public function CodeConfirmation($code, $id){
-            $Data = $this->Find(self::TABLE, $id);
+            $Data = $this->Find(self::TABLE, $id, "", "", true);
             return ($Data[0]['code_gmail'] === $code) ? $Data[0] : "";
         }
         public function Accept($id){

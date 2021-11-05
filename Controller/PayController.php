@@ -1,4 +1,5 @@
-<?php 
+<?php   
+
     class PayController extends BaseController{
         private $payController;
         private $cartController;
@@ -20,17 +21,26 @@
             $error = "";
             (empty($myOrder)) ? header("location: ./") : "";
             if(isset($_POST['pay_btn'])){
+                $dis = "disabled";
                 if(!is_numeric($_POST['fullname'])){
-                    $this->payController->addOrder([
-                        "id_user" => $_SESSION['user'],
-                        "id_cart" => $myOrder[0]['id_products'],
-                        "name_user" => $_POST['fullname'],
-                        "quantity" => $_POST['total_quan'],
-                        "totalmoney" => $_POST['total_money'],
-                        "address" => $_POST['address'],
-                        "tel" => $userInfor['tel'],
-                        "gmail" => $userInfor['gmail']
-                    ]);
+                    foreach($myOrder as $order){
+                        $total = $order['price'] * $order['quantity'];
+                        $this->payController->addOrder([
+                            "id_user" => $_SESSION['user'],
+                            "id_product" => $order['id_products'],
+                            "name_user" => $_POST['fullname'],
+                            "quantity" => $order['quantity'],
+                            "totalmoney" => $total,
+                            "address" => $_POST['address'],
+                            "tel" => $userInfor['tel'],
+                            "gmail" => $userInfor['gmail'],
+                            "received" => 'false'
+                        ]);
+                        $this->sendCodeMail($userInfor['gmail'], "NEW ORDER OF GUEST KINHSACHKIMQUY", 
+                        "Tên người mua: ".$_POST['fullname'].", Tên sách: ${order['name']}, Số lượng: ${order['quantity']}, Địa chỉ: ".$_POST['address'].",
+                        Số điện thoại: ${userInfor['tel']}, Gmail: ${userInfor['gmail']}, Tổng tiền: $total đ."
+                        );
+                    }
                    ($this->cartController->deleteCartUser("id_user", $_SESSION['user'])) ? $check = true : "";
                 }
                 else $error = "(*) Vui lòng nhập thông tin hợp lệ";
@@ -42,7 +52,7 @@
             if($check){
                 $output = "<div class='pay_box cart'>
                     <div class='pay_box__title cart__title'>
-                        <h1>Thanh Toán Thành Công</h1>
+                        <h1>Đặt Hàng Thành Công</h1>
                         <a href='./'>Quay về</a>
                     </div>
                 </div>";

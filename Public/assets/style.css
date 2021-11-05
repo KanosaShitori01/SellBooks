@@ -973,6 +973,7 @@ input, button {
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card {
+  margin-bottom: 1em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -981,7 +982,7 @@ input, button {
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card .main_page__manager__card__img {
   width: 10%;
-  height: 100px;
+  height: 120px;
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card .main_page__manager__card__img img {
@@ -1008,6 +1009,7 @@ input, button {
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card .main_page__manager__card__content .main_page__manager__card__content__text {
   color: #252c6b;
+  font-weight: 600;
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card .main_page__manager__card__content .main_page__manager__card__content__process {

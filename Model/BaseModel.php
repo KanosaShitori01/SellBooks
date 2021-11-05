@@ -38,6 +38,7 @@
             }
             else
             $sql = "SELECT * FROM $tb WHERE $key LIKE $value";
+            // echo $sql;
             $query = $this->Query($sql);
             if(!$query) return "";
             $data = [];

@@ -46,7 +46,7 @@
     }
     $Category = $controllerObj->getAll("categories");
     if(isset($_SESSION['user'])){
-        $Cart = $controllerObj->Find("carts", "", "id_user", $_SESSION['user']);
+        $Cart = $controllerObj->Find("carts", "", "id_user", $_SESSION['user'], true);
     }
     $cart_count = (isset($Cart) && isset($_SESSION['user'])) ? count($Cart) : "0"; 
     $choice = ["", ""]; 
