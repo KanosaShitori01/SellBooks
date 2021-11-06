@@ -1,5 +1,6 @@
 <?php 
     // PHP mailer
+    (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     if(isset($_GET['controller'])){
     include "./PHPMailer/src/PHPMailer.php";
     include "./PHPMailer/src/Exception.php";
@@ -24,11 +25,6 @@
                 return require (self::MODEL_FOLDER_NAME.'/'.$modelPath.'.php');
             }
             else return require ("../".self::MODEL_FOLDER_NAME.'/'.$modelPath.'.php');
-        }
-        protected function clearSession(){
-            session_unset();
-            session_destroy();
-            // session_start();
         }
         public function emailValid($string) 
         { 

@@ -1,4 +1,5 @@
 <?php 
+ (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     class CategoryModel extends BaseModel{
         const TABLE = "categories";
         public function getAllCategory($select = ["*"], $orderBy = [""]){

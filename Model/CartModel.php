@@ -1,4 +1,5 @@
 <?php
+ (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     class CartModel extends BaseModel{
         const TABLE = "carts";
         public function findCart($key, $value, $mul = "no", $data = []){

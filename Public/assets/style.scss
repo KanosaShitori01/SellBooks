@@ -13,8 +13,19 @@ a{
 ul{
     list-style: none;
 }
+textarea{
+    resize: none;
+    width: 100%;
+    font-size: 20px;
+    padding: 10px;
+    height: 100px;
+}
 .error_content{
     color: red;
+}
+input{
+    border: none;
+    outline: none;
 }
 .dropdown{
     position: absolute;
@@ -163,8 +174,6 @@ input, button{
                     background-color: rgba(176, 177, 238, 0.2);
                     font-size: 20px;
                     width: 100%;
-                    border: none;
-                    outline: none;
                     padding: 1em;
                     position: relative;
                 }
@@ -319,7 +328,7 @@ input, button{
         padding: 0 1em;
         display: flex;
         .main_page__left{
-            width: 22%;
+            width: 23%;
             margin-right: 1em;
             .main_page__category{
                 border-radius: 5px 5px 0 0;
@@ -353,11 +362,9 @@ input, button{
                         }
                     }
                     input[type="submit"]{
-                        background-color:  rgb(59, 80, 122);
-                        border: none;
+                        background-color:  rgb(59, 80, 122);     
                         color: white;
                         padding: 5px 10px;
-                        outline: none;
                         cursor: pointer;
                         &:hover{
                             background-color:  rgb(80, 109, 167);
@@ -392,8 +399,6 @@ input, button{
        
         .main_page__content{
             flex: 1;
-            // background-color: red;
-            // margin-left: 1em;
             .main_page__box{
                 margin-bottom: 1em;
                 .main_page__content__title{
@@ -414,9 +419,15 @@ input, button{
                     background-color: rgba(145, 166, 206, .3);
                     padding: 10px;
                     .main_page__content__intestine__text{
-                        font-size: 20px;
+                        font-size: 2.5em;
                         color: rgb(11, 12, 48);
                         min-height: 500px;
+                        &.empty{
+                            text-align: center;
+                            font-size: 35px;
+                            text-transform: uppercase;
+                            margin-top: 3em;
+                        }
                     }
                     .main_page__content__intestine__products{
                         display: flex;
@@ -464,11 +475,12 @@ input, button{
                         }
                     }
                     .main_page__content__infor{
-                        width: 100%;
+                        max-width: 100%;
                         display: flex;
+                        // flex-wrap: wrap;
                         color: rgb(11, 12, 48);
                         .main_page__content__infor__pic{
-                            width: 30%;
+                            flex: 1;
                             height: 400px;
                             margin-right: 1em;
                             img{
@@ -477,7 +489,7 @@ input, button{
                             }
                         }
                         .main_page__content__infor__content{
-                            flex: 1;
+                            width: 70%;
                             .sp{
                                 padding: 10px;
                             }
@@ -491,7 +503,9 @@ input, button{
                                 color: rgb(22, 24, 70)
                             }
                             .infor__content__description{
-                                color: rgb(46, 48, 112)
+                                color: rgb(46, 48, 112);
+                                width: auto;
+                                word-break: keep-all;
                             }
                             .infor__content__price{
                                 font-size: 20px;
@@ -615,8 +629,6 @@ input, button{
                                     input{
                                         text-align: center;
                                         font-size: 18px;
-                                        border: none;
-                                        outline: none;
                                         background-color: rgb(215, 226, 255);
                                         width: 100%;
                                     }
@@ -707,8 +719,8 @@ input, button{
                 .main_page__manager__box{
                     color: rgb(11, 12, 48);
                     flex: 1;
-                    height: 600px;
                     overflow-y: auto;
+                    height: 600px;
                     background-color: rgb(205, 222, 255);
                     .main_page__manager__title{
                         padding: 1em;
@@ -718,6 +730,7 @@ input, button{
                     }
                     .main_page__manager__content{
                         padding: 2em;
+                        overflow-y: auto;
                         .main_page__manager__infor{
                             width: 100%;
                             .main_page__manager__infor__tab{
@@ -734,10 +747,8 @@ input, button{
                                     position: relative;
                                     input{
                                         border-radius: 5px;
-                                        width: 100%;
-                                        border: none;
+                                        width: 100%;            
                                         color: white;
-                                        outline: none;
                                         background: rgba(35, 64, 126, .5);
                                         padding: 10px;
                                     }
@@ -751,14 +762,12 @@ input, button{
                             }
                         }
                         .main_page__manager__change{
-                            margin-top: 3em;
+                            margin-top: 1em;
                             // background-color: red;
                             input{
                                 cursor: pointer;
                                 background-color: rgb(134, 161, 221);
                                 padding: 1em 3em;
-                                border: none;
-                                outline: none;
                                 font-size: 17px;
                                 margin-right: 1em;
                                 &:hover{
@@ -798,6 +807,104 @@ input, button{
                                     .main_page__manager__card__content__process{
                                         color: rgb(151, 255, 151);
                                         margin-right: 10px;
+                                    }
+                                }
+                            }
+                        }
+                        .main_page__manager__control{
+                            .main_page__manager__control__ebox{
+                                .small{
+                                    background-color: rgba(132, 155, 201, .4);
+                                    padding: 1em;
+                                    display: flex;
+                                    align-items: center;
+                                }
+                               
+                                h2{
+                                    margin-right: 1em;
+                                }
+                                a, input, select{
+                                    font-size: 16px;
+                                    padding: 10px;
+                                }
+                                input[type="submit"]{
+                                    background-color: rgb(132, 155, 201);
+                                    color: rgb(14, 15, 56);
+                                    cursor: pointer;
+                                    padding: 10px 1em !important;
+                                }
+                                a{
+                                    font-size: 18px;
+                                    background-color: rgb(94, 116, 160);
+                                    color: rgb(14, 15, 56);
+                                    padding: 10px 1em !important;
+                                }
+                            }
+                            .main_page__manager__control__list{
+                                .main_page__manager__control__list__title{
+                                    padding-bottom: 10px;
+                                    margin-bottom: 10px;
+                                    border-bottom: 2px solid rgb(11, 12, 48);
+                                }
+                                .main_page__manager__control__list__boxs{
+                                    display: flex;
+                                    justify-content: space-between;
+                                    .main_page__manager__control__list__box{
+                                        width: calc(50% - 10px);
+                                        .main_page__manager__control__boxs__function{
+                                            display: flex;  
+                                            input{
+                                                padding: 10px 2em;
+                                                margin-right: 1em;
+                                                background-color: rgb(102, 130, 184);
+                                                font-weight: 600;
+                                                cursor: pointer;
+                                                color: rgb(212, 214, 255);
+                                                &:hover{
+                                                    background-color: rgb(65, 70, 151);
+                                                }
+                                            }
+                                        }
+                                        .main_page__manager__control__boxs__title{
+                                            width: 100%;
+                                            margin-top: 10px;
+                                            padding: 10px;
+                                            color: rgb(221, 232, 255);
+                                            background-color: rgb(63, 91, 141);
+                                        }
+                                        .main_page__manager__control__boxs__content{
+                                            ul{
+                                                li{
+                                                    display: block;
+                                                    background-color: rgb(158, 162, 216);
+                                                    padding: 10px;
+                                                    border-bottom: 1px solid rgb(13, 15, 68);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .main_page__manager__control__box{
+                                margin-bottom: 1em;
+                                .main_page__manager__control__box__content{
+                                    textarea{
+                                        border: none;
+                                        outline: none;
+                                        background-color: rgba(111, 119, 224, .4);
+                                    }
+                                    
+                                }
+                            }
+                            .main_page__manager__control__btn{
+                                input{
+                                    background-color: rgb(111, 119, 224);
+                                    color: white;
+                                    padding: 1em 3em;
+                                    font-size: 18px;
+                                    border: none;
+                                    &:hover{
+                                        background-color: rgb(84, 92, 197);
                                     }
                                 }
                             }
@@ -865,16 +972,14 @@ input, button{
                 }
                 .pay_box__btn{
                     display: flex;
-                    justify-content: space-around;
+                    justify-content: flex-end;
                     input{
-                        width: 300px;
+                        width: 100%;
                         font-size: 25px;
                         padding: 1em 3em;
                         color: white;
-                        background-color: rgb(37, 39, 116);
-                        border: none;
+                        background-color: rgb(37, 39, 116);     
                         cursor: pointer;
-                        outline: none;
                         margin-top: 3em;
                         &:hover{
                             background-color: rgb(70, 73, 155);
@@ -885,6 +990,14 @@ input, button{
         }
     }
   
+}
+.alert_manager{
+    width: 100%;
+    text-align: center;
+    background-color: rgb(85, 255, 99);
+    color: rgb(13, 16, 63);
+    padding: 10px;
+    margin-bottom: 2em;
 }
 .snipper{
     display: flex;
@@ -990,7 +1103,6 @@ input, button{
                             input{
                                 width: 80%;
                                 padding: 10px;
-                                outline: none;
                             }
                             button{
                                 flex: 1;

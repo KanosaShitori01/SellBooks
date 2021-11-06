@@ -7,12 +7,16 @@ if (window.history.replaceState) {
 }
 function OnlyNum(e, max){
     e.value = e.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
-    // let str = e.value.length;
-    // if(str > max){
-    //     e.value = "";
-    // }
 }
-let money = document.querySelectorAll(".money .price");
+let textarea = document.querySelectorAll("textarea");
+// console.log(textarea[0]);
+for(let i = 0; i < textarea.length; i++){
+    if(textarea[i].value[0] == " "){
+        textarea[i].value.trim();
+    }  
+}
+
+
 // console.log(money);
 function moneyForm(valmoney){
     let count = 0;
@@ -35,7 +39,7 @@ function moneyForm(valmoney){
     // let beStr = reVal.join("");
     // money.innerHTML = beStr;
 }
-moneyForm(money);
+// moneyForm(money);
 $(document).ready(function(){
     $('#findbooks').keyup(function(){
         let query = $(this).val().trim();

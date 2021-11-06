@@ -1,5 +1,5 @@
 <?php   
-
+ (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     class PayController extends BaseController{
         private $payController;
         private $cartController;
@@ -130,8 +130,7 @@
             $output .= "</div>
                     </div>
                     <div class='pay_box__btn'>
-                        <input type='submit' $dis value='Giao Hàng' name='pay_btn'/>
-                        <input type='submit' $dis value='Hủy Bỏ' name='pay_btn_cancel'/>
+                        <input type='submit' $dis value='Giao Đến Địa Chỉ Này' name='pay_btn'/>
                     </div>
                 </div>
                 </form>

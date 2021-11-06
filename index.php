@@ -19,6 +19,7 @@
             header("refresh:0, url=./");
         }
     }else{
+        $_SESSION['url_main'] = $_SERVER['PHP_SELF'];
         DeleteErr();
     }
     function DeleteErr(){
@@ -39,6 +40,8 @@
     $controllerObj = new BaseModel;
     $Product = $controllerObj->getAll("products");
     $Author = $controllerObj->getAll("author");
+    $AdminD = $controllerObj->Find("users", "", "admin", 1, true);
+    $Address = $controllerObj->getAll("address");
     $today = date("Y-m");
     $newProducts = $controllerObj->Find("products", "", "created_day", "'%".$today."%'");
     if(empty($newProducts)){
@@ -165,7 +168,7 @@
             </div>
             <div class="heading_page__headmain__functions">
                 <div class="heading_page__headmain__functions__function hotline">
-                    <p><i class="fas fa-phone-alt"></i> Hotline : 0974881495 </p>
+                    <p><i class="fas fa-phone-alt"></i> Hotline : <?= $AdminD[0]['tel'] ?> </p>
                 </div>
                 <div class="heading_page__headmain__functions__function cart">
                     <div class="quantily"><span><?= $cart_count; ?></span></div>
@@ -654,10 +657,8 @@
                         <div class='main_page__manager'>
                             <div class='main_page__manager__list'>
                                 <ul>
-                                    <li class='title_list'><i class='fas fa-user-circle'></i> <span> Tài khoản </span></li>
-                                    <li><a href='?controller=user'>Thông tin cá nhân</a></li>
-                                    <li><a href='?controller=user&action=myorder'>Lịch sử đơn hàng</a></li>
-                                    <li><a href='?controller=user&action=security'>Đổi mật khẩu</a></li>
+                                <li class='title_list'><i class='fas fa-user-circle'></i> <span> Tài khoản </span></li>
+                                    ${user['list']}
                                 </ul>
                             </div>
                             <div class='main_page__manager__box'>
@@ -678,6 +679,7 @@
             </div>
         </div>
     </main>
+    <!-- <textarea name="" id="" cols="30" rows="10"></textarea> -->
     <footer class="footer_page">
         <div class="footer_page__top">
             <div class="footer_page__informations">
@@ -687,9 +689,9 @@
                     </div>
                     <div class="footer_page__information__content">
                         <ul>
-                            <li><i class="fas fa-map-marker-alt"></i> 90C Đường 297, P. Phước Long B, Q9 Thành phố Hồ Chí Minh 700000</li>
-                            <li><a href="tel:097 110 94 58"><i class="fas fa-phone-alt"></i> 097 110 94 58</a></li>
-                            <li><a href="mailto:dangtong0412@gmail.com"><i class="far fa-envelope"></i> dangtong0412@gmail.com</a></li>
+                            <li><i class="fas fa-map-marker-alt"></i><?= $Address[0]['address'] ?></li>
+                            <li><a href="tel:<?= $AdminD[0]['tel'] ?>"><i class="fas fa-phone-alt"></i><?= $AdminD[0]['tel'] ?></a></li>
+                            <li><a href="mailto:<?= $AdminD[0]['gmail'] ?>"><i class="far fa-envelope"></i><?= $AdminD[0]['gmail'] ?></a></li>
                         </ul>
                     </div>
                  </div>

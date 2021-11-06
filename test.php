@@ -6,9 +6,8 @@
     //     "id_user" => 31,
     //     "id_products" => 1
     // ]));
-    $dis = "";
-    if(isset($_POST['ok'])){
-        $dis = "disabled";
+    if(isset($_POST['submit'])){
+        var_dump($_FILES['fileToUpload']);
     }
 ?>
 <!DOCTYPE html>
@@ -20,8 +19,10 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="test.php" method="post">
-        <input type="submit" name="ok" value="OKE" <?= $dis ?>>
+    <form action="test.php" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
     </form>
 </body>
 </html>

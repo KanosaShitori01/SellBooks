@@ -1,5 +1,5 @@
 <?php 
-//  require './index.php';
+ (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     class BaseModel extends Database{
         protected $conn; 
         public function __construct()

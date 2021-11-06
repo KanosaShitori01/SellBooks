@@ -1,4 +1,5 @@
 <?php 
+ (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     class AuthorController extends BaseController{
         private $authorController;
         private $productController;

@@ -1,4 +1,5 @@
 <?php 
+     (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     class SignController extends BaseController{
         private $signController;
         public function __construct(){

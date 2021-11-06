@@ -1,5 +1,5 @@
 <?php 
-
+ (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     class SignModel extends BaseModel{
         const TABLE = "users";
         public function checkData(){

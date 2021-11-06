@@ -1,20 +1,34 @@
 <?php 
+    (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     if(!isset($_SESSION['user'])){
         header('location: ./');
     }
     class UserController extends BaseController{
-        private $userController;
-        private $orderController;
-        private $productController;
+        private $userController; // user 
+        private $orderController; // admin/user
+        private $productController; // admin/user
+        private $authorController; // admin 
+        private $categoryController; // admin
+        private $anotherController; // admin
+        // dữ liệu chung
+        private $user;
         private $url = "?controller=user";
         public function __construct()
         {  
             $this->loadModel("SignModel");
             $this->loadModel("PayModel");
             $this->loadModel("ProductModel");
-            $this->userController = new SignModel;
-            $this->orderController = new PayModel;
-            $this->productController = new ProductModel;
+            $this->loadModel("CategoryModel");
+            $this->loadModel("AuthorModel");
+            $this->loadModel("AnotherModel");
+            $this->userController = new SignModel; // user/admin
+            $this->orderController = new PayModel; // user/admin
+            $this->productController = new ProductModel; // user/admin
+            $this->authorController = new AuthorModel; // admin
+            $this->categoryController = new CategoryModel; // admin
+            $this->anotherController = new AnotherModel; // admin
+            
+            $this->user = $this->userController->showInfor($_SESSION['user'])[0];
         }
         private function checkDataU($key, $value){
             $userPresent = $this->userController->findUserQ("id", $_SESSION['user'])[0];
@@ -27,7 +41,6 @@
         }
         public function index(){
             $error_text = "";
-            $user = $this->userController->showInfor($_SESSION['user'])[0];
             $close = "disabled";
             $confirm = [
                 "output" => "",
@@ -43,14 +56,18 @@
                     if($this->checkDataU("username",$_POST['username']) && $this->checkDataU("gmail", $_POST['gmail']) &&
                     $this->checkDataU("tel", $_POST['tel']) && strlen($_POST['tel']) == 10 && $this->emailValid($_POST['gmail'])){
                         $pass = md5($_POST['password']);
-                        if($user['password'] === $pass) {
-                        $this->userController->UpdateUser($user['id'], [
+                        if($this->user['password'] === $pass) {
+                        $this->userController->UpdateUser($this->user['id'], [
                             "username" => $_POST['username'],
                             "gmail" => $_POST['gmail'], 
                             "tel" => $_POST['tel']
                         ]);
+                        (isset($_POST['address'])) ? $this->userController->Update("address", 1, "", "", [
+                            "address" => $_POST['address']
+                        ]) : "";
                         header("location: ?controller=user");
-                        } else $error_text = "(*) Sai mật khẩu";
+                        }
+                        else $error_text = "(*) Sai mật khẩu";
                     }
                     else{
                         $error_text = "(*) Vui lòng nhập thông tin hợp lệ";
@@ -71,7 +88,11 @@
             if(isset($_POST['cancel'])){
                 header("location: ?controller=user");
             }
-           
+            $userData = [
+                "username" => $this->user['username'],
+                "gmail" => $this->user['gmail'],
+                "tel" => $this->user['tel']
+            ];
             $output = "
             <form action='$this->url' method='post'>
             <div class='main_page__manager__infor'>
@@ -80,7 +101,7 @@
                         <label for=''>Tên tài khoản: </label>
                     </div>
                     <div class='tab__input'>
-                        <input type='text' value='${user['username']}' $close name='username' required>
+                        <input type='text' value='${userData['username']}' $close name='username' required>
                     </div>
                 </div>
                 <div class='main_page__manager__infor__tab'>
@@ -88,7 +109,7 @@
                         <label for=''>Gmail: </label>
                     </div>
                     <div class='tab__input'>
-                        <input type='gmail' value=${user['gmail']} $close name='gmail' required>
+                        <input type='gmail' value=${userData['gmail']} $close name='gmail' required>
                     </div>
                 </div>
                 <div class='main_page__manager__infor__tab'>
@@ -96,18 +117,31 @@
                         <label for=''>Số điện thoại: </label>
                     </div>
                     <div class='tab__input'>
-                        <input type='tel' maxlength='10' value='${user['tel']}' $close name='tel' required>
+                        <input type='tel' maxlength='10' value='${userData['tel']}' $close name='tel' required>
+                    </div>
+                </div>";
+            if($this->user['admin'] == 1){
+                $address = $this->userController->getAll("address")[0];
+                $output .= "
+                <div class='main_page__manager__infor__tab'>
+                    <div class='tab__label'>
+                        <label for=''>Địa chỉ: </label>
+                    </div>
+                    <div class='tab__input'>
+                        <input type='address' value='${address['address']}' $close name='address' required>
                     </div>
                 </div>
-                ".
-                $confirm['output']
-            ."</div>
+                ";
+            }
+            $output .= "
+                ${confirm['output']}
+            </div>
             <div class='main_page__manager__change'>".
                 $confirm['confirm_btn'].   
             "</div>
             </form>
             ";
-            return $this->outputDataView("Thông tin cá nhân", $output);
+            return $this->outputDataView("Thông tin cá nhân", $output, $this->list($this->user));
         }
         public function myorder(){
             $output = "";
@@ -130,8 +164,9 @@
            
             $output .= "<div class='main_page__manager__order'>";
                     foreach($dataOrder as $order){
-                        $productsOf = $this->productController->findProductBID($order['id_product'])[0];
+                        $productsOf = ($this->productController->findProductBID($order['id_product'])[0]) ?? "";
                         $process = ($order == 1) ? "Đã nhận hàng" : "Đang giao hàng";
+                        if(!empty($productsOf))
                         $output .= "
                             <div class='main_page__manager__card'>
                                 <div class='main_page__manager__card__img'>
@@ -152,7 +187,7 @@
                     }
             $output .= "</div>";
             }
-            return $this->outputDataView("Lịch sử đơn hàng", $output);
+            return $this->outputDataView("Lịch sử đơn hàng", $output, $this->list($this->user));
         }
         public function security(){
             $error = "";
@@ -207,17 +242,642 @@
             </div>
             </form>
             ";
-            return $this->outputDataView("Đổi mật khẩu", $output);
+            return $this->outputDataView("Đổi mật khẩu", $output, $this->list($this->user));
         }
-       
-        private function outputDataView($title, $output){
+        public function admincontrol(){
+            $title = "";
+            $output = "";
+            if(isset($_GET['qlnd'])){ 
+                $title = "Quản Lý Nội Dung";
+                $output = $this->QLND($output);
+            }else if(isset($_GET['qldm'])){
+                $title = "Quản Lý Danh Mục";
+                $output = $this->QLDM($output);
+            }else if(isset($_GET['qlsp'])){
+                $title = "Quản Lý Sản Phẩm";
+                $output = $this->QLSP($output);
+            }else if(isset($_GET['qldh'])){
+                $title = "Quản Lý Đơn Hàng";
+                $output = $this->QLDH($output);
+            }
+            return ($this->user['admin'] == 1) ? 
+            $this->outputDataView($title, $output, $this->list($this->user)) : 
+            header("location: ?controller=user");
+        }
+
+        // Chức năng hỗ trợ
+        private function outputDataView($title, $output, $list = ""){
             $dataOut = [
                 "title" => $title,
+                "list" => $list,
                 "output" => $output
             ];
             return $this->loadView("FrontEnd.User.index", [
                 "output" => $dataOut
             ]);
         }
+        private function list($dataU){
+           return ($dataU['admin'] == 1) ? 
+           "<li><a href='?controller=user'>Thông tin cá nhân</a></li>
+            <li><a href='?controller=user&action=admincontrol&qlnd'>Quản lý nội dung</a></li>
+            <li><a href='?controller=user&action=admincontrol&qldm'>Quản lý danh mục</a></li>
+            <li><a href='?controller=user&action=admincontrol&qlsp'>Quản lý sản phẩm</a></li>
+            <li><a href='?controller=user&action=admincontrol&qldh'>Quản lý đơn hàng</a></li>
+            <li><a href='?controller=user&action=security'>Đổi mật khẩu</a></li>
+           " : 
+           "<li><a href='?controller=user'>Thông tin cá nhân</a></li>
+            <li><a href='?controller=user&action=myorder'>Lịch sử đơn hàng</a></li>
+            <li><a href='?controller=user&action=security'>Đổi mật khẩu</a></li>";
+        }
+        private function QLND($output){
+            $alert = "";
+            $dataANO = $this->anotherController->findAN(2);
+            if(isset($_POST['manag_cont'])){
+                ($this->anotherController->updateANO($dataANO[0]['id'], [
+                    "introduce" => $_POST['introduce'],
+                    "QaA" => $_POST['QaA'],
+                    "contact" => $_POST['contact']
+                ])) ? $alert = "<div class='alert_manager'>
+                    <h2>Cập Nhật Thành Công</h2>
+                </div>" : "";
+            }
+            $output .= "<form action='?controller=user&action=admincontrol&qlnd' method='post'>
+            <div class='main_page__manager__control'>$alert";
+                foreach($dataANO as $data){
+                    $output .= "    
+                    <div class='main_page__manager__control__box'>
+                        <div class='main_page__manager__control__box__title'>
+                            <h2>- Giới Thiệu</h2>
+                        </div>
+                        <div class='main_page__manager__control__box__content'>
+                            <textarea name='introduce' placeholder='Nhập nội dung giới thiệu' required>".$data['introduce']."</textarea>
+                        </div>  
+                    </div>
+                    <div class='main_page__manager__control__box'>
+                        <div class='main_page__manager__control__box__title'>
+                            <h2>- Hỏi Đáp</h2>
+                        </div>
+                        <div class='main_page__manager__control__box__content'>
+                            <textarea name='QaA' placeholder='Nhập nội dung hỏi đáp' required>".$data['QaA']."</textarea>
+                        </div>
+                    </div>
+                    <div class='main_page__manager__control__box'>
+                        <div class='main_page__manager__control__box__title'>
+                            <h2>- Liên Hệ</h2>
+                        </div>
+                        <div class='main_page__manager__control__box__content'>
+                            <textarea name='contact' placeholder='Nhập nội dung liên hệ' required>".$data['contact']."</textarea>
+                        </div>
+                    </div>
+                    <div class='main_page__manager__control__btn'>
+                        <input type='submit' value='Tiếp Tục' name='manag_cont' />
+                    </div>
+                    ";
+                }
+            $output .="</div>
+            </form>
+            ";
+            return $output;
+        }
+        private function QLDM($output){
+            $alert = "";
+            $createBox = "";
+            $categoryB = $this->categoryController->getAllCategory();
+            $authorB = $this->authorController->getAllAu();
+            if(isset($_POST['add_cate'])){
+                $createBox = "<div class='main_page__manager__control__ebox small'>
+                    <h2>Thêm loại sách</h2>
+                    <input type='text' placeholder='Nhập tên loại sách...' required name='cate' />
+                    <input type='submit' name='add_cate_ok' value='Tiếp tục'/>
+                    <a href='?controller=user&action=admincontrol&qldm'>Hủy</a>
+                </div>";
+            }
+            if(isset($_POST['add_cate_ok'])){
+               if($this->checkData($categoryB, $_POST['cate'])){
+                    $this->categoryController->addCategory([
+                            "name" => $_POST['cate']
+                    ]);
+                    header("location: ?controller=user&action=admincontrol&qldm");
+                }
+               else{
+                $alert = "<div class='alert_manager'>
+                            <h2>".$_POST['cate']." đã tồn tại</h2>
+                        </div>"; 
+                }
+            }
+            if(isset($_POST['edit_cate'])){
+                $createBox = "<div class='main_page__manager__control__ebox small'>
+                    <h2>Sửa loại sách</h2>
+                    <select name='cate_list' id=''>";
+                        foreach($categoryB as $cate){
+                            $createBox .= "<option value='${cate['id']}'>${cate['name']}</option>";
+                        } 
+                $createBox .= "</select>
+                    <input type='text' name='edit_cate_val'/>
+                    <input type='submit' name='edit_cate_ok' value='Sửa'/>
+                    <a href='?controller=user&action=admincontrol&qldm'>Hủy</a>
+                </div>";
+            }
+            if(isset($_POST['edit_cate_ok'])){
+                if($this->checkData($categoryB, $_POST['edit_cate_val'])){
+                     $this->categoryController->editCategory($_POST['cate_list'],[
+                        "name" => $_POST['edit_cate_val']
+                     ]);
+                     header("location: ?controller=user&action=admincontrol&qldm");
+                 }
+                else{
+                 $alert = "<div class='alert_manager'>
+                             <h2>".$_POST['edit_cate_val']." đã tồn tại</h2>
+                         </div>"; 
+                 }
+            }
+            if(isset($_POST['del_cate'])){
+                $createBox = "<div class='main_page__manager__control__ebox small'>
+                    <h2>Xóa tác giả</h2>
+                    <select name='cate_list' id=''>";
+                        foreach($categoryB as $cate){
+                            $createBox .= "<option value='${cate['id']}'>${cate['name']}</option>";
+                        } 
+                $createBox .= "</select>
+                    <input type='submit' name='del_cate_ok' value='Xóa'/>
+                    <a href='?controller=user&action=admincontrol&qldm'>Hủy</a>
+                </div>";
+            }
+            if(isset($_POST['del_cate_ok'])){
+                $this->categoryController->deleteCategory($_POST['cate_list']);
+                header("location: ?controller=user&action=admincontrol&qldm");
+            }
+            // Tác giả
+            if(isset($_POST['add_au'])){
+                $createBox = "<div class='main_page__manager__control__ebox small'>
+                    <h2>Thêm tác giả</h2>
+                    <input type='text' placeholder='Nhập tên loại sách...' required name='au' />
+                    <input type='submit' name='add_au_ok' value='Tiếp tục'/>
+                    <a href='?controller=user&action=admincontrol&qldm'>Hủy</a>
+                </div>";
+            }
+            if(isset($_POST['add_au_ok'])){
+               if($this->checkData($authorB, $_POST['au'])){
+                    $this->authorController->addAu([
+                            "name" => $_POST['au']
+                    ]);
+                    header("location: ?controller=user&action=admincontrol&qldm");
+                }
+               else{
+                $alert = "<div class='alert_manager'>
+                            <h2>".$_POST['au']." đã tồn tại</h2>
+                        </div>"; 
+                }
+            }
+            if(isset($_POST['edit_au'])){
+                $createBox = "<div class='main_page__manager__control__ebox small'>
+                    <h2>Sửa tên tác giả</h2>
+                    <select name='au_list' id=''>";
+                        foreach($authorB as $au){
+                            $createBox .= "<option value='${au['id']}'>${au['name']}</option>";
+                        } 
+                $createBox .= "</select>
+                    <input type='text' name='edit_au_val'/>
+                    <input type='submit' name='edit_au_ok' value='Sửa'/>
+                    <a href='?controller=user&action=admincontrol&qldm'>Hủy</a>
+                </div>";
+            }
+            if(isset($_POST['edit_au_ok'])){
+                if($this->checkData($authorB, $_POST['edit_au_val'])){
+                     $this->authorController->editAu($_POST['au_list'],[
+                        "name" => $_POST['edit_au_val']
+                     ]);
+                     header("location: ?controller=user&action=admincontrol&qldm");
+                }
+                else{
+                 $alert = "<div class='alert_manager'>
+                             <h2>".$_POST['edit_au_val']." đã tồn tại</h2>
+                         </div>"; 
+                 }
+            }
+            if(isset($_POST['del_au'])){
+                $createBox = "<div class='main_page__manager__control__ebox small'>
+                    <h2>Xóa tác giả</h2>
+                    <select name='au_list' id=''>";
+                        foreach($authorB as $au){
+                            $createBox .= "<option value='${au['id']}'>${au['name']}</option>";
+                        } 
+                $createBox .= "</select>
+                    <input type='submit' name='del_au_ok' value='Xóa'/>
+                    <a href='?controller=user&action=admincontrol&qldm'>Hủy</a>
+                </div>";
+            }
+            if(isset($_POST['del_au_ok'])){
+                $this->authorController->deleteAu($_POST['au_list']);
+                header("location: ?controller=user&action=admincontrol&qldm");
+            }
+            $output .= "<form action='?controller=user&action=admincontrol&qldm' method='post'>
+                    $alert
+                    <div class='main_page__manager__control'>
+                        $createBox
+                        <div class='main_page__manager__control__list'>
+                            <div class='main_page__manager__control__list__title'>
+                                <h2>Danh Mục Của Tôi</h2>
+                            </div>
+                            <div class='main_page__manager__control__list__boxs'>";
+                $output .= "<div class='main_page__manager__control__list__box'>
+                                <div class='main_page__manager__control__boxs__function'>
+                                    <input type='submit' name='add_cate' value='Thêm' />
+                                    <input type='submit' name='edit_cate' value='Sửa'  />
+                                    <input type='submit' name='del_cate' value='Xóa'  />
+                                </div>
+                                <div class='main_page__manager__control__boxs__title'>
+                                    <h3>Sách</h3>
+                                </div>
+                                <div class='main_page__manager__control__boxs__content'>
+                                    <ul>";                  
+                                    foreach($categoryB as $cate){
+                                    $output .= "<li>".$cate['name']."</li>";
+                                    }
+                        $output .= "</ul>
+                                </div>
+                            </div>";
+                $output .= "<div class='main_page__manager__control__list__box'>
+                                <div class='main_page__manager__control__boxs__function'>
+                                    <input type='submit' name='add_au' value='Thêm' />
+                                    <input type='submit' name='edit_au' value='Sửa'  />
+                                    <input type='submit' name='del_au' value='Xóa'  />
+                                </div>
+                                <div class='main_page__manager__control__boxs__title'>
+                                    <h3>Tác giả</h3>
+                                </div>
+                                <div class='main_page__manager__control__boxs__content'>
+                                    <ul>";                  
+                                    foreach($authorB as $au){
+                                    $output .= "<li>".$au['name']."</li>";
+                                    }
+                        $output .= "</ul>
+                                </div>
+                            </div>";                    
+                $output .= "</div>
+                        </div>
+                    </div>
+                </form>";
+                return $output;
+            }
+            private function QLSP($output){
+                $createBox = "";
+                $alert = "";
+                $products = $this->productController->getAllProduct();
+                $cate = $this->categoryController->getAllCategory();
+                $au = $this->authorController->getAllAu();
+                // Thêm Sản Phẩm
+                if(isset($_POST['add_product'])){
+                    $createBox = "<div class='main_page__manager__control__ebox'>
+                        <h2>Thêm Sản Phẩm</h2>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Tên Sản Phẩm: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <input type='text' required name='name_prod' />
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Hình Ảnh: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <input type='file' required name='img_prod' />
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Nội dung: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <textarea required name='des_prod'></textarea>
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Giá: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <input type='text' required name='price_prod' />
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Số lượng: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <input type='number' required name='quan_prod' />
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Tác giả: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <select name='author_prod'>";
+                                foreach($cate as $cateD){
+                                    $createBox .= "<option value='${cateD['id']}'>${cateD['name']}</option>";
+                                }
+                $createBox .=  "</select>
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Thể loại: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <select name='cate_prod'>";
+                                foreach($au as $auD){
+                                    $createBox .= "<option value='${auD['id']}'>${auD['name']}</option>";
+                                }
+                $createBox  .= "</select>
+                            </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <input type='submit' name='add_prod_sub' value='Xác Nhận' />
+                        </div>
+                        </div>
+                    </div>";
+                }
+                if(isset($_POST['add_prod_sub'])){
+                    $today = date("Y-m-d");
+                    $img_prod = $this->UploadImg($_FILES['img_prod'], "add_prod_sub");
+                    if($this->checkData($products, $_POST['name_prod']) !== false && $img_prod !== false){
+                        $this->productController->addProduct([
+                            "name" => $_POST['name_prod'],
+                            "image" => $img_prod,
+                            "price" => $_POST['price_prod'],
+                            "description" => $_POST['des_prod'],
+                            "id_author" => $_POST['author_prod'],
+                            "id_category" => $_POST['cate_prod'],
+                            "quantity" => $_POST['quan_prod'],
+                            "created_day" => $today
+                        ]);
+                        header("location: ?controller=user&action=admincontrol&qlsp");
+                    }
+                   else{
+                    $alert = "<div class='alert_manager err'>
+                                <h2>".$_POST['name_prod']." đã tồn tại hoặc tệp hình ảnh bị sai</h2>
+                            </div>"; 
+                    }
+                }
+                // ==========================
+                if(isset($_GET['edit_product'])){
+                    $Iprod = ($this->productController->findProductBID($_GET['edit_product'])[0]) ?? "";
+                    if(!empty($Iprod)){
+                    $createBox = "<div class='main_page__manager__control__ebox'>
+                        <h2>Sửa Sản Phẩm</h2>
+                        <input type='text' hidden value='${Iprod['id']}' name='id_prod' />
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Tên Sản Phẩm: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <input type='text' hidden value='${Iprod['name']}' name='name_prod_o' />
+                                <input type='text' required value='${Iprod['name']}' name='name_prod' />
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Hình Ảnh: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <input type='file' name='img_prod' />
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Nội dung: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <textarea required name='des_prod'>${Iprod['description']}</textarea>
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Giá: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <input type='text' required value='${Iprod['price']}' name='price_prod' />
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Số lượng: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <input type='number' value='${Iprod['quantity']}' required name='quan_prod' />
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Tác giả: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <select name='author_prod'>";
+                                foreach($au as $auD){
+                                    if($Iprod['id_author'] == $auD['id'])
+                                    $createBox .= "<option selected value='${auD['id']}'>${auD['name']}</option>";
+                                    else $createBox .= "<option value='${auD['id']}'>${auD['name']}</option>";
+                                }
+                $createBox .=  "</select>
+                            </div>
+                        </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <label>Thể loại: </label>
+                            </div>
+                            <div class='main_page__manager__control__ebox__tab'>
+                                <select name='cate_prod'>";
+                                foreach($cate as $cateD){
+                                    if($Iprod['id_category'] == $cateD['id'])
+                                    $createBox .= "<option selected value='${cateD['id']}'>${cateD['name']}</option>";
+                                    else $createBox .= "<option value='${cateD['id']}'>${cateD['name']}</option>";
+                                }
+                $createBox  .= "</select>
+                            </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <input type='submit' name='edit_prod_sub' value='Xác Nhận' />
+                        </div>
+                        </div>
+                    </div>";
+                    }
+                }
+                if(isset($_POST['edit_prod_sub'])){
+                    $img_prod = $this->UploadImg($_FILES['img_prod'], "edit_prod_sub");
+                    if($this->checkData($cate, $_POST['name_prod'], $_POST['name_prod_o'])){
+                        if(!empty($_FILES['img_prod']) && $img_prod !== false){
+                            $this->productController->editProduct($_POST['id_prod'],[
+                                "name" => $_POST['name_prod'],
+                                "price" => $_POST['price_prod'],
+                                "image" => $img_prod,
+                                "description" => $_POST['des_prod'],
+                                "id_category" => $_POST['cate_prod'],
+                                "id_author" => $_POST['author_prod'],
+                                "quantity" => $_POST['quan_prod']
+                            ]);
+                            header("location: ?controller=user&action=admincontrol&qlsp");
+                        }else{
+                            $this->productController->editProduct($_POST['id_prod'],[
+                                "name" => $_POST['name_prod'],
+                                "price" => $_POST['price_prod'],
+                                "description" => $_POST['des_prod'],
+                                "id_category" => $_POST['cate_prod'],
+                                "id_author" => $_POST['au_prod'],
+                                "quantity" => $_POST['quan_prod']
+                            ]);
+                            header("location: ?controller=user&action=admincontrol&qlsp");
+                        }
+                    }else{
+                        $alert = "<div class='alert_manager err'>
+                        <h2>".$_POST['name_prod']." đã tồn tại hoặc tệp hình ảnh bị sai</h2>
+                        </div>"; 
+                    }
+                }
+                if(isset($_GET['del_product'])){
+                    $this->productController->deleteProduct($_GET['del_product']);
+                    header("location: ?controller=user&action=admincontrol&qlsp");
+                }
+
+                // Xuất Dữ Liệu
+                $output .= "
+                <form action='?controller=user&action=admincontrol&qlsp' method='post' enctype='multipart/form-data'>
+                <div class='main_page__manager__control'>
+                    $alert
+                    <div class='main_page__manager__control__functions'>
+                        <input type='submit' name='add_product' value='Thêm Sản Phẩm'/>
+                    </div>
+                    $createBox
+                    <div class='main_page__manager__control__list'>
+                        <div class='main_page__manager__control__list__title'>
+                            <h2>Sản Phẩm Của Tôi</h2>
+                        </div>
+                        <div class='main_page__manager__control__list__products'>";
+                            foreach($products as $prod){
+                                $cate = ($this->categoryController->findCategory($prod['id_category'])[0]['name']) ?? "";
+                                $au = ($this->authorController->findAu($prod['id_author'])[0]['name']) ?? "";
+                                $output .= "
+                                <div class='main_page__manager__control__list__product'>
+                                    ${prod['name']}
+                                    ${prod['image']}
+                                    ${prod['price']}
+                                    $cate
+                                    $au
+                                    <a href='?controller=user&action=admincontrol&qlsp&edit_product=${prod['id']}'>
+                                    Sửa sản phẩm</a>
+                                    <a href='?controller=user&action=admincontrol&qlsp&del_product=${prod['id']}'>
+                                    Xóa sản phẩm</a>
+                                </div>";
+                            }
+                           
+                $output .= "</div>                  
+                    </div>
+                </div>
+                </form>";
+            return $output;
+        }
+        private function QLDH($output){
+            $allOrder = $this->orderController->showOrder();
+            $countOrd = count($allOrder);
+            $output .= "<div class='main_page__manager__control'>
+                <div class='main_page__manager__control__count'>
+                    <h2>Tổng số đơn hàng: $countOrd</h2>
+                </div>
+                <div class='main_page__manager__control__orders'>";
+                    if(!empty($allOrder)){
+                        foreach($allOrder as $order){
+                        if($order['received'] == 0){
+                            $productOrd = $this->productController->findProductBID($order['id_product'])[0];
+                $output .= "<div class='main_page__manager__control__order'>
+                                <div class='main_page__manager__control__infor'>
+                                    <div class='main_page__manager__control__infor__img'>
+                                        <img src='${productOrd['image']}' />
+                                    </div>
+                                    <div class='main_page__manager__control__infor__text'>
+                                        <p>Tên Người Đặt: ${order['name_user']}</p>
+                                        <p>Tên Sách: ${productOrd['name']}</p>
+                                        <p>Số Lượng: ${order['quantity']}</p>
+                                        <p>Tổng Tiền: ${order['totalmoney']}đ</p>
+                                        <p>Địa chỉ: ${order['address']}</p>
+                                        <p>Số điện thoại: ${order['tel']}</p>
+                                        <p>Gmail: ${order['gmail']}</p>
+                                    </div>
+                                </div>
+                                <div class='main_page__manager__control__done'>
+                                    
+                                </div>
+                            </div>";
+                            }
+                        }
+                    }
+            $output .= "</div>
+            </div>";
+            return $output;
+        }
+        private function checkData($dataM, $dataC, $temp = ""){
+            if($temp === $dataC) return true;
+            foreach($dataM as $data){
+                if($data['name'] === $dataC){
+                    return false;
+                    break;
+                }
+            }
+            return true;
+            // var_dump($dataM);
+        }
+        private function UploadImg($img, $post){
+            $target_dir = "Images/";
+            $target_file = $target_dir . basename($img["name"]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            // Check if image file is a actual image or fake image
+            if(isset($_POST["$post"])) {
+              $check = getimagesize($img["tmp_name"]);
+              $uploadOk = 1;
+              if($check !== false) {
+                if ($uploadOk == 0) {
+                    return false;
+                  // if everything is ok, try to upload file
+                  } else {
+                    if (move_uploaded_file($img["tmp_name"], $target_file)) {
+                        return $target_file;
+                    } else {
+                        return false;
+                    }
+                }
+              } else {
+                return false;
+                $uploadOk = 0;
+              }
+              // File Exists
+              if (file_exists($target_file)) {
+                return false;
+                $uploadOk = 0;
+              }
+              
+              // Check file size
+              if ($img["size"] > 500000) {
+                return false;
+                $uploadOk = 0;
+              }
+              
+              // Allow certain file formats
+              if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+              && $imageFileType != "gif" ) {
+                  return false;
+                $uploadOk = 0;
+              }
+            }
+            
+           
+        }
     }
 ?>
+
+
+<!-- <div class='main_page__manager__control__functions'>
+                        <div class='main_page__manager__control__functions__btn'>
+                            <input type='submit' name='create_cate' value='Tạo Danh Mục' />
+                            <input type='submit' name='delall_cate' value='Xóa Toàn Bộ Danh Mục'/>
+                        </div>
+                    </div> -->

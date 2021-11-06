@@ -1,4 +1,5 @@
 <?php 
+ (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
    class ProductsController extends BaseController{
         private $productsController;
         private $categoriesController;
@@ -14,6 +15,7 @@
         public function index(){
             $Categories = $this->categoriesController->getAllCategory();
             $Data = $this->productsController->getAllProduct();
+            
             $this->loadView("FrontEnd.Products.index",[
                 "products" => $Data,
                 "categories" => $Categories
@@ -38,7 +40,7 @@
             }
             $this->loadView("FrontEnd.Products.show",[
                 "ProductOne" => $ProductMain
-            ]);
+            ]); 
         }
         public function buy(){
             if(isset($_SESSION['user'])){

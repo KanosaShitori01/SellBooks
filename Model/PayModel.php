@@ -1,5 +1,5 @@
 <?php 
-
+ (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     class PayModel extends BaseModel{
         const TABLE = "myorder";
         public function addOrder($data){

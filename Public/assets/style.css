@@ -18,8 +18,21 @@ ul {
   list-style: none;
 }
 
+textarea {
+  resize: none;
+  width: 100%;
+  font-size: 20px;
+  padding: 10px;
+  height: 100px;
+}
+
 .error_content {
   color: red;
+}
+
+input {
+  border: none;
+  outline: none;
 }
 
 .dropdown {
@@ -184,8 +197,6 @@ input, button {
   background-color: rgba(176, 177, 238, 0.2);
   font-size: 20px;
   width: 100%;
-  border: none;
-  outline: none;
   padding: 1em;
   position: relative;
 }
@@ -376,7 +387,7 @@ input, button {
 }
 
 .main_page .main_page__part .main_page__left {
-  width: 22%;
+  width: 23%;
   margin-right: 1em;
 }
 
@@ -427,10 +438,8 @@ input, button {
 
 .main_page .main_page__part .main_page__left .main_page__category .main_page__category__title input[type="submit"] {
   background-color: #3b507a;
-  border: none;
   color: white;
   padding: 5px 10px;
-  outline: none;
   cursor: pointer;
 }
 
@@ -490,9 +499,16 @@ input, button {
 }
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__intestine__text {
-  font-size: 20px;
+  font-size: 2.5em;
   color: #0b0c30;
   min-height: 500px;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__intestine__text.empty {
+  text-align: center;
+  font-size: 35px;
+  text-transform: uppercase;
+  margin-top: 3em;
 }
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__intestine__products {
@@ -554,7 +570,7 @@ input, button {
 }
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor {
-  width: 100%;
+  max-width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -562,7 +578,9 @@ input, button {
 }
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__pic {
-  width: 30%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   height: 400px;
   margin-right: 1em;
 }
@@ -573,9 +591,7 @@ input, button {
 }
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  width: 70%;
 }
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .sp {
@@ -595,6 +611,8 @@ input, button {
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__description {
   color: #2e3070;
+  width: auto;
+  word-break: keep-all;
 }
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__price {
@@ -768,8 +786,6 @@ input, button {
 .main_page .main_page__part .main_page__content .cart .cart__content .cart__content__products .cart__content__products__product .cart__content__product__right .cart__content__product__quantity input {
   text-align: center;
   font-size: 18px;
-  border: none;
-  outline: none;
   background-color: #d7e2ff;
   width: 100%;
 }
@@ -886,8 +902,8 @@ input, button {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  height: 600px;
   overflow-y: auto;
+  height: 600px;
   background-color: #cddeff;
 }
 
@@ -900,6 +916,7 @@ input, button {
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content {
   padding: 2em;
+  overflow-y: auto;
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor {
@@ -931,9 +948,7 @@ input, button {
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab .tab__input input {
   border-radius: 5px;
   width: 100%;
-  border: none;
   color: white;
-  outline: none;
   background: rgba(35, 64, 126, 0.5);
   padding: 10px;
 }
@@ -946,15 +961,13 @@ input, button {
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__change {
-  margin-top: 3em;
+  margin-top: 1em;
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__change input {
   cursor: pointer;
   background-color: #86a1dd;
   padding: 1em 3em;
-  border: none;
-  outline: none;
   font-size: 17px;
   margin-right: 1em;
 }
@@ -1015,6 +1028,115 @@ input, button {
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__order .main_page__manager__card .main_page__manager__card__content .main_page__manager__card__content__process {
   color: #97ff97;
   margin-right: 10px;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__ebox .small {
+  background-color: rgba(132, 155, 201, 0.4);
+  padding: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__ebox h2 {
+  margin-right: 1em;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__ebox a, .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__ebox input, .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__ebox select {
+  font-size: 16px;
+  padding: 10px;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__ebox input[type="submit"] {
+  background-color: #849bc9;
+  color: #0e0f38;
+  cursor: pointer;
+  padding: 10px 1em !important;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__ebox a {
+  font-size: 18px;
+  background-color: #5e74a0;
+  color: #0e0f38;
+  padding: 10px 1em !important;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__title {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #0b0c30;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__boxs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__boxs .main_page__manager__control__list__box {
+  width: calc(50% - 10px);
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__boxs .main_page__manager__control__list__box .main_page__manager__control__boxs__function {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__boxs .main_page__manager__control__list__box .main_page__manager__control__boxs__function input {
+  padding: 10px 2em;
+  margin-right: 1em;
+  background-color: #6682b8;
+  font-weight: 600;
+  cursor: pointer;
+  color: #d4d6ff;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__boxs .main_page__manager__control__list__box .main_page__manager__control__boxs__function input:hover {
+  background-color: #414697;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__boxs .main_page__manager__control__list__box .main_page__manager__control__boxs__title {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  color: #dde8ff;
+  background-color: #3f5b8d;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__boxs .main_page__manager__control__list__box .main_page__manager__control__boxs__content ul li {
+  display: block;
+  background-color: #9ea2d8;
+  padding: 10px;
+  border-bottom: 1px solid #0d0f44;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__box {
+  margin-bottom: 1em;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__box .main_page__manager__control__box__content textarea {
+  border: none;
+  outline: none;
+  background-color: rgba(111, 119, 224, 0.4);
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__btn input {
+  background-color: #6f77e0;
+  color: white;
+  padding: 1em 3em;
+  font-size: 18px;
+  border: none;
+}
+
+.main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__btn input:hover {
+  background-color: #545cc5;
 }
 
 .main_page .main_page__part .main_page__content .pay_box {
@@ -1104,24 +1226,32 @@ input, button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 .main_page .main_page__part .main_page__content .pay_box .pay_box__btn input {
-  width: 300px;
+  width: 100%;
   font-size: 25px;
   padding: 1em 3em;
   color: white;
   background-color: #252774;
-  border: none;
   cursor: pointer;
-  outline: none;
   margin-top: 3em;
 }
 
 .main_page .main_page__part .main_page__content .pay_box .pay_box__btn input:hover {
   background-color: #46499b;
+}
+
+.alert_manager {
+  width: 100%;
+  text-align: center;
+  background-color: #55ff63;
+  color: #0d103f;
+  padding: 10px;
+  margin-bottom: 2em;
 }
 
 .snipper {
@@ -1270,7 +1400,6 @@ input, button {
 .footer_page .footer_page__top .footer_page__informations .footer_page__information .footer_page__information__content .footer_page__information__content__item .tab_send input {
   width: 80%;
   padding: 10px;
-  outline: none;
 }
 
 .footer_page .footer_page__top .footer_page__informations .footer_page__information .footer_page__information__content .footer_page__information__content__item .tab_send button {

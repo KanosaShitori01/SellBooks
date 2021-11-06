@@ -1,5 +1,5 @@
 <?php 
-
+ (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     class ProductModel extends BaseModel{
         const TABLE = "products";
         // Models Main

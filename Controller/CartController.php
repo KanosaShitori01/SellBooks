@@ -1,5 +1,5 @@
 <?php 
-    // session_start();
+     (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     class CartController extends BaseController{
         private $cartController;
         private $productController;
