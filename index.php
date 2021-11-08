@@ -37,6 +37,9 @@
             ]);
         }
     }
+    $sessCount = session_id();
+    $time = time();
+
     $controllerObj = new BaseModel;
     $Product = $controllerObj->getAll("products");
     $Author = $controllerObj->getAll("author");
@@ -44,6 +47,19 @@
     $Address = $controllerObj->getAll("address");
     $today = date("Y-m");
     $newProducts = $controllerObj->Find("products", "", "created_day", "'%".$today."%'");
+    $usOnline = $controllerObj->Find("usonline", "", "session", $sessCount, true);
+    if(empty($usOnline)){
+        $controllerObj->toAdd("sumconnect", ["res" => $time, "sess" => $sessCount]);
+        $controllerObj->toAdd("usonline", ["session" => $sessCount, "time" => $time], true);
+    }
+    else {
+        $controllerObj->Update("usonline", "", "session", $sessCount, ["time" => $time]);
+        $controllerObj->Update("sumconnect", "", "sess", $sessCount, ["res" => $time]);
+    }
+    $getusOnline = $controllerObj->getAll("usonline");
+    $getSumOn = $controllerObj->getAll("sumconnect");
+    $controllerObj->Query("DELETE FROM usonline WHERE time < $time-10");
+    $News = $controllerObj->getAll("news");
     if(empty($newProducts)){
         $newProducts = $controllerObj->getAll("products");
     }
@@ -130,15 +146,41 @@
     <link rel="stylesheet" href="Nivo/themes/dark/dark.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="Nivo/themes/bar/bar.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="Nivo/nivo-slider.css" type="text/css" media="screen" />
+    <link rel="shortcut icon" href="Public/img/logottKQ.ico" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="Public/assets/responsive/respon.css">
 </head>
 <body>
-
     <header class="heading_page">
+        <div class='heading_page__navhead heading_page_bar_mobile'>
+            <div class='heading_page_bar_mobile__active'>
+                <i class='fas fa-bars'></i>
+            </div>
+            <div class='heading_page_bar_mobile__content'>
+                <div class="heading_page_bar_mobile__content__subject">
+                    <h2>Menu</h2>
+                </div>
+                <div class="heading_page_bar_mobile__content__log heading_page__navhead__log">
+                <?php    
+                if(!isset($_SESSION['user']))
+                    echo " <div class='heading_page__navhead__log login'> 
+                        <a href='Sign/login.php'><i class='fas fa-user'></i> Đăng Nhập</a>
+                    </div>
+                    <div class='heading_page__navhead__log register'>
+                        <a href='Sign/register.php'><i class='fas fa-key'></i> Đăng Ký</a>
+                    </div>
+                    ";
+                else 
+                    echo "<a href='?controller=user'><i class='fas fa-user-circle'></i> Tài khoản</a>
+                        <a href='?logout'><i class='fas fa-door-open'></i> Đăng Xuất</a>";
+                ?>
+                </div>
+            </div>
+        </div>
         <?php
             if(!isset($_SESSION['user'])){
                 echo "
-                <div class='heading_page__navhead'>
+                <div class='heading_page__navhead mob'>
                     <div class='heading_page__navhead__log login'> 
                         <a href='Sign/login.php'><i class='fas fa-user'></i> Đăng Nhập</a>
                     </div>
@@ -150,7 +192,7 @@
             }
             else{
                 echo "
-                <div class='heading_page__navhead'>
+                <div class='heading_page__navhead mob'>
                     <div class='heading_page__navhead__log login'> 
                         <a href='?controller=user'><i class='fas fa-user-circle'></i> Tài khoản</a>
                     </div>
@@ -166,26 +208,21 @@
             <div class="heading_page__headmain__logo">
                 <a href="./"><img src="Public/img/LogoKQ.png" width="100%" height="100%" alt="" srcset=""></a>
             </div>
+            <div class="heading_page__headmain__about">
+               <img src="Public/img/logocenter.jpg" width="100%" height="100%" alt="" srcset="">
+            </div>
             <div class="heading_page__headmain__functions">
                 <div class="heading_page__headmain__functions__function hotline">
                     <p><i class="fas fa-phone-alt"></i> Hotline : <?= $AdminD[0]['tel'] ?> </p>
+                    <p><a href='https://www.facebook.com/phamthanh.quy.98'><i class="fab fa-facebook"></i> Facebook : Kim Quy </a></p>
+                    <p><a href=''><i class="fas fa-comments"></i> Zalo : <?= $AdminD[0]['tel'] ?> </a></p>
                 </div>
                 <div class="heading_page__headmain__functions__function cart">
                     <div class="quantily"><span><?= $cart_count; ?></span></div>
-                    <a href="?controller=cart"><i class="fas fa-shopping-cart"></i> Giỏ Hàng</a>
+                    <a href="?controller=cart" class="cart_m"><i class="fas fa-shopping-cart"></i><span>Giỏ Hàng</span></a>
                 </div>
             </div>
             <div class="heading_page__headmain__search">
-                <!-- <div class="heading_page__headmain__search__select">
-                    <select name="" id="">
-                        <option value="0" selected>Tất cả sản phẩm</option>
-                       
-                            // foreach($Category as $cate){
-                            //     echo "<option value='${cate['id']}'>${cate['name']}</option>";
-                            // }
-                       
-                    </select>
-                </div> -->
                 <form action="<?=$_SERVER["PHP_SELF"]?>" method="post">
                     <div class="heading_page__headmain__search__input">
                         <input id="findbooks" type="text" name="namebook" required placeholder="Nhập tên sách bạn cần tìm..." id="">
@@ -221,14 +258,20 @@
     <main class="main_page">
         <?php 
             if(!isset($_GET['controller'])){
+                $check = false;
+                // img_slide
+                // data-transition='slideInLeft' 
                 echo "
                 <div class='main_page__slider'>
-                    <div id='slider' class='main_page__slider__card'> 
-                        <img src='Public/img/245079935_955571495026459_4502308963599472870_n.jpg' data-thumb='Public/img/245079935_955571495026459_4502308963599472870_n.jpg' alt='' /> 
-                        <img src='Public/img/245185246_955571501693125_8276774198587732744_n.jpg' data-thumb='Public/img/245185246_955571501693125_8276774198587732744_n.jpg' alt='' />
-                        <img src='Public/img/246634284_955571515026457_4363408423091032081_n.jpg' data-thumb='Public/img/246634284_955571515026457_4363408423091032081_n.jpg' alt='' data-transition='slideInLeft' /> 
-                        <img src='Public/img/246947917_955571511693124_1134443736739023420_n.jpg' data-thumb='Public/img/246947917_955571511693124_1134443736739023420_n.jpg' alt='' /> 
-                    </div>
+                    <div id='slider' class='main_page__slider__card'>";
+                foreach($News as $post){
+                    if($post['indexp'] == 1){
+                        echo "<img src='${post['image']}' data-thumb='${post['image']}' alt='' />";
+                        $check = false;
+                    }
+                }
+
+               echo "</div>
                 </div>
                 ";         
             }
@@ -320,7 +363,7 @@
                                                         <p>".FindAuthor($prod['id_author'], $Author)."</p>
                                                     </div>
                                                     <div class='product__content__price money sp'>
-                                                        <p class='price'>${prod['price']}đ</p>
+                                                        <p class='price'>${prod['price']}</p>
                                                     </div>
                                                 </div></a>
                                             </div>
@@ -358,7 +401,7 @@
                                                                 <p>".FindAuthor($prod['id_author'], $Author)."</p>
                                                             </div>
                                                             <div class='product__content__price money sp'>
-                                                                <p class='price'>${prod['price']}đ</p>
+                                                                <p class='price'>${prod['price']}</p>
                                                             </div>
                                                         </div></a>
                                                     </div>
@@ -400,7 +443,7 @@
                                                                 <p>".FindAuthor($prod['id_author'], $Author)."</p>
                                                             </div>
                                                             <div class='product__content__price money sp'>
-                                                                <p class='price'>${prod['price']}đ</p>
+                                                                <p class='price'>${prod['price']}</p>
                                                             </div>
                                                         </div></a>
                                                     </div>
@@ -436,7 +479,7 @@
                                                     <p>".FindAuthor($prod['id_author'], $Author)."</p>
                                                 </div>
                                                 <div class='product__content__price money sp'>
-                                                    <p class='price'>${prod['price']}đ</p>
+                                                    <p class='price'>${prod['price']}</p>
                                                 </div>
                                             </div></a>
                                         </div>
@@ -470,7 +513,7 @@
                                         </div>
                                         <div class='infor__content__price money sp'>
                                             <p>Giá bán: </p>
-                                            <p class='price'>${infor_prod['price']} đ</p>
+                                            <p class='price'>${infor_prod['price']}</p>
                                         </div>
                                         <form action='?controller=products&action=show&id=${infor_prod['id']}' method='post'>
                                         <div class='infor__content__buy sp'>
@@ -482,6 +525,7 @@
                                                 oninput='OnlyNum(this, ${infor_prod['quantity']})'>   
                                             </div>
                                              <input name='submit_buy' type='submit' class='btn_ok' value='Đặt Mua' /> 
+                                             <input name='submit_buy' type='submit' class='btn_ok' value='Thêm Vào Giỏ Hàng' /> 
                                         </div>
                                         <div class='error_content'>
                                             <p>${infor_prod['error']}</p>
@@ -517,7 +561,7 @@
                                                 <p>".FindAuthor($product_f['id_author'], $Author)."</p>
                                             </div>
                                             <div class='product__content__price money sp'>
-                                                <p class='price'>${product_f['price']}đ</p>
+                                                <p class='price'>${product_f['price']}</p>
                                             </div>
                                         </div></a>
                                     </div>
@@ -561,7 +605,7 @@
                                                             <p>${cart['name']}</p>
                                                         </div>
                                                         <div class='cart__content__product__intro__price money'>
-                                                            <p class='price'>${cart['price']}đ</p>
+                                                            <p class='price'>${cart['price']}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -576,7 +620,7 @@
                                                 </div>
                                                 <div class='cart__content__product__total'>
                                                     <p>Thành Tiền</p>
-                                                    <p>${totalquantity}đ</p>
+                                                    <p class='price'>${totalquantity}</p>
                                                 </div>
                                             </div>
                                             <div class='error_content'>
@@ -602,7 +646,7 @@
                                             <p>Sản phẩm : $manysp</p>
                                         </div>
                                     <div class='cart__content__pay__tab'>
-                                        <p>Tổng tiền : $totalmoney đ</p>
+                                        <p>Tổng tiền : <span class='price'>$totalmoney</span></p>
                                     </div>
                                     </div>";
                            echo (empty($manysp)) ? "<a href='./' class='cart__content__pay__btn'>Mua Hàng</a>" : "<a href='?controller=pay' class='cart__content__pay__btn'>Thanh Toán</a>"; 
@@ -638,7 +682,7 @@
                                                             <p>${author_name['name']}</p>
                                                         </div>
                                                         <div class='product__content__price money sp'>
-                                                            <p class='price'>${prod['price']}đ</p>
+                                                            <p class='price'>${prod['price']}</p>
                                                         </div>
                                                     </div></a>
                                                 </div>
@@ -692,6 +736,8 @@
                             <li><i class="fas fa-map-marker-alt"></i><?= $Address[0]['address'] ?></li>
                             <li><a href="tel:<?= $AdminD[0]['tel'] ?>"><i class="fas fa-phone-alt"></i><?= $AdminD[0]['tel'] ?></a></li>
                             <li><a href="mailto:<?= $AdminD[0]['gmail'] ?>"><i class="far fa-envelope"></i><?= $AdminD[0]['gmail'] ?></a></li>
+                            <li><a href="">Zalo: <?= $AdminD[0]['tel'] ?></a></li>
+                            <li><a href="https://www.facebook.com/pham.quy.393"><i class="fab fa-facebook"></i>Facebook</a></li>
                         </ul>
                     </div>
                  </div>
@@ -715,10 +761,10 @@
                      </div>
                      <div class="footer_page__information__content">
                          <div class="footer_page__information__content__item">
-                            <span class="til">Trực tuyến:</span><span>29</span>
+                            <span class="til">Trực tuyến:</span><span><?=count($getusOnline)?></span>
                          </div>
                          <div class="footer_page__information__content__item">
-                            <span class="til">Tổng truy cập:</span><span>758881</span>
+                            <span class="til">Tổng truy cập:</span><span><?=count($getSumOn)?></span>
                          </div>
                          <div class="footer_page__information__content__item">
                             <p class="title">Cập nhật thông tin khuyến mãi</p>

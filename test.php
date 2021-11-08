@@ -6,9 +6,6 @@
     //     "id_user" => 31,
     //     "id_products" => 1
     // ]));
-    if(isset($_POST['submit'])){
-        var_dump($_FILES['fileToUpload']);
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,3 +23,38 @@
     </form>
 </body>
 </html>
+
+
+<?php
+include('smtp/PHPMailerAutoload.php');
+$html='<h1>Kinh Sách Kim Quy Tới Đây!!!!</h1>';
+echo smtp_mailer('tranchauqn9@gmail.com','Tin nhắn từ Kinh Sách Kim QUy',$html);
+function smtp_mailer($to,$subject, $msg){
+	$mail = new PHPMailer(); 
+	$mail->SMTPDebug  = 3;
+	$mail->IsSMTP(); 
+	$mail->SMTPAuth = true; 
+	$mail->SMTPSecure = 'tls'; 
+	$mail->Host = "smtp.gmail.com";
+	$mail->Port = 587; 
+	$mail->IsHTML(true);
+	$mail->CharSet = 'UTF-8';
+	$mail->Username = "darkmodenhan@gmail.com";
+	$mail->Password = "Darkmode123@";
+	$mail->SetFrom("darkmodenhan@gmail.com");
+	$mail->Subject = $subject;
+	$mail->Body = $msg;
+	$mail->AddAddress($to);
+	$mail->addCC("darkmodenhan@gmail.com");
+	$mail->SMTPOptions=array('ssl'=>array(
+		'verify_peer'=>false,
+		'verify_peer_name'=>false,
+		'allow_self_signed'=>false
+	));
+	if(!$mail->Send()){
+		echo $mail->ErrorInfo;
+	}else{
+		return 'Sent';
+	}
+}
+?>

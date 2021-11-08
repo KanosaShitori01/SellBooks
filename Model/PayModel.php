@@ -12,7 +12,7 @@
             return $this->Find(self::TABLE, "", $key, $value, true);
         }
         public function CancelOrder($id){
-
+            return $this->Delete(self::TABLE, $id);
         }
     }
 ?>

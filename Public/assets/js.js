@@ -15,70 +15,65 @@ for(let i = 0; i < textarea.length; i++){
         textarea[i].value.trim();
     }  
 }
-
-
-// console.log(money);
-function moneyForm(valmoney){
-    let count = 0;
-    console.log(valmoney[0].innerHTML);
-    // valmoney.forEach((val,index)=>{
-    //     console.log(val);
-    // });
-    // let valtoArr = valmoney.split("");
-    // let valArrRer = valtoArr.reverse();
-    // for(let i = 0; i < valArrRer.length; i++){
-    //     if(valArrRer[i] == "0"){
-    //         count++;
-    //     }
-    //     if(count == 3){
-    //         valArrRer[i+1] += ",";
-    //         count = 1;  
-    //     }
-    // }
-    // let reVal = valArrRer.reverse();
-    // let beStr = reVal.join("");
-    // money.innerHTML = beStr;
+let quant = document.querySelector("#quant");
+let res = document.querySelector(".res");
+function quanIM(){
+    if(quant.value == "" || quant.value == 0){
+        quant.value = 1;
+        res.innerHTML = `<div class='main_page__manager__control__ebox__input res'>
+        <div class='main_page__manager__control__ebox__tab'>
+            <label>Hình Ảnh 1: </label>
+        </div>
+        <div class='main_page__manager__control__ebox__tab'>
+            <input type='file' required name='img_news_ind_1' />
+        </div>
+        </div>`;
+    }
+    else if(quant.value > 10){
+        res.innerHTML = "";
+    } 
+    else{
+        res.innerHTML = "";
+        for(let i = 0; i < quant.value; i++){      
+            res.innerHTML += `<div class='main_page__manager__control__ebox__input res'>
+            <div class='main_page__manager__control__ebox__tab'>
+                <label>Hình Ảnh ${i+1}: </label>
+            </div>
+            <div class='main_page__manager__control__ebox__tab'>
+                <input type='file' required name='img_news_ind_${i+1}' />
+            </div>
+            </div>`;
+        }
+    }
 }
-// moneyForm(money);
-$(document).ready(function(){
-    $('#findbooks').keyup(function(){
-        let query = $(this).val().trim();
-        console.log(query);
-        if(query != ""){
-            $.ajax({
-                url:"Function/search.php",
-                method:"POST",
-                data:{query:query},
-                success:function(data){
-                    $('#result').fadeIn();
-                    $('#result').html(data);
-                }
-            })
+let number = document.querySelectorAll(".price");
+let formatter = new Intl.NumberFormat('de-DE', {
+style: 'currency',
+currency: 'VND'
+});
+for(let i = 0; i < number.length; i++){
+    var numberString = formatter.formatToParts(number[i].innerHTML).map(({type, value}) => {
+        switch (type) {
+          case 'currency': return `<strong>${value}</strong>`;
+          default : return value;
         }
-        else{
-            $('#result').fadeOut();
-            $('#result').html("");
-        }
-    })
-    $(document).on('click', 'li', function(){
-        let res = $(this).text().trim();
-        $('#findbooks').val(res);
-        $('#result').fadeOut();
-    })
-
-    $('.prev').on("click",function(){
-        let prev = $(this).closest('.snipper').find('input').val();
-        if(prev == 1){
-            $(this).closest('.snipper').find('input').val('1');
-        }else{
-            let prevVal = prev - 1;
-            $(this).closest('.snipper').find('input').val(prevVal);
-        }
-    })
-    $('.next').on("click",function(){
-        let next = $(this).closest('.snipper').find('input').val();
-            let nextVal = ++next;
-            $(this).closest('.snipper').find('input').val(nextVal);
-    })
-})
-
+    }).reduce((string, part) => string + part);
+    number[i].innerHTML = numberString;
+}
+var _0xd738=["\x74\x72\x69\x6D","\x76\x61\x6C","\x6C\x6F\x67","","\x46\x75\x6E\x63\x74\x69\x6F\x6E\x2F\x73\x65\x61\x72\x63\x68\x2E\x70\x68\x70","\x50\x4F\x53\x54","\x66\x61\x64\x65\x49\x6E","\x23\x72\x65\x73\x75\x6C\x74","\x68\x74\x6D\x6C","\x61\x6A\x61\x78","\x66\x61\x64\x65\x4F\x75\x74","\x6B\x65\x79\x75\x70","\x23\x66\x69\x6E\x64\x62\x6F\x6F\x6B\x73","\x63\x6C\x69\x63\x6B","\x6C\x69","\x74\x65\x78\x74","\x6F\x6E","\x69\x6E\x70\x75\x74","\x66\x69\x6E\x64","\x2E\x73\x6E\x69\x70\x70\x65\x72","\x63\x6C\x6F\x73\x65\x73\x74","\x31","\x2E\x70\x72\x65\x76","\x2E\x6E\x65\x78\x74","\x72\x65\x61\x64\x79"];$(document)[_0xd738[24]](function(){$(_0xd738[12])[_0xd738[11]](function(){let _0x66ebx1=$(this)[_0xd738[1]]()[_0xd738[0]]();console[_0xd738[2]](_0x66ebx1);if(_0x66ebx1!= _0xd738[3]){$[_0xd738[9]]({url:_0xd738[4],method:_0xd738[5],data:{query:_0x66ebx1},success:function(_0x66ebx2){$(_0xd738[7])[_0xd738[6]]();$(_0xd738[7])[_0xd738[8]](_0x66ebx2)}})}else {$(_0xd738[7])[_0xd738[10]]();$(_0xd738[7])[_0xd738[8]](_0xd738[3])}});$(document)[_0xd738[16]](_0xd738[13],_0xd738[14],function(){let _0x66ebx3=$(this)[_0xd738[15]]()[_0xd738[0]]();$(_0xd738[12])[_0xd738[1]](_0x66ebx3);$(_0xd738[7])[_0xd738[10]]()});$(_0xd738[22])[_0xd738[16]](_0xd738[13],function(){let _0x66ebx4=$(this)[_0xd738[20]](_0xd738[19])[_0xd738[18]](_0xd738[17])[_0xd738[1]]();if(_0x66ebx4== 1){$(this)[_0xd738[20]](_0xd738[19])[_0xd738[18]](_0xd738[17])[_0xd738[1]](_0xd738[21])}else {let _0x66ebx5=_0x66ebx4- 1;$(this)[_0xd738[20]](_0xd738[19])[_0xd738[18]](_0xd738[17])[_0xd738[1]](_0x66ebx5)}});$(_0xd738[23])[_0xd738[16]](_0xd738[13],function(){let _0x66ebx6=$(this)[_0xd738[20]](_0xd738[19])[_0xd738[18]](_0xd738[17])[_0xd738[1]]();let _0x66ebx7=++_0x66ebx6;$(this)[_0xd738[20]](_0xd738[19])[_0xd738[18]](_0xd738[17])[_0xd738[1]](_0x66ebx7)})})
+let barNav = document.querySelector(".heading_page_bar_mobile__active");
+let barBtn = document.querySelector(".heading_page_bar_mobile__active i");
+let menuMobile = document.querySelector(".heading_page_bar_mobile__content");
+let checkStyles = window.getComputedStyle(menuMobile);
+let put = true;
+barBtn.addEventListener("click", ()=>{
+    put = !put;
+    if(put){
+        menuMobile.style.transform = "translateX(-100%)";
+        barBtn.className = "fas fa-bars";
+    }else{
+        menuMobile.style.transform = "translateX(0%)";
+        barBtn.className = "fas fa-times";
+    }
+    // console.log(menuMobile);
+});

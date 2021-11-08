@@ -17,7 +17,7 @@
             return $this->Update(self::TABLE, $id, "", "", $data);
         }
         public function deleteAu($id){
-            return $this->delete(self::TABLE, $id);
+            return $this->Delete(self::TABLE, $id);
         }
     }
 ?>

@@ -63,16 +63,14 @@ input, button{
         justify-content: flex-end;
         .heading_page__navhead__log{
             color: white;
-            &:hover{
-                a{
-                    background-color: rgb(209, 216, 255);
-                    color: rgb(11, 12, 48);
-                }
-            }
             a{
                 padding: 1em;
                 display: block;
                 color: white;
+                &:hover{
+                    background-color: rgb(209, 216, 255);
+                    color: rgb(11, 12, 48);
+                }
                 i{
                     margin: 0 4px;
                 }
@@ -84,30 +82,47 @@ input, button{
         justify-content: space-between;
         flex-wrap: wrap;
         .heading_page__headmain__logo{
-            width: 40%;
+            width: 41%;
             img{
                 width: 100%;
                 height: 100%;
             }
         }
+        .heading_page__headmain__about{
+            width: 24%;
+            height: 180px;
+            margin-left: 2em;
+            margin-top: 10px;
+            img{
+                // border-radius: 50%;
+                width: 100%;
+                height: 100%;
+            }
+        }
         .heading_page__headmain__functions{
-            width: 50%;
+            flex: 1;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             padding: 0 1em;
             .heading_page__headmain__functions__function{
                 font-size: 20px;
-                margin-left: 2em;
+                margin-left: 10px;
                 i{
                     padding: 0 5px;
                 }
                 &.hotline{
                     text-transform: uppercase;
-                    display: flex;
+                    // display: flex;
                     color: rgb(45, 19, 92);
                     padding: 5px 0;
-                    border-bottom: 3px solid rgb(28, 29, 88);
+                    p{
+                        border-bottom: 3px solid rgb(28, 29, 88);
+                        padding: 10px 0;
+                        a{
+                            color: rgb(45, 19, 92);
+                        }
+                    }
                     // p{
                     //     color: white;
                     //     padding: 10px 15px;
@@ -124,14 +139,22 @@ input, button{
                 }
                 &.cart{
                     position: relative;
-                    a{
-                        display: block;
+                    .cart_m{
+                        display: flex;
+                        flex-direction: column;
+                        text-align: center;
                         padding: 5px;  
                         color:rgb(17, 19, 95);
+                        i{
+                            font-size: 30px;
+                        }
+                        span{
+                            padding: 10px;
+                            font-size: 20px;
+                        }
                     }
                     .quantily{
-                        top: -10%;
-                        left: -5%; 
+                        left: 25%;
                         font-size: 15px;
                         position: absolute;
                         padding: 2px 3px;
@@ -298,9 +321,10 @@ input, button{
         height: auto;
         overflow: hidden;
         margin-bottom: 2em;
+        background-color: rgb(17, 16, 73);
         .main_page__slider__card{
             width: 100%;
-            height: 650px;
+            height: 500px;
             img{
                 width: 100%;
                 height: 100%;
@@ -418,8 +442,38 @@ input, button{
                 .main_page__content__intestine{
                     background-color: rgba(145, 166, 206, .3);
                     padding: 10px;
+                    .main_page__content__intestine__news{
+                        .main_page__content__intestine__news__box{
+                            display: flex;
+                            color: rgb(22, 24, 70);
+                            height: 400px;
+                            margin-bottom: 10px;
+                            .main_page__content__intestine__news__box__img{
+                                width: 30%;
+                                img{
+                                    width: 100%;
+                                    height: 100%;
+                                }
+                            }
+                            .main_page__content__intestine__news__box__content{
+                                padding: 0 10px;
+                                flex: 1;
+                                overflow-y: auto;
+                                .main_page__content__intestine__news__box__content__title{
+                                    width: 100%;
+                                    padding: 10px 0;
+                                    border-bottom: 2px solid black;
+                                }
+                                .main_page__content__intestine__news__box__content__text{
+                                    padding: 5px;
+                                    font-size: 18px;
+                                    // background-color: red;
+                                }
+                            }
+                        }
+                    }
                     .main_page__content__intestine__text{
-                        font-size: 2.5em;
+                        font-size: 20px;
                         color: rgb(11, 12, 48);
                         min-height: 500px;
                         &.empty{
@@ -506,6 +560,8 @@ input, button{
                                 color: rgb(46, 48, 112);
                                 width: auto;
                                 word-break: keep-all;
+                                height: 170px;
+                                overflow-y: auto;
                             }
                             .infor__content__price{
                                 font-size: 20px;
@@ -719,8 +775,9 @@ input, button{
                 .main_page__manager__box{
                     color: rgb(11, 12, 48);
                     flex: 1;
-                    overflow-y: auto;
                     height: 600px;
+                    display: flex;
+                    flex-direction: column;
                     background-color: rgb(205, 222, 255);
                     .main_page__manager__title{
                         padding: 1em;
@@ -731,6 +788,7 @@ input, button{
                     .main_page__manager__content{
                         padding: 2em;
                         overflow-y: auto;
+                        height: 100%;
                         .main_page__manager__infor{
                             width: 100%;
                             .main_page__manager__infor__tab{
@@ -812,18 +870,132 @@ input, button{
                             }
                         }
                         .main_page__manager__control{
+                            .main_page__manager__control__functions{
+                                width: 100%;
+                                margin-bottom: 1em;
+                                input{
+                                    padding: 10px 2em;
+                                    cursor: pointer;
+                                    background-color: rgb(87, 126, 184);
+                                    color: white;
+                                    font-size: 14px;
+                                    &:hover{
+                                        background-color: rgb(67, 101, 151);
+                                    }
+                                }
+                            }
+                            .main_page__manager__control__list{
+                                .main_page__manager__control__list__title{
+                                    margin-top: 2em;
+                                }
+                                .main_page__manager__control__list__products{
+                                    .main_page__manager__control__list__product{
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: space-between;
+                                        margin-bottom: 1em;
+                                        height: 230px;
+                                        overflow-y: auto;
+                                        // background: red;
+                                        .control__list__product__left{
+                                            display: flex;
+                                            align-items: center;
+                                            flex: 1;
+                                            height: 100%;
+                                            // overflow-y: hidden;
+                                            .main_page__manager__control__list__product_img{
+                                                width: 30%;
+                                                height: 100%;
+                                                margin-right: 10px;
+                                                &.news{
+                                                    width: 40%;
+                                                }
+                                                img{
+                                                    width: 100%;
+                                                    height: 100%;
+                                                }
+                                            }
+                                            .main_page__manager__control__list__product_infor{
+                                                width: 100%;
+                                                margin-right: 10px;
+                                                height: 100%;   
+                                                p.title{
+                                                    font-size: 18px;
+                                                    font-weight: 700;
+                                                }
+                                                p.descrip{
+                                                    width: 100%;
+                                                    word-break: keep-all;
+                                                    overflow: auto;
+                                                }
+                                            }
+                                        }
+                                        .control__list__product__right{
+                                            a{
+                                                padding: 10px 1em;
+                                                color: rgb(13, 15, 68);
+                                                background-color: rgb(132, 155, 201);
+                                                &:hover{
+                                                    color: white;
+                                                    background-color: rgb(88, 117, 175);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                             .main_page__manager__control__ebox{
-                                .small{
+                                background-color: rgba(104, 139, 209, .2);
+                                margin-bottom: 2em;
+                                &.small{
                                     background-color: rgba(132, 155, 201, .4);
                                     padding: 1em;
                                     display: flex;
                                     align-items: center;
+                                    h2{
+                                        margin-right: 1em;
+                                        // background-color: red;
+                                    }
+                                }
+                                .main_page__manager__control__ebox__input{
+                                    display: flex;
+                                    align-items: center;
+                                    font-size: 20px;
+                                    padding: 1em;
+                                    &.res{
+                                        display: block;
+                                        .main_page__manager__control__ebox__tab{
+                                            width: 100%;
+                                        }
+                                    }
+                                    .main_page__manager__control__ebox__submit{
+                                        width: 100%;
+                                        input{
+                                            &:hover{
+                                                background-color: rgb(111, 119, 224);
+                                                color: white;
+                                            }
+                                        }
+                                    }
+                                    .main_page__manager__control__ebox__tab{
+                                        width: 15%;
+                                        &:last-child{
+                                            flex: 1;
+                                            input{
+                                                width: 100%;
+                                            }
+                                        }
+                                    }
                                 }
                                
-                                h2{
-                                    margin-right: 1em;
+                                .title_ebox{
+                                    padding: 10px;
+                                    width: 100%;
+                                    background-color: rgba(109, 132, 179, 0.9);
+                                    margin: 10px 0;
+                                    color: white;
                                 }
-                                a, input, select{
+                                a, input, select, textarea{
                                     font-size: 16px;
                                     padding: 10px;
                                 }
@@ -905,6 +1077,49 @@ input, button{
                                     border: none;
                                     &:hover{
                                         background-color: rgb(84, 92, 197);
+                                    }
+                                }
+                            }
+                            .main_page__manager__control__count{
+                                padding: 10px;
+                                background-color: rgb(143, 173, 219);
+                                width: 100%;
+                                margin-bottom: 1em;
+                            }
+                            .main_page__manager__control__orders{
+                                .main_page__manager__control__order{
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    background-color: rgba(129, 157, 214, 0.7);
+                                    margin-bottom: 10px;
+                                    .main_page__manager__control__infor{
+                                        display: flex;
+                                        align-items: center;
+                                        .main_page__manager__control__infor__img{
+                                            height: 180px;
+                                            width: 140px;
+                                            img{
+                                                width: 100%;
+                                                height: 100%;
+                                            }
+                                        }
+                                        .main_page__manager__control__infor__text{
+                                            margin-left: 1em;
+                                            p{
+                                                color:rgb(22, 24, 70);
+                                                font-weight: 700;
+                                                padding: 2px;
+                                            }
+                                        }
+                                    }
+                                    .main_page__manager__control__done{
+                                        a{
+                                            padding: 10px 1em;
+                                            background-color: rgb(22, 24, 70);
+                                            margin-right: 1em;
+                                            color: white;
+                                        }
                                     }
                                 }
                             }

@@ -22,7 +22,8 @@
         public function editProduct($id, $data){
             return $this->Update(self::TABLE, $id, "", "", $data);
         }
-        public function deleteProduct($id){
+        public function deleteProduct($id, $img = ""){
+            unlink($img);
             return $this->delete(self::TABLE, $id);
         }
     }

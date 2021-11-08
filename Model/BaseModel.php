@@ -1,5 +1,5 @@
 <?php 
- (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
+//  (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     class BaseModel extends Database{
         protected $conn; 
         public function __construct()
@@ -63,13 +63,15 @@
             return $this->Query($sql) ?? "";
         }
         // 4. Thêm dữ liệu 
-        public function toAdd($tb, $data){
+        public function toAdd($tb, $data, $non = false){
             $column = implode(", ", array_keys($data));
             $perVal = array_map(function($values){
                 return "'".$values."'";
             }, array_values($data));
             $perVal = implode(", ", $perVal);
-            $sql = "INSERT INTO $tb(id, $column) VALUES(NULL, $perVal)";
+            $sql = ($non === false) ? "INSERT INTO $tb(id, $column) VALUES(NULL, $perVal)" 
+            : "INSERT INTO $tb($column) VALUES($perVal)";
+            // echo $sql;
             return $this->Query($sql) ?? "";
         }
         // 5. Xóa dữ liệu 

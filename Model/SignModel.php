@@ -70,11 +70,3 @@
         }
     }
 ?>
-<!-- Notice: Array to string conversion in C:\xampp\htdocs\SellBooks\Model\SignModel.php on line 39
-Array, e10adc3949ba59abbe56e057f20f883e, , 734003, 0337294740, falseNULL NULL OKE -->
-
-<!-- Admin_BRUH, 17225f2346a7f6eaa6d6d92876d1cd72, 17225f2346a7f6eaa6d6d92876d1cd72, 0337294740, 
-tuananhditu1@gmail.com, 622230
-INSERT INTO users(id, username, password, gmail, code_gmail, tel, admin) 
-VALUES(NULL, '', '17225f2346a7f6eaa6d6d92876d1cd72', '', '622230', '0337294740', 'false')
-bool(true) NULL NULL OKE -->

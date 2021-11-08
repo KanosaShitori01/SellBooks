@@ -10,6 +10,8 @@
         private $authorController; // admin 
         private $categoryController; // admin
         private $anotherController; // admin
+        private $newsController;
+        private $cartController;
         // dữ liệu chung
         private $user;
         private $url = "?controller=user";
@@ -21,13 +23,16 @@
             $this->loadModel("CategoryModel");
             $this->loadModel("AuthorModel");
             $this->loadModel("AnotherModel");
+            $this->loadModel("NewsModel");
+            $this->loadModel("CartModel");
             $this->userController = new SignModel; // user/admin
             $this->orderController = new PayModel; // user/admin
             $this->productController = new ProductModel; // user/admin
             $this->authorController = new AuthorModel; // admin
             $this->categoryController = new CategoryModel; // admin
             $this->anotherController = new AnotherModel; // admin
-            
+            $this->newsController = new NewsModel; // admin
+            $this->cartController = new CartModel; // admin
             $this->user = $this->userController->showInfor($_SESSION['user'])[0];
         }
         private function checkDataU($key, $value){
@@ -175,7 +180,7 @@
                                 <div class='main_page__manager__card__content'>
                                     <div class='main_page__manager__card__content__text'>
                                         <p>${productsOf['name']}</p>
-                                        <p>Giá: ${order['totalmoney']}đ</p>
+                                        <p>Giá: <span class='price'>${order['totalmoney']}</span></p>
                                         <p>Số lượng: ${order['quantity']}</p>
                                     </div>
                                     <div class='main_page__manager__card__content__process'>
@@ -259,6 +264,9 @@
             }else if(isset($_GET['qldh'])){
                 $title = "Quản Lý Đơn Hàng";
                 $output = $this->QLDH($output);
+            }else if(isset($_GET['qltt'])){
+                $title = "Quản Lý Tin Tức";
+                $output = $this->QLTT($output);
             }
             return ($this->user['admin'] == 1) ? 
             $this->outputDataView($title, $output, $this->list($this->user)) : 
@@ -283,6 +291,7 @@
             <li><a href='?controller=user&action=admincontrol&qldm'>Quản lý danh mục</a></li>
             <li><a href='?controller=user&action=admincontrol&qlsp'>Quản lý sản phẩm</a></li>
             <li><a href='?controller=user&action=admincontrol&qldh'>Quản lý đơn hàng</a></li>
+            <li><a href='?controller=user&action=admincontrol&qltt'>Quản lý tin tức</a></li>
             <li><a href='?controller=user&action=security'>Đổi mật khẩu</a></li>
            " : 
            "<li><a href='?controller=user'>Thông tin cá nhân</a></li>
@@ -294,9 +303,9 @@
             $dataANO = $this->anotherController->findAN(2);
             if(isset($_POST['manag_cont'])){
                 ($this->anotherController->updateANO($dataANO[0]['id'], [
-                    "introduce" => $_POST['introduce'],
-                    "QaA" => $_POST['QaA'],
-                    "contact" => $_POST['contact']
+                    "introduce" => nl2br($_POST['introduce']),
+                    "QaA" => nl2br($_POST['QaA']),
+                    "contact" => nl2br($_POST['contact'])
                 ])) ? $alert = "<div class='alert_manager'>
                     <h2>Cập Nhật Thành Công</h2>
                 </div>" : "";
@@ -310,7 +319,7 @@
                             <h2>- Giới Thiệu</h2>
                         </div>
                         <div class='main_page__manager__control__box__content'>
-                            <textarea name='introduce' placeholder='Nhập nội dung giới thiệu' required>".$data['introduce']."</textarea>
+                            <textarea name='introduce' placeholder='Nhập nội dung giới thiệu' required>".str_replace("<br />", " ",$data['introduce'])."</textarea>
                         </div>  
                     </div>
                     <div class='main_page__manager__control__box'>
@@ -318,7 +327,7 @@
                             <h2>- Hỏi Đáp</h2>
                         </div>
                         <div class='main_page__manager__control__box__content'>
-                            <textarea name='QaA' placeholder='Nhập nội dung hỏi đáp' required>".$data['QaA']."</textarea>
+                            <textarea name='QaA' placeholder='Nhập nội dung hỏi đáp' required>".str_replace("<br />", " ",$data['QaA'])."</textarea>
                         </div>
                     </div>
                     <div class='main_page__manager__control__box'>
@@ -326,7 +335,7 @@
                             <h2>- Liên Hệ</h2>
                         </div>
                         <div class='main_page__manager__control__box__content'>
-                            <textarea name='contact' placeholder='Nhập nội dung liên hệ' required>".$data['contact']."</textarea>
+                            <textarea name='contact' placeholder='Nhập nội dung liên hệ' required>".str_replace("<br />", " ",$data['contact'])."</textarea>
                         </div>
                     </div>
                     <div class='main_page__manager__control__btn'>
@@ -484,7 +493,7 @@
                                 <div class='main_page__manager__control__boxs__function'>
                                     <input type='submit' name='add_cate' value='Thêm' />
                                     <input type='submit' name='edit_cate' value='Sửa'  />
-                                    <input type='submit' name='del_cate' value='Xóa'  />
+                                    <input type='submit' name='del_cate' value='Xóa Một Mục'  />
                                 </div>
                                 <div class='main_page__manager__control__boxs__title'>
                                     <h3>Sách</h3>
@@ -501,7 +510,7 @@
                                 <div class='main_page__manager__control__boxs__function'>
                                     <input type='submit' name='add_au' value='Thêm' />
                                     <input type='submit' name='edit_au' value='Sửa'  />
-                                    <input type='submit' name='del_au' value='Xóa'  />
+                                    <input type='submit' name='del_au' value='Xóa Một Mục'  />
                                 </div>
                                 <div class='main_page__manager__control__boxs__title'>
                                     <h3>Tác giả</h3>
@@ -529,7 +538,7 @@
                 // Thêm Sản Phẩm
                 if(isset($_POST['add_product'])){
                     $createBox = "<div class='main_page__manager__control__ebox'>
-                        <h2>Thêm Sản Phẩm</h2>
+                        <h2 class='title_ebox'>Thêm Sản Phẩm</h2>
                         <div class='main_page__manager__control__ebox__input'>
                             <div class='main_page__manager__control__ebox__tab'>
                                 <label>Tên Sản Phẩm: </label>
@@ -559,7 +568,7 @@
                                 <label>Giá: </label>
                             </div>
                             <div class='main_page__manager__control__ebox__tab'>
-                                <input type='text' required name='price_prod' />
+                                <input type='text' required oninput='OnlyNum(this,999)' name='price_prod' />
                             </div>
                         </div>
                         <div class='main_page__manager__control__ebox__input'>
@@ -567,7 +576,7 @@
                                 <label>Số lượng: </label>
                             </div>
                             <div class='main_page__manager__control__ebox__tab'>
-                                <input type='number' required name='quan_prod' />
+                                <input type='number' oninput='OnlyNum(this,999)' required name='quan_prod' />
                             </div>
                         </div>
                         <div class='main_page__manager__control__ebox__input'>
@@ -575,7 +584,7 @@
                                 <label>Tác giả: </label>
                             </div>
                             <div class='main_page__manager__control__ebox__tab'>
-                                <select name='author_prod'>";
+                                <select name='cate_prod'>";
                                 foreach($cate as $cateD){
                                     $createBox .= "<option value='${cateD['id']}'>${cateD['name']}</option>";
                                 }
@@ -587,17 +596,21 @@
                                 <label>Thể loại: </label>
                             </div>
                             <div class='main_page__manager__control__ebox__tab'>
-                                <select name='cate_prod'>";
+                                <select name='author_prod'>";
                                 foreach($au as $auD){
                                     $createBox .= "<option value='${auD['id']}'>${auD['name']}</option>";
                                 }
                 $createBox  .= "</select>
                             </div>
+                        </div>
                         <div class='main_page__manager__control__ebox__input'>
-                            <input type='submit' name='add_prod_sub' value='Xác Nhận' />
+                            <div class='main_page__manager__control__ebox__submit'>
+                                <input type='submit' name='add_prod_sub' value='Xác Nhận' />
+                                <a href='?controller=user&action=admincontrol&qlsp'>Hủy Bỏ</a>
+                            </div>
                         </div>
                         </div>
-                    </div>";
+                    ";
                 }
                 if(isset($_POST['add_prod_sub'])){
                     $today = date("Y-m-d");
@@ -607,7 +620,7 @@
                             "name" => $_POST['name_prod'],
                             "image" => $img_prod,
                             "price" => $_POST['price_prod'],
-                            "description" => $_POST['des_prod'],
+                            "description" => nl2br($_POST['des_prod']),
                             "id_author" => $_POST['author_prod'],
                             "id_category" => $_POST['cate_prod'],
                             "quantity" => $_POST['quan_prod'],
@@ -625,8 +638,9 @@
                 if(isset($_GET['edit_product'])){
                     $Iprod = ($this->productController->findProductBID($_GET['edit_product'])[0]) ?? "";
                     if(!empty($Iprod)){
+                    $Ides = str_replace("<br />", "", $Iprod['description']);
                     $createBox = "<div class='main_page__manager__control__ebox'>
-                        <h2>Sửa Sản Phẩm</h2>
+                        <h2 class='title_ebox'>Sửa Sản Phẩm</h2>
                         <input type='text' hidden value='${Iprod['id']}' name='id_prod' />
                         <div class='main_page__manager__control__ebox__input'>
                             <div class='main_page__manager__control__ebox__tab'>
@@ -642,6 +656,7 @@
                                 <label>Hình Ảnh: </label>
                             </div>
                             <div class='main_page__manager__control__ebox__tab'>
+                                <input type='text' hidden name='img_prod_old' value='${Iprod['image']}' />
                                 <input type='file' name='img_prod' />
                             </div>
                         </div>
@@ -650,7 +665,7 @@
                                 <label>Nội dung: </label>
                             </div>
                             <div class='main_page__manager__control__ebox__tab'>
-                                <textarea required name='des_prod'>${Iprod['description']}</textarea>
+                                <textarea required name='des_prod'>${Ides}</textarea>
                             </div>
                         </div>
                         <div class='main_page__manager__control__ebox__input'>
@@ -658,7 +673,7 @@
                                 <label>Giá: </label>
                             </div>
                             <div class='main_page__manager__control__ebox__tab'>
-                                <input type='text' required value='${Iprod['price']}' name='price_prod' />
+                                <input type='text' required value='${Iprod['price']}' oninput='OnlyNum(this,999)' name='price_prod' />
                             </div>
                         </div>
                         <div class='main_page__manager__control__ebox__input'>
@@ -696,22 +711,26 @@
                                 }
                 $createBox  .= "</select>
                             </div>
-                        <div class='main_page__manager__control__ebox__input'>
-                            <input type='submit' name='edit_prod_sub' value='Xác Nhận' />
                         </div>
+                        <div class='main_page__manager__control__ebox__input'>
+                            <div class='main_page__manager__control__ebox__submit'>
+                                <input type='submit' name='edit_prod_sub' value='Xác Nhận' />
+                                <a href='?controller=user&action=admincontrol&qlsp'>Hủy Bỏ</a>
+                            </div>
                         </div>
                     </div>";
                     }
                 }
                 if(isset($_POST['edit_prod_sub'])){
-                    $img_prod = $this->UploadImg($_FILES['img_prod'], "edit_prod_sub");
+                    $img_prod = ($this->UploadImg($_FILES['img_prod'], "edit_prod_sub")) ?? false;
                     if($this->checkData($cate, $_POST['name_prod'], $_POST['name_prod_o'])){
                         if(!empty($_FILES['img_prod']) && $img_prod !== false){
+                            unlink($_POST['img_prod_old']);
                             $this->productController->editProduct($_POST['id_prod'],[
                                 "name" => $_POST['name_prod'],
                                 "price" => $_POST['price_prod'],
                                 "image" => $img_prod,
-                                "description" => $_POST['des_prod'],
+                                "description" => nl2br($_POST['des_prod']),
                                 "id_category" => $_POST['cate_prod'],
                                 "id_author" => $_POST['author_prod'],
                                 "quantity" => $_POST['quan_prod']
@@ -721,9 +740,9 @@
                             $this->productController->editProduct($_POST['id_prod'],[
                                 "name" => $_POST['name_prod'],
                                 "price" => $_POST['price_prod'],
-                                "description" => $_POST['des_prod'],
+                                "description" => nl2br($_POST['des_prod']),
                                 "id_category" => $_POST['cate_prod'],
-                                "id_author" => $_POST['au_prod'],
+                                "id_author" => $_POST['author_prod'],
                                 "quantity" => $_POST['quan_prod']
                             ]);
                             header("location: ?controller=user&action=admincontrol&qlsp");
@@ -735,7 +754,9 @@
                     }
                 }
                 if(isset($_GET['del_product'])){
-                    $this->productController->deleteProduct($_GET['del_product']);
+                    $img = ($this->productController->findProductBID($_GET['del_product'])[0]['image']) ?? "";
+                    $this->productController->deleteProduct($_GET['del_product'], $img);
+                    $this->cartController->deleteCart("", true, "id_products", $_GET['del_product']);
                     header("location: ?controller=user&action=admincontrol&qlsp");
                 }
 
@@ -756,27 +777,43 @@
                             foreach($products as $prod){
                                 $cate = ($this->categoryController->findCategory($prod['id_category'])[0]['name']) ?? "";
                                 $au = ($this->authorController->findAu($prod['id_author'])[0]['name']) ?? "";
+                                // var_dump($prod['id_author']);
                                 $output .= "
                                 <div class='main_page__manager__control__list__product'>
-                                    ${prod['name']}
-                                    ${prod['image']}
-                                    ${prod['price']}
-                                    $cate
-                                    $au
-                                    <a href='?controller=user&action=admincontrol&qlsp&edit_product=${prod['id']}'>
-                                    Sửa sản phẩm</a>
-                                    <a href='?controller=user&action=admincontrol&qlsp&del_product=${prod['id']}'>
-                                    Xóa sản phẩm</a>
+                                    <div class='control__list__product__left'>
+                                        <div class='main_page__manager__control__list__product_img'>
+                                            <img src='${prod['image']}'/>
+                                        </div>
+                                        <div class='main_page__manager__control__list__product_infor'>
+                                            <h3>Sách: ${prod['name']}</h3>
+                                            <p>Giá: <span class='price'>${prod['price']}</span></p>
+                                            <p>Thể loại: ${cate}</p>
+                                            <p>Tác giả: ${au}</p>
+                                            <p>Ngày tạo: ${prod['created_day']}</p>
+                                            <p class='descrip'>Nội dung: ${prod['description']} </p>
+                                        </div>
+                                    </div>      
+                                    <div class='control__list__product__right'>
+                                        <a href='?controller=user&action=admincontrol&qlsp&edit_product=${prod['id']}'>
+                                        Sửa sản phẩm</a>
+                                        <a href='?controller=user&action=admincontrol&qlsp&del_product=${prod['id']}'>
+                                        Xóa sản phẩm</a>
+                                    </div>
                                 </div>";
                             }
                            
                 $output .= "</div>                  
+                        </div>
                     </div>
-                </div>
                 </form>";
             return $output;
         }
         private function QLDH($output){
+            if(isset($_GET['del_ord'])){
+                $id = $_GET['del_ord'];
+                $this->orderController->CancelOrder($id);
+                header("location: ?controller=user&action=admincontrol&qldh");
+            }
             $allOrder = $this->orderController->showOrder();
             $countOrd = count($allOrder);
             $output .= "<div class='main_page__manager__control'>
@@ -788,6 +825,7 @@
                         foreach($allOrder as $order){
                         if($order['received'] == 0){
                             $productOrd = $this->productController->findProductBID($order['id_product'])[0];
+                        if(!empty($productOrd))
                 $output .= "<div class='main_page__manager__control__order'>
                                 <div class='main_page__manager__control__infor'>
                                     <div class='main_page__manager__control__infor__img'>
@@ -797,16 +835,19 @@
                                         <p>Tên Người Đặt: ${order['name_user']}</p>
                                         <p>Tên Sách: ${productOrd['name']}</p>
                                         <p>Số Lượng: ${order['quantity']}</p>
-                                        <p>Tổng Tiền: ${order['totalmoney']}đ</p>
+                                        <p>Tổng Tiền: <span class='price'>${order['totalmoney']}</span></p>
                                         <p>Địa chỉ: ${order['address']}</p>
                                         <p>Số điện thoại: ${order['tel']}</p>
                                         <p>Gmail: ${order['gmail']}</p>
                                     </div>
                                 </div>
                                 <div class='main_page__manager__control__done'>
-                                    
+                                    <a href='?controller=user&action=admincontrol&qldh&del_ord=${order['id']}'>Xóa Đơn Hàng</a>
                                 </div>
-                            </div>";
+                            </div>
+                            ";
+                        else {$this->orderController->CancelOrder($order['id']);
+                        header("location: ?controller=user&action=admincontrol&qldh");}
                             }
                         }
                     }
@@ -814,6 +855,219 @@
             </div>";
             return $output;
         }
+        private function QLTT($output){
+            $alert = "";
+            $createBox = "";
+            $news = $this->newsController->getAllNews();
+            if(isset($_POST['add_news'])){
+                $createBox = "<div class='main_page__manager__control__ebox'>
+                    <h2 class='title_ebox'>Thêm Tin Tức</h2>
+                    <div class='main_page__manager__control__ebox__input'>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <label>Tên Tiêu Đề: </label>
+                        </div>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <input type='text' required name='name_news' />
+                        </div>
+                    </div>
+                    <div class='main_page__manager__control__ebox__input'>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <label>Hình Ảnh: </label>
+                        </div>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <input type='file' required name='img_news' />
+                        </div>
+                    </div>
+                    <div class='main_page__manager__control__ebox__input'>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <label>Nội dung: </label>
+                        </div>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <textarea required name='des_news'></textarea>
+                        </div>
+                    </div>
+                    <div class='main_page__manager__control__ebox__input'>
+                        <div class='main_page__manager__control__ebox__submit'>
+                            <input type='submit' name='add_news_sub' value='Xác Nhận' />
+                            <a href='?controller=user&action=admincontrol&qltt'>Hủy Bỏ</a>
+                        </div>
+                    </div>
+                </div>";
+            }
+            if(isset($_POST['add_news_sub'])){
+                $img_prod = $this->UploadImg($_FILES['img_news'], "add_news_sub");
+                if($this->checkData($news, $_POST['name_news']) !== false && $img_prod !== false){
+                    $this->newsController->addNews([
+                        "name" => $_POST['name_news'],
+                        "image" => $img_prod,
+                        "description" => nl2br($_POST['des_news'])
+                    ]);
+                    header("location: ?controller=user&action=admincontrol&qltt");
+                }
+               else{
+                $alert = "<div class='alert_manager err'>
+                            <h2>".$_POST['name_news']." đã tồn tại hoặc tệp hình ảnh bị sai</h2>
+                        </div>"; 
+                }
+            }
+            // Thêm tin tức trang chủ
+            if(isset($_POST['add_news_ind'])){
+                $createBox = "<div class='main_page__manager__control__ebox'>
+                    <h2 class='title_ebox'>Thêm Tin Tức Trang Chủ</h2>
+                    <div class='main_page__manager__control__ebox__input'>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <label>Số lượng ảnh: </label>
+                        </div>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <input type='number' oninput='OnlyNum(this,10)' onkeyup='quanIM()' id='quant' required name='quantity_news_ind' />
+                        </div>
+                    </div>
+                    <div class='main_page__manager__control__ebox__input res'>
+                        
+                    </div>
+                    <div class='main_page__manager__control__ebox__input'>
+                        <div class='main_page__manager__control__ebox__submit'>
+                            <input type='submit' name='add_news_ind_sub' value='Xác Nhận' />
+                            <a href='?controller=user&action=admincontrol&qltt'>Hủy Bỏ</a>
+                        </div>
+                    </div>
+                </div>";
+            }
+            if(isset($_POST['add_news_ind_sub'])){
+                $length = $_POST['quantity_news_ind'];
+                for($i = 0; $i < $length; $i++){
+                    $num = $i + 1;
+                    $img = $_FILES['img_news_ind_'.$num];
+                    $img_prod = $this->UploadImg($img, "add_news_ind_sub");
+                    if($img_prod !== false){
+                        $this->newsController->addNews([
+                            "name" => "Tin tức trang chủ",
+                            "image" => $img_prod,
+                            "indexp" => 1
+                        ]);
+                        header("location: ?controller=user&action=admincontrol&qltt");
+                    }
+                    else{
+                        $alert = "<div class='alert_manager err'>
+                                <h2>Tệp hình ảnh bị sai hoặc đã tồn tại</h2>
+                            </div>"; 
+                    }
+                }
+            }
+            // Sửa tin tức
+            if(isset($_GET['edit_news'])){
+                $Inews = ($this->newsController->findNews($_GET['edit_news'])[0]) ?? "";
+                if(!empty($Inews)){
+                $Ides = str_replace("<br />", " ", $Inews['description']);
+                $createBox = "<div class='main_page__manager__control__ebox'>
+                    <h2 class='title_ebox'>Sửa Tin Tức</h2>
+                    <input type='text' hidden value='${Inews['id']}' required name='id_news' />
+                    <div class='main_page__manager__control__ebox__input'>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <label>Tên Tiêu Đề: </label>
+                        </div>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <input type='text' hidden value='${Inews['name']}' required name='name_news_o' />
+                            <input type='text' value='${Inews['name']}' required name='name_news' />
+                        </div>
+                    </div>
+                    <div class='main_page__manager__control__ebox__input'>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <label>Hình Ảnh: </label>
+                        </div>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <input type='text' hidden name='img_news_o' value='${Inews['image']}' />
+                            <input type='file' name='img_news' />
+                        </div>
+                    </div>
+                    <div class='main_page__manager__control__ebox__input'>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <label>Nội dung: </label>
+                        </div>
+                        <div class='main_page__manager__control__ebox__tab'>
+                            <textarea required name='des_news'>${Ides}</textarea>
+                        </div>
+                    </div>
+                    <div class='main_page__manager__control__ebox__input'>
+                        <div class='main_page__manager__control__ebox__submit'>
+                            <input type='submit' name='edit_news_sub' value='Xác Nhận' />
+                            <a href='?controller=user&action=admincontrol&qltt'>Hủy Bỏ</a>
+                        </div>
+                    </div>
+                </div>";
+                }
+            }
+            if(isset($_POST['edit_news_sub'])){
+                $img_news = ($this->UploadImg($_FILES['img_news'], "edit_news_sub")) ?? false;
+                if($this->checkData($news, $_POST['name_news'], $_POST['name_news_o'])){
+                    if(!empty($_FILES['img_news']) && $img_news !== false){
+                        unlink($_POST['img_news_o']);
+                        $this->newsController->updateNews($_POST['id_news'],[
+                            "name" => $_POST['name_news'],
+                            "image" => $img_news,
+                            "description" => nl2br($_POST['des_news'])
+                        ]);
+                        header("location: ?controller=user&action=admincontrol&qltt");
+                    }else{
+                        $this->newsController->updateNews($_POST['id_news'],[
+                            "name" => $_POST['name_news'],
+                            "description" => nl2br($_POST['des_news'])
+                        ]);
+                        header("location: ?controller=user&action=admincontrol&qltt");
+                    }
+                }else{
+                    $alert = "<div class='alert_manager err'>
+                    <h2>".$_POST['name_prod']." đã tồn tại hoặc tệp hình ảnh bị sai</h2>
+                    </div>"; 
+                }
+            }
+
+            if(isset($_GET['del_news'])){
+                $img = ($this->newsController->findNews($_GET['del_news'])[0]['image']) ?? "";
+                $this->newsController->deleteNews($_GET['del_news'], $img);
+                header("location: ?controller=user&action=admincontrol&qltt");
+            }
+            $output .= "
+            <form action='?controller=user&action=admincontrol&qltt' method='post' enctype='multipart/form-data'>
+            <div class='main_page__manager__control'>
+                $alert
+                $createBox
+                <div class='main_page__manager__control__functions'>
+                    <input type='submit' name='add_news' value='Thêm Tin Tức'/>
+                    <input type='submit' name='add_news_ind' value='Thêm Tin Tức Trang Chủ'/>
+                </div>
+                <div class='main_page__manager__control__list'>
+                    <div class='main_page__manager__control__list__title'>
+                        <h2>Tin Tức Của Tôi</h2>
+                    </div>
+                    <div class='main_page__manager__control__list__products'>";
+                        foreach($news as $post){
+                            $output .= "
+                            <div class='main_page__manager__control__list__product'>
+                                    <div class='control__list__product__left'>
+                                        <div class='main_page__manager__control__list__product_img news'>
+                                            <img src='${post['image']}'/>
+                                        </div>
+                                        <div class='main_page__manager__control__list__product_infor'>
+                                            <p class='title'>${post['name']}</p>
+                                            <p class='descrip'>${post['description']}</p>
+                                        </div>
+                                    </div>      
+                                    <div class='control__list__product__right'>
+                                        <a href='?controller=user&action=admincontrol&qltt&edit_news=${post['id']}'>
+                                        Sửa sản phẩm</a>
+                                        <a href='?controller=user&action=admincontrol&qltt&del_news=${post['id']}'>
+                                        Xóa sản phẩm</a>
+                                    </div>
+                            </div>";
+                        }
+            $output .= "</div>                  
+                    </div>
+                </div>
+            </form>";
+            return $output;
+        }
+
         private function checkData($dataM, $dataC, $temp = ""){
             if($temp === $dataC) return true;
             foreach($dataM as $data){
@@ -823,7 +1077,6 @@
                 }
             }
             return true;
-            // var_dump($dataM);
         }
         private function UploadImg($img, $post){
             $target_dir = "Images/";
@@ -832,24 +1085,7 @@
             $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
             // Check if image file is a actual image or fake image
             if(isset($_POST["$post"])) {
-              $check = getimagesize($img["tmp_name"]);
-              $uploadOk = 1;
-              if($check !== false) {
-                if ($uploadOk == 0) {
-                    return false;
-                  // if everything is ok, try to upload file
-                  } else {
-                    if (move_uploaded_file($img["tmp_name"], $target_file)) {
-                        return $target_file;
-                    } else {
-                        return false;
-                    }
-                }
-              } else {
-                return false;
-                $uploadOk = 0;
-              }
-              // File Exists
+                // File Exists
               if (file_exists($target_file)) {
                 return false;
                 $uploadOk = 0;
@@ -867,17 +1103,25 @@
                   return false;
                 $uploadOk = 0;
               }
+              $check = (!empty($img["tmp_name"])) ? getimagesize($img["tmp_name"]) : false;
+              $uploadOk = 1;
+              if($check !== false) {
+                if ($uploadOk == 0) {
+                    return false;
+                  // if everything is ok, try to upload file
+                  } else {
+                    if (move_uploaded_file($img["tmp_name"], $target_file)) {
+                        return $target_file;
+                    } else {
+                        return false;
+                    }
+                }
+              } else {
+                return false;
+                $uploadOk = 0;
+              }
+              
             }
-            
-           
         }
     }
 ?>
-
-
-<!-- <div class='main_page__manager__control__functions'>
-                        <div class='main_page__manager__control__functions__btn'>
-                            <input type='submit' name='create_cate' value='Tạo Danh Mục' />
-                            <input type='submit' name='delall_cate' value='Xóa Toàn Bộ Danh Mục'/>
-                        </div>
-                    </div> -->
