@@ -1,5 +1,5 @@
 <?php 
- (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
+//  (!isset($_SESSION['url_main'])) ? header("location: ./") : "";
     require "../Core/Database.php";
     require "../Model/BaseModel.php";
     if(isset($_POST['query'])){

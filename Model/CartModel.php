@@ -41,11 +41,14 @@
         public function alterCart($column, $val){
             return $this->Alter(self::TABLE, $column, $val);
         }
-        public function deleteCart($id){
-            return $this->delete(self::TABLE, $id);
+        public function deleteCart($id = "", $query = false, $key = "", $val = ""){
+            if($query) {
+                return $this->Delete(self::TABLE, "", true, $key, $val);
+            } 
+            return $this->Delete(self::TABLE, $id);
         }
         public function deleteCartUser($key, $val){
-            return $this->delete(self::TABLE, "", true, $key, "'".$val."'");
+            return $this->Delete(self::TABLE, "", true, $key, "'".$val."'");
         }
     }
 ?>

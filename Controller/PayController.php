@@ -116,12 +116,12 @@
                                     <h3>${order['name']}</h3>
                                 </div>
                                 <div class='pay_box__infor__tab_more'>
-                                    <h4>Tổng tiền: ${priceOrder}đ</h4>
+                                    <h4>Tổng tiền: <span class='price'>${priceOrder}</span></h4>
                                     <h4>Số lượng: ${order['quantity']}</h4>
                                 </div>
                             </div>";
                         }   
-            $output .= "<h2 class='total'> - Tổng số tiền của đơn hàng : ".$totalOrder."đ </h2>
+            $output .= "<h2 class='total'> - Tổng số tiền của đơn hàng : <span class='price'>".$totalOrder."</span> </h2>
                         <h2 class='total'> - Tổng số sách : $quantityOrder </h2>
                         <input type='text' value='$quantityOrder' name='total_quan' hidden/>
                         <input type='text' value='$totalOrder' name='total_money' hidden/>
