@@ -49,18 +49,38 @@ input{
 input, button{
     outline: none;
 }
-.sticky{
-    position: fixed;
-    width: 100%;
-    z-index: 1000000;
+@mixin respon_1200{
+    @media(max-width: 1200px) { @content };
+}
+@mixin respon_1100{
+    @media(max-width: 1100px) { @content };
+}
+@mixin respon_1000{
+    @media(max-width: 1000px) { @content };
+}
+@mixin respon_800{
+    @media(max-width: 800px) { @content };
+}
+@mixin respon_600{
+    @media(max-width: 600px) { @content };
+}
+@mixin respon_400{
+    @media(max-width: 400px) { @content };
 }
 .heading_page{
     max-width: 100%;
     .heading_page__navhead{
+        position: relative;
         background-color: rgb(14, 15, 56);
         display: flex;
         padding: 0 1em;
         justify-content: flex-end;
+        &.sticky{
+            position: fixed;
+            // display: block;
+            width: 100%;
+            z-index: 1000000;
+        }
         .heading_page__navhead__log{
             color: white;
             a{
@@ -108,10 +128,14 @@ input, button{
             .heading_page__headmain__functions__function{
                 font-size: 20px;
                 margin-left: 10px;
+               
                 i{
                     padding: 0 5px;
                 }
                 &.hotline{
+                    @include respon_1100(){
+                        width: 100%;             
+                    }
                     text-transform: uppercase;
                     // display: flex;
                     color: rgb(45, 19, 92);
@@ -139,6 +163,9 @@ input, button{
                 }
                 &.cart{
                     position: relative;
+                    @include respon_1100(){
+                        display: none;
+                    }
                     .cart_m{
                         display: flex;
                         flex-direction: column;
@@ -311,6 +338,7 @@ input, button{
         }
     }
 }
+
 .main_page{
     display: flex;
     flex-wrap: wrap;
@@ -448,8 +476,19 @@ input, button{
                             color: rgb(22, 24, 70);
                             height: 400px;
                             margin-bottom: 10px;
+                            @include respon_600(){
+                                display: block;
+                                height: auto;
+                            }
                             .main_page__content__intestine__news__box__img{
                                 width: 30%;
+                                @include respon_1000(){
+                                    width: 40%;
+                                }
+                                @include respon_600(){
+                                    width: 100%;
+                                    height: 440px;
+                                }
                                 img{
                                     width: 100%;
                                     height: 100%;
@@ -494,6 +533,20 @@ input, button{
                             margin-left: 10px;
                             margin-bottom: 10px;
                             background: rgba(172, 193, 233, 0.3);
+                            @include respon_1000(){
+                                width: calc(33% - 8px);
+                            }
+                            @include respon_800(){
+                                width: calc(50% - 10px);
+                            }
+                            @include respon_600(){
+                                width: calc(50% - 10px);
+                                height: 400px;
+                            }
+                            @include respon_400(){
+                                width: calc(50% - 10px);
+                                height: 399px;
+                            }
                             .main_page__content__product__pic{
                                 height: 75%;
                                 img{
@@ -749,16 +802,34 @@ input, button{
             .main_page__manager{
                 background-color: rgb(54, 79, 129);
                 display: flex;
+                @include respon_1000(){
+                    flex-wrap: wrap;
+                }
                 .main_page__manager__list{
                     width: 20%;
+                    @include respon_1000(){
+                        width: 100%;
+                    }
                     ul{
                         list-style: none;
                         li{
                             width: 100%;
                             &.title_list{
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
                                 padding: 1em;
                                 font-size: 18px;
                                 background-color: rgb(42, 66, 112);
+                                cursor: pointer;
+                                .arro{
+                                    cursor: pointer;
+                                    transition: .5s;
+                                    display: none;
+                                    @include respon_1000(){
+                                        display: block;
+                                    }
+                                }
                             }
                             a{
                                 padding: 1em;
@@ -769,6 +840,10 @@ input, button{
                                     background: rgb(81, 112, 175);
                                 }
                             }
+                        }
+                        .main_list{
+                            height: 0;
+                            transition: .5s all;
                         }
                     }
                 }

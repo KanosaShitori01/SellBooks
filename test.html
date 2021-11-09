@@ -58,8 +58,19 @@
     <div class="res">
 
     </div>
+
+    <select name="" id="cate">
+        <option value="1">OKe</option>
+        <option value="2">OKe2</option>
+        <option value="3">OKe3</option>
+        <option value="4">OKe4</option>
+    </select>
 </body>
 <script>
+    let select = document.querySelector("#cate");
+    select.onchange = () =>{
+        console.log(select.value);
+    }
     let number = document.querySelector(".money p").innerHTML;
     let formatter = new Intl.NumberFormat('de-DE', {
     style: 'currency',

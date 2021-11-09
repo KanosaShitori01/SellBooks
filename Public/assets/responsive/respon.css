@@ -5,52 +5,139 @@
           box-sizing: border-box;
 }
 
-.heading_page__navhead.heading_page_bar_mobile {
+.heading_page .heading_page_bar_mobile {
   display: none;
 }
 
-@media only screen and (max-width: 1000px) {
+@media (max-width: 1100px) {
   body {
-    position: relative;
     overflow-x: hidden;
+  }
+  body .sticky {
+    height: auto;
   }
   body .heading_page {
     max-width: 100%;
-    overflow: hidden;
   }
-  body .heading_page .heading_page__navhead.mob {
-    display: none;
-  }
-  body .heading_page .heading_page__navhead.heading_page_bar_mobile {
+  body .heading_page .heading_page_bar_mobile {
     display: block;
+    background-color: #0e0f38;
     padding: 10px;
   }
-  body .heading_page .heading_page__navhead.heading_page_bar_mobile .heading_page_bar_mobile__active {
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__topbox {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__topbox .heading_page_bar_mobile__active {
+    position: relative;
     font-size: 2em;
   }
-  body .heading_page .heading_page__navhead.heading_page_bar_mobile .heading_page_bar_mobile__active i {
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__topbox .heading_page_bar_mobile__active a {
+    color: white;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__topbox .heading_page_bar_mobile__active i {
     cursor: pointer;
   }
-  body .heading_page .heading_page__navhead.heading_page_bar_mobile .heading_page_bar_mobile__content {
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__topbox .heading_page_bar_mobile__active.cart {
+    position: relative;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__topbox .heading_page_bar_mobile__active.cart .quantily {
+    position: absolute;
+    top: -16%;
+    left: -10px;
+    border-radius: 50%;
+    font-size: 15px;
+    padding: 4px;
+    background-color: #47489b;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__content {
     position: absolute;
     left: 0;
-    width: 100%;
-    height: 100%;
+    top: 100%;
+    width: 98%;
+    height: 90vh;
+    overflow-y: auto;
     -webkit-transition: .5s;
     transition: .5s;
     -webkit-transform: translateX(-100%);
             transform: translateX(-100%);
-    z-index: 100000000;
+    z-index: 10000000000;
     background-color: #0e0f38;
   }
-  body .heading_page .heading_page__navhead.heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__subject {
-    margin-top: 10px;
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__log {
+    margin-top: 5px;
+    border-bottom: 2px solid #8485cc;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__menu .heading_page_bar_mobile__content__menu__subject {
     padding: 1em;
     text-transform: uppercase;
     background-color: #2d2f7c;
   }
-  body .heading_page .heading_page__navhead.heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__log {
-    border-bottom: 2px solid #8485cc;
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__menu .heading_page_bar_mobile__content__menu__list ul li {
+    list-style: none;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__menu .heading_page_bar_mobile__content__menu__list ul li a {
+    display: block;
+    padding: 15px;
+    color: white;
+    background-color: #1d1d38;
+    border-bottom: 2px solid #494977;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__menu .heading_page_bar_mobile__content__menu__list ul li a:hover {
+    background-color: #404174;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__menu .heading_page_bar_mobile__content__cate {
+    width: 100%;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__menu .heading_page_bar_mobile__content__cate .heading_page_bar_mobile__content__cate__title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 1em;
+    background-color: #424488;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__menu .heading_page_bar_mobile__content__cate .heading_page_bar_mobile__content__cate__title h2 {
+    margin-right: 10px;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__menu .heading_page_bar_mobile__content__cate .heading_page_bar_mobile__content__cate__content .mobile__content__cate__box {
+    width: 100%;
+  }
+  body .heading_page .heading_page_bar_mobile .heading_page_bar_mobile__content .heading_page_bar_mobile__content__menu .heading_page_bar_mobile__content__cate .heading_page_bar_mobile__content__cate__content .mobile__content__cate__box.author {
+    display: none;
+  }
+  body .heading_page .heading_page__navhead.mob {
+    display: none;
+  }
+  body .heading_page .heading_page__headmain .heading_page__headmain__logo {
+    width: 90%;
+    margin: 1em 0;
+  }
+  body .heading_page .heading_page__headmain .heading_page__headmain__about {
+    width: 100%;
+    height: 300px;
+    margin-left: 0;
+  }
+  body .heading_page .heading_page__instruction {
+    display: none;
+  }
+  body .main_page .main_page__slider {
+    height: 400px;
+  }
+  body .main_page .main_page__slider .step {
+    top: 40%;
+  }
+  body .main_page .main_page__part .main_page__left {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .main_page .main_page__part .main_page__left {
+    width: 27%;
   }
 }
 /*# sourceMappingURL=respon.css.map */

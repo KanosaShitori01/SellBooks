@@ -153,28 +153,77 @@
 <body>
     <header class="heading_page">
         <div class='heading_page__navhead heading_page_bar_mobile'>
-            <div class='heading_page_bar_mobile__active'>
-                <i class='fas fa-bars'></i>
+            <div class="heading_page_bar_mobile__topbox">
+                <div class='heading_page_bar_mobile__active'>
+                    <i class='fas fa-bars'></i>
+                </div>
+                <div class='heading_page_bar_mobile__active cart'>
+                    <div class="quantily"><span><?= $cart_count; ?></span></div>
+                    <a href="?controller=cart" class="cart_m"><i class="fas fa-shopping-cart"></i></a>
+                </div>
             </div>
             <div class='heading_page_bar_mobile__content'>
-                <div class="heading_page_bar_mobile__content__subject">
-                    <h2>Menu</h2>
-                </div>
                 <div class="heading_page_bar_mobile__content__log heading_page__navhead__log">
-                <?php    
-                if(!isset($_SESSION['user']))
-                    echo " <div class='heading_page__navhead__log login'> 
-                        <a href='Sign/login.php'><i class='fas fa-user'></i> Đăng Nhập</a>
-                    </div>
-                    <div class='heading_page__navhead__log register'>
-                        <a href='Sign/register.php'><i class='fas fa-key'></i> Đăng Ký</a>
-                    </div>
-                    ";
-                else 
-                    echo "<a href='?controller=user'><i class='fas fa-user-circle'></i> Tài khoản</a>
-                        <a href='?logout'><i class='fas fa-door-open'></i> Đăng Xuất</a>";
-                ?>
+                    <?php    
+                    if(!isset($_SESSION['user']))
+                        echo " <div class='heading_page__navhead__log login'> 
+                            <a href='Sign/login.php'><i class='fas fa-user'></i> Đăng Nhập</a>
+                        </div>
+                        <div class='heading_page__navhead__log register'>
+                            <a href='Sign/register.php'><i class='fas fa-key'></i> Đăng Ký</a>
+                        </div>
+                        ";
+                    else 
+                        echo "<a href='?controller=user'><i class='fas fa-user-circle'></i> Tài khoản</a>
+                            <a href='?logout'><i class='fas fa-door-open'></i> Đăng Xuất</a>";
+                    ?>
                 </div>
+                <div class="heading_page_bar_mobile__content__menu">
+                    <div class="heading_page_bar_mobile__content__cate">
+                        <div class="heading_page_bar_mobile__content__cate__title">
+                            <h2>Danh Mục: </h2>
+                            <select name="" id="cate">
+                                <option value="B">Sách</option>
+                                <option value="A">Tác giả</option>
+                            </select>
+                        </div>
+                        <div class="heading_page_bar_mobile__content__cate__content">
+                            <div class="mobile__content__cate__box books heading_page_bar_mobile__content__menu__list">
+                                <ul>
+                                <?php 
+                                    foreach($Category as $cate){
+                                echo "<li><a href='?controller=category&action=show&id=${cate['id']}'>${cate['name']}</a></li>";
+                                    }
+                                ?>
+                                </ul>
+                            </div>
+                            <div class="mobile__content__cate__box author heading_page_bar_mobile__content__menu__list">
+                                <ul>
+                                <?php 
+                                    foreach($Author as $au){
+                                echo "<li><a href='?controller=author&action=show&id=${au['id']}'>${au['name']}</a></li>";
+                                    }
+                                ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="heading_page_bar_mobile__content__menu__subject">
+                        <h2>Menu</h2>
+                    </div>
+                    <div class="heading_page_bar_mobile__content__menu__list">
+                        <ul>
+                            <li><a href='./'>Trang Chủ</a></li>
+                            <li><a href='?controller=another&action=introduce'>Giới Thiệu</a></li>
+                            <li><a href='?controller=products'>Sách</a></li>
+                            <li><a href='?controller=another&action=HowtoBuy'>Hướng Dẫn Mua Hàng</a></li>
+                            <li><a href='?controller=another&action=QaA'>Hỏi Đáp</a></li>
+                            <li><a href='?controller=another&action=News'>Tin Tức</a></li>
+                            <li><a href='?controller=another&action=Contact'>Liên Hệ</a></li>
+                        </ul>
+                    </div>
+                </div>
+               
             </div>
         </div>
         <?php
@@ -312,17 +361,18 @@
                                 // var_dump();
                                 if(!empty($selected)){
                                     if(isset($_SESSION["selected"])){
-                                    if($_SESSION["selected"] == "SP"){
-                                        foreach($Category as $cate){
-                                            echo "<li><a href='?controller=category&action=show&id=${cate['id']}'>${cate['name']}</a></li>";
+                                        if($_SESSION["selected"] == "SP"){
+                                            foreach($Category as $cate){
+                                                echo "<li><a href='?controller=category&action=show&id=${cate['id']}'>${cate['name']}</a></li>";
+                                            }
+                                        }
+                                        else{
+                                            foreach($Author as $au){
+                                                echo "<li><a href='?controller=author&action=show&id=${au['id']}'>${au['name']}</a></li>";
+                                            }
                                         }
                                     }
                                     else{
-                                        foreach($Author as $au){
-                                            echo "<li><a href='?controller=author&action=show&id=${au['id']}'>${au['name']}</a></li>";
-                                        }
-                                    }
-                                    }else{
                                         foreach($Category as $cate){
                                             echo "<li><a href='?controller=category&action=show&id=${cate['id']}'>${cate['name']}</a></li>";
                                         }
@@ -547,10 +597,11 @@
                             </div>
                             <div class="main_page__content__intestine">
                                 <div class="main_page__content__intestine__products">';
-                            foreach($GLOBALS['products_follow'] as $product_f){
+                                foreach($GLOBALS['products_follow'] as $product_f){
                                     echo "
-                                    <div class='main_page__content__product'>
-                                        <a href='?controller=products&action=show&id=${product_f['id']}'><div class='main_page__content__product__pic'>
+                                        <div class='main_page__content__product'>
+                                        <a href='?controller=products&action=show&id=${product_f['id']}'>
+                                        <div class='main_page__content__product__pic'>
                                             <img src='${product_f['image']}' alt='' srcset=''>
                                         </div>
                                         <div class='main_page__content__product__content'>
@@ -563,15 +614,19 @@
                                             <div class='product__content__price money sp'>
                                                 <p class='price'>${product_f['price']}</p>
                                             </div>
-                                        </div></a>
+                                        </div>
+                                        </a>
                                     </div>
                                     ";
-                        echo       '</div>
+                                }
+                        echo       "
                                 </div>
                             </div>
-                        ';
-                        }
+                        </div>
+                        ";
+                        
                     }
+               
                     else if(isset($_GET['controller']) && $_GET['controller'] == "cart"){
                         $totalmoney = 0;
                         $manysp = 0;
@@ -701,8 +756,13 @@
                         <div class='main_page__manager'>
                             <div class='main_page__manager__list'>
                                 <ul>
-                                <li class='title_list'><i class='fas fa-user-circle'></i> <span> Tài khoản </span></li>
+                                <li class='title_list'>
+                                    <p><i class='fas fa-user-circle'></i> <span> Tài khoản </span></p>
+                                    <i class='fas fa-angle-down arro'></i>
+                                </li>
+                                    <ul class='main_list'>
                                     ${user['list']}
+                                    </ul>
                                 </ul>
                             </div>
                             <div class='main_page__manager__box'>

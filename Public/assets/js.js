@@ -1,6 +1,8 @@
 window.addEventListener("scroll", ()=>{
-    let header = document.querySelector(".heading_page__navhead");
-    header.classList.toggle("sticky", scrollY > 0);
+    let header = document.querySelectorAll(".heading_page__navhead");
+    header.forEach((val)=>{
+        val.classList.toggle("sticky", scrollY > 0);
+    });
 })
 if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);
@@ -77,3 +79,30 @@ barBtn.addEventListener("click", ()=>{
     }
     // console.log(menuMobile);
 });
+let cate = document.querySelector("#cate");
+let cateB = document.querySelector(".books");
+let cateA = document.querySelector(".author");
+cate.onchange = () => {
+    if(cate.value == "A"){
+        cateA.style.display = "block";
+        cateB.style.display = "none";
+    }else{
+        cateB.style.display = "block";
+        cateA.style.display = "none";
+    }
+    
+}
+let titleList = document.querySelector(".title_list");
+let mainList = document.querySelector(".main_list");
+titleList.onclick = () => {
+    put = !put;
+    let arro = document.querySelector(".arro");
+    if(put){
+        arro.style.transform = "rotate(0deg)";
+        mainList.style.height = "0";
+    }else{
+        arro.style.transform = "rotate(180deg)";
+        mainList.style.height = "auto";
+    }
+    
+}
