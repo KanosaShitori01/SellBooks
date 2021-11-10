@@ -4,6 +4,7 @@
     require "./Core/Database.php";
     require "./Model/BaseModel.php";
     if(isset($_SESSION['userZ'])) header("location: Sign/user_otp.php");
+    if(!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
     if(isset($_GET['controller'])){
         $controllerName = ucfirst(strtolower($_REQUEST['controller'] ?? "Welcome"))."Controller";
         $actionName = strtolower($_REQUEST['action'] ?? 'index');
@@ -35,6 +36,10 @@
             $Prod->Update("carts", $cart['id'], "", "", [
                 "error" => ""
             ]);
+            if(!empty($_SESSION['cart']))
+            foreach($_SESSION['cart'] as $cart){
+                $cart['error'] = "";
+            }
         }
     }
     $sessCount = session_id();
@@ -66,8 +71,8 @@
     $Category = $controllerObj->getAll("categories");
     if(isset($_SESSION['user'])){
         $Cart = $controllerObj->Find("carts", "", "id_user", $_SESSION['user'], true);
-    }
-    $cart_count = (isset($Cart) && isset($_SESSION['user'])) ? count($Cart) : "0"; 
+    }else $Cart = $_SESSION['cart'];
+    $cart_count = (isset($Cart) && isset($_SESSION['user']) || isset($_SESSION['cart'])) ? count($Cart) : "0"; 
     $choice = ["", ""]; 
     $selected = "SP";
 if(isset($_POST['change_cate'])){
@@ -130,6 +135,7 @@ function FindAuthor($id, $author){
         }
         return $res;
 }
+// var_dump($_SESSION['cart']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -652,7 +658,7 @@ function FindAuthor($id, $author){
                                         $totalquantity = $cart['price'] * $cart['quantity'];
                                         $manysp += $cart['quantity'];
                                         $totalmoney += $totalquantity;
-                                        // $max = $quantityProd[$cart['id_products']];
+                                        $max = $quantityProd[$cart['id_products']];
                                         echo "
                                         <div class='cart__content__products__product'>
                                             <div class='cart__content__product__left'>
@@ -674,7 +680,7 @@ function FindAuthor($id, $author){
                                                     <div class='snipper'>
                                                         <div class='prev cart_p'><i class='fas fa-minus'></i></div>
                                                         <div class='next cart_n'><i class='fas fa-plus'></i></div>
-                                                        <input type='number' onchange='alert('oke')' value='${cart['quantity']}' name='quantity_${cart['id_products']}' />   
+                                                        <input type='number' value='${cart['quantity']}' name='quantity_${cart['id_products']}' />   
                                                     </div>
                                                 </div>
                                                 <div class='cart__content__product__total'>
@@ -686,7 +692,7 @@ function FindAuthor($id, $author){
                                                 <p>${cart['error']}</p>
                                             </div>
                                             <div class='cart__content__product__delete'>
-                                                <a href='?controller=cart&action=delete&id=${cart['id']}'><i class='fas fa-times'></i></a>
+                                                <a href='?controller=cart&action=delete&id=${cart['id']}&guest'><i class='fas fa-times'></i></a>
                                             </div>
                                         </div>         
                                         ";
