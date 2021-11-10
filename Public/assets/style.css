@@ -128,6 +128,13 @@ input, button {
   margin-top: 10px;
 }
 
+@media (min-width: 1600px) {
+  .heading_page .heading_page__headmain .heading_page__headmain__about {
+    width: 30%;
+    height: 260px;
+  }
+}
+
 .heading_page .heading_page__headmain .heading_page__headmain__about img {
   width: 100%;
   height: 100%;
@@ -677,6 +684,7 @@ input, button {
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__intestine__products .main_page__content__product .main_page__content__product__pic {
   height: 75%;
+  width: 100%;
 }
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__intestine__products .main_page__content__product .main_page__content__product__pic img {
@@ -740,6 +748,13 @@ input, button {
   }
 }
 
+@media (min-width: 1600px) {
+  .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__pic {
+    height: 520px;
+    margin-right: 1px;
+  }
+}
+
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__pic img {
   width: 100%;
   height: 100%;
@@ -780,7 +795,7 @@ input, button {
   color: #2e3070;
   width: auto;
   word-break: keep-all;
-  min-height: 170px;
+  height: 170px;
   overflow-y: auto;
 }
 
