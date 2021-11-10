@@ -70,7 +70,7 @@
     $cart_count = (isset($Cart) && isset($_SESSION['user'])) ? count($Cart) : "0"; 
     $choice = ["", ""]; 
     $selected = "SP";
-   if(isset($_POST['change_cate'])){
+if(isset($_POST['change_cate'])){
         if(!empty($_POST['category'])) {
             $_SESSION["selected"] = $_POST['category'];
             if($_SESSION["selected"] == "SP"){
@@ -84,43 +84,43 @@
         } else {
             echo 'Please select the value.';
         }
-   }
-   if(isset($_POST['submit_search'])){
-       if(isset($_POST['namebook'])){
-           $_SESSION['namebook'] = $_POST['namebook'];
-           header("location: ?controller=products&action=find&name=".$_SESSION['namebook']);
-       }
-       else{
-           header("refresh:0, url=./");
-       }
-   }
-   if(isset($_POST['submit_buy'])){
-       if(isset($_POST['quantity'])){
+}
+if(isset($_POST['submit_search'])){
+    if(isset($_POST['namebook'])){
+        $_SESSION['namebook'] = $_POST['namebook'];
+        header("location: ?controller=products&action=find&name=".$_SESSION['namebook']);
+    }
+    else{
+        header("refresh:0, url=./");
+    }
+}
+if(isset($_POST['submit_buy'])){
+    if(isset($_POST['quantity'])){
             $id = $GLOBALS['product_one'][0]['id'];
             $quantity = $_POST['quantity'];
             header("location: ?controller=products&action=buy&id=$id&quantity=$quantity");
-       }
-   }
-   if(isset($_POST['update_cart'])){
-       $res = "";
-       $resSec = "";
-       foreach($Cart as $idprod){
-           if(isset($_POST["quantity_${idprod['id_products']}"])){
-               $change_val = $_POST["quantity_${idprod['id_products']}"];
+    }
+}
+if(isset($_POST['update_cart'])){
+    $res = "";
+    $resSec = "";
+    foreach($Cart as $idprod){
+        if(isset($_POST["quantity_${idprod['id_products']}"])){
+            $change_val = $_POST["quantity_${idprod['id_products']}"];
                 $res .= "$change_val,";
                 $resSec .= $idprod["id"].",";
-           }
-       }
-       $setResSec = rtrim($resSec, ",");
-       $setRes = rtrim($res, ",");
-       header("location: ?controller=cart&action=update&id=$setResSec&change=$setRes");
-   }
-   if(isset($_GET['logout'])){
+        }
+    }
+    $setResSec = rtrim($resSec, ",");
+    $setRes = rtrim($res, ",");
+    header("location: ?controller=cart&action=update&id=$setResSec&change=$setRes");
+}
+if(isset($_GET['logout'])){
         session_unset();
         session_destroy();
         header("location: ./");
-   }
-   function FindAuthor($id, $author){
+}
+function FindAuthor($id, $author){
         $res = "";
         foreach($author as $au){
             if($au["id"] === $id){
@@ -129,7 +129,7 @@
             }
         }
         return $res;
-   }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -223,7 +223,7 @@
                         </ul>
                     </div>
                 </div>
-               
+            
             </div>
         </div>
         <?php
@@ -252,13 +252,13 @@
                 ";
             }
         ?>
-       
+    
         <div class="heading_page__headmain">
             <div class="heading_page__headmain__logo">
                 <a href="./"><img src="Public/img/LogoKQ.png" width="100%" height="100%" alt="" srcset=""></a>
             </div>
             <div class="heading_page__headmain__about">
-               <img src="Public/img/logocenter.jpg" width="100%" height="100%" alt="" srcset="">
+            <img src="Public/img/logocenter.jpg" width="100%" height="100%" alt="" srcset="">
             </div>
             <div class="heading_page__headmain__functions">
                 <div class="heading_page__headmain__functions__function hotline">
@@ -320,7 +320,7 @@
                     }
                 }
 
-               echo "</div>
+            echo "</div>
                 </div>
                 ";         
             }
@@ -386,47 +386,47 @@
                     ';
                 }
             ?>
-          
+        
             <div class="main_page__content">
                 <?php 
                     if(!isset($_GET['controller'])){
                         DeleteErr();
-                        echo '
-                            <div class="main_page__box">
-                                <div class="main_page__content__title">
-                                    <p>Sách Mới</p>
-                                </div>
-                                <div class="main_page__content__intestine">
-                                    <div class="main_page__content__intestine__products">';
-                                    $count = 0;
-                                        foreach($newProducts as $prod){
-                                            echo "
-                                            <div class='main_page__content__product'>
-                                                <a href='?controller=products&action=show&id=${prod['id']}'><div class='main_page__content__product__pic'>
-                                                    <img src='${prod['image']}' alt='' srcset=''>
-                                                </div>
-                                                <div class='main_page__content__product__content'>
-                                                    <div class='product__content__name sp'>
-                                                        <p>${prod['name']}</p>
-                                                    </div>
-                                                    <div class='product__content__author sp'>
-                                                        <p>".FindAuthor($prod['id_author'], $Author)."</p>
-                                                    </div>
-                                                    <div class='product__content__price money sp'>
-                                                        <p class='price'>${prod['price']}</p>
-                                                    </div>
-                                                </div></a>
-                                            </div>
-                                            ";
-                                            $count++;
-                                            if($count > 14){
-                                                break;
-                                            }
-                                        }
-                        echo       '</div>
-                                </div>
-                            </div>
-                        ';
+                        // echo '
+                        //     <div class="main_page__box">
+                        //         <div class="main_page__content__title">
+                        //             <p>Sách Mới</p>
+                        //         </div>
+                        //         <div class="main_page__content__intestine">
+                        //             <div class="main_page__content__intestine__products">';
+                        //             $count = 0;
+                        //                 foreach($newProducts as $prod){
+                        //                     echo "
+                        //                     <div class='main_page__content__product'>
+                        //                         <a href='?controller=products&action=show&id=${prod['id']}'><div class='main_page__content__product__pic'>
+                        //                             <img src='${prod['image']}' alt='' srcset=''>
+                        //                         </div>
+                        //                         <div class='main_page__content__product__content'>
+                        //                             <div class='product__content__name sp'>
+                        //                                 <p>${prod['name']}</p>
+                        //                             </div>
+                        //                             <div class='product__content__author sp'>
+                        //                                 <p>".FindAuthor($prod['id_author'], $Author)."</p>
+                        //                             </div>
+                        //                             <div class='product__content__price money sp'>
+                        //                                 <p class='price'>${prod['price']}</p>
+                        //                             </div>
+                        //                         </div></a>
+                        //                     </div>
+                        //                     ";
+                        //                     $count++;
+                        //                     if($count > 14){
+                        //                         break;
+                        //                     }
+                        //                 }
+                        // echo       '</div>
+                        //         </div>
+                        //     </div>
+                        // ';
                         foreach($Category as $cate){
                             DeleteErr();
                             echo '
@@ -574,8 +574,8 @@
                                                 <input type='number' value='1' name='quantity'
                                                 oninput='OnlyNum(this, ${infor_prod['quantity']})'>   
                                             </div>
-                                             <input name='submit_buy' type='submit' class='btn_ok' value='Đặt Mua' /> 
-                                             <input name='submit_buy' type='submit' class='btn_ok' value='Thêm Vào Giỏ Hàng' /> 
+                                            <input name='submit_buy' type='submit' class='btn_ok' value='Đặt Mua' /> 
+                                            <input name='submit_buy' type='submit' class='btn_ok' value='Thêm Vào Giỏ Hàng' /> 
                                         </div>
                                         <div class='error_content'>
                                             <p>${infor_prod['error']}</p>
@@ -586,7 +586,7 @@
                                 </div>
                             </div>
                         </div>";
-                       
+                    
                     }
                     else if(isset($_GET['controller']) && $_GET['controller'] == "category"){
                         DeleteErr();
@@ -626,7 +626,7 @@
                         ";
                         
                     }
-               
+            
                     else if(isset($_GET['controller']) && $_GET['controller'] == "cart"){
                         $totalmoney = 0;
                         $manysp = 0;
@@ -704,7 +704,7 @@
                                         <p>Tổng tiền : <span class='price'>$totalmoney</span></p>
                                     </div>
                                     </div>";
-                           echo (empty($manysp)) ? "<a href='./' class='cart__content__pay__btn'>Mua Hàng</a>" : "<a href='?controller=pay' class='cart__content__pay__btn'>Thanh Toán</a>"; 
+                        echo (empty($manysp)) ? "<a href='./' class='cart__content__pay__btn'>Mua Hàng</a>" : "<a href='?controller=pay' class='cart__content__pay__btn'>Thanh Toán</a>"; 
                         echo    "</div>
                             </div>
                         </div>
@@ -800,8 +800,8 @@
                             <li><a href="https://www.facebook.com/pham.quy.393"><i class="fab fa-facebook"></i>Facebook</a></li>
                         </ul>
                     </div>
-                 </div>
-                 <div class="footer_page__information">
+                </div>
+                <div class="footer_page__information">
                     <div class="footer_page__information__title">
                         <p>Thông tin hữu ích</p>
                     </div>
@@ -814,35 +814,36 @@
                             <li><a href=""><i class="fas fa-long-arrow-alt-right"></i>Tận tâm phụng sự</a></li>
                         </ul>
                     </div>
-                 </div>
+                </div>
                 <div class="footer_page__information">
-                     <div class="footer_page__information__title">
+                    <div class="footer_page__information__title">
                         <p>Thống kê truy cập</p>
-                     </div>
-                     <div class="footer_page__information__content">
-                         <div class="footer_page__information__content__item">
+                    </div>
+                    <div class="footer_page__information__content">
+                        <div class="footer_page__information__content__item">
                             <span class="til">Trực tuyến:</span><span><?=count($getusOnline)?></span>
-                         </div>
-                         <div class="footer_page__information__content__item">
+                        </div>
+                        <div class="footer_page__information__content__item">
                             <span class="til">Tổng truy cập:</span><span><?=count($getSumOn)?></span>
-                         </div>
-                         <div class="footer_page__information__content__item">
+                        </div>
+                        <div class="footer_page__information__content__item">
                             <p class="title">Cập nhật thông tin khuyến mãi</p>
                             <div class="tab_send">
                                 <input type="text" name="" id="">
                                 <button type="submit"><i class="fab fa-telegram-plane"></i></button>
                             </div>
-                         </div>
-                     </div>
-                  </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer_page__plugin">
+                    <iframe data-width="170" height="300px" 
+                    src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fkinhsachkimquy&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                </div>
             </div>
-            <div class="footer_page__plugin">
-                <iframe data-width="170" height="300px" 
-                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fkinhsachkimquy&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-            </div>
+        
         </div>
         <div class="footer_page__copyright">
-           <p> &copy; Copyright 2021 <a href="https://kinhsachkimquy.com/">kinhsachkimquy.com</a> Designed by <a href="">Thanh Mây</a></p>
+        <p> &copy; Copyright 2021 <a href="https://kinhsachkimquy.com/">kinhsachkimquy.com</a> Designed by <a href="">Thanh Mây</a></p>
         </div>
         </footer>
 </body>
@@ -850,7 +851,7 @@
 <script type="text/javascript" src="Nivo/jquery.nivo.slider.js"></script>
 <script type="text/javascript">
     $(window).load(function () {
-      $("#slider").nivoSlider({
+    $("#slider").nivoSlider({
             effect: 'random',               // Specify sets like: 'fold,fade,sliceDown'
             slices: 15,                     // For slice animations
             boxCols: 10,                     // For box animations
@@ -873,8 +874,8 @@
             afterLoad: function(){}         // Triggers when slider has loaded
         });
     });
-  </script>
-  <script type="text/javascript">
+</script>
+<script type="text/javascript">
 
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-36251023-1']);
@@ -882,10 +883,10 @@
     _gaq.push(['_trackPageview']);
 
     (function () {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-  </script>
+</script>
 <script src="Public/assets/js.js"></script>
 </html>

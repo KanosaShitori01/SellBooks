@@ -65,12 +65,20 @@ input, button{
     @media(max-width: 600px) { @content };
 }
 @mixin respon_400{
-    @media(max-width: 400px) { @content };
+    @media(max-width: 490px) { @content };
+}
+@mixin respon_500{
+    @media(max-width: 500px) { @content };
+}
+@mixin respon_300{
+    @media(max-width: 380px) { @content };
 }
 .heading_page{
     max-width: 100%;
+    width: 100%;
     .heading_page__navhead{
         position: relative;
+        width: 100%;
         background-color: rgb(14, 15, 56);
         display: flex;
         padding: 0 1em;
@@ -453,6 +461,7 @@ input, button{
             flex: 1;
             .main_page__box{
                 margin-bottom: 1em;
+                max-width: 100%;
                 .main_page__content__title{
                     padding: 1em;
                     text-transform: uppercase;
@@ -543,9 +552,9 @@ input, button{
                                 width: calc(50% - 10px);
                                 height: 400px;
                             }
-                            @include respon_400(){
-                                width: calc(50% - 10px);
-                                height: 399px;
+                            @include respon_500(){
+                                width: calc(100% - 10px);
+                                height: 500px;
                             }
                             .main_page__content__product__pic{
                                 height: 75%;
@@ -648,7 +657,7 @@ input, button{
                 }
             }
             .cart{
-                margin: 1em;
+                width: 100%;
                 .cart__title{
                     font-size: 17px;
                     text-transform: uppercase;
@@ -658,6 +667,7 @@ input, button{
                     margin-bottom: 1em;
                 }
                 .cart__content{
+                    width: 100%;
                     display: flex;
                     flex-wrap: wrap;
                     color: rgb(27, 40, 75);
@@ -680,6 +690,9 @@ input, button{
                     }
                     .cart__content__products{
                         flex: 1;
+                        @include respon_1000(){
+                            width: 100%;
+                        }
                         margin-right: 10px;
                         padding: 10px;
                         background-color: rgba(207, 223, 253, 0.6);
@@ -687,9 +700,14 @@ input, button{
                             display: flex;
                             justify-content: space-between;
                             align-items: center;
+                            flex-wrap: wrap;
                             height: 170px;
                             position: relative;
                             margin-bottom: 4px;
+                            @include respon_600(){
+                                height: auto;
+                                
+                            }
                             // background-color: red;
                             border-bottom: 1px solid rgb(27, 40, 75);
                             font-size: 20px;
@@ -763,11 +781,19 @@ input, button{
                                 right: 0;
                                 bottom: 10px;
                                 font-size: 15px;
+                                @include respon_1000(){
+                                    position: relative;
+                                    width: 100%;
+                                    text-align: right;
+                                }
                             }
                         }
                     }
                     .cart__content__pay{
                         width: 20%;
+                        @include respon_1000(){
+                            width: 100%;
+                        }
                         height: 200px;
                         color: white;
                         font-size: 20px;
@@ -1350,8 +1376,15 @@ input, button{
             flex: 1;
             margin-top: 1em;
             justify-content: space-between;
+            @include respon_800(){
+                display: block;
+                text-align: center;
+            }
             .footer_page__information{
                 width: 30%;
+                @include respon_800(){
+                    width: 100%;
+                }
                 .footer_page__information__title{
                     text-transform: uppercase;
                     font-size: 21px;
@@ -1379,6 +1412,10 @@ input, button{
                         margin: 15px 0;
                         display: flex;
                         flex-wrap: wrap;
+                        @include respon_800(){
+                            display: block;
+                            text-align: center;
+                        }
                         .til{
                             width: 40%;
                         }
@@ -1389,6 +1426,9 @@ input, button{
                         .tab_send{
                             display: flex;
                             width: 85%;
+                            @include respon_800(){
+                                width: 100%;
+                            }
                             background-color: rgb(255, 255, 255);
                             input{
                                 width: 80%;
@@ -1406,6 +1446,13 @@ input, button{
                             }
                         }
                     }
+                }
+            }
+            .footer_page__plugin{
+                @include respon_800(){
+                     width: 100%;
+                     display: flex;
+                    justify-content: center;
                 }
             }
         }
