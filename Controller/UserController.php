@@ -820,7 +820,28 @@
                 <div class='main_page__manager__control__count'>
                     <h2>Tổng số đơn hàng: $countOrd</h2>
                 </div>
-                <div class='main_page__manager__control__orders'>";
+                <div class='main_page__manager__control__orders'>
+                <div class='main_page__manager__control__order'>
+                    <div class='main_page__manager__control__infor'>
+                        <div class='main_page__manager__control__infor__img'>
+                            <img src='' />
+                        </div>
+                        <div class='main_page__manager__control__infor__text'>
+                            <p>Tên Người Đặt: </p>
+                            <p>Tên Sách: </p>
+                            <p>Số Lượng: </p>
+                            <p>Tổng Tiền: <span class='price'></span></p>
+                            <p>Địa chỉ: </p>
+                            <p>Số điện thoại: </p>
+                            <p>Gmail:</p>
+                        </div>
+                    </div>
+                    <div class='main_page__manager__control__done'>
+                        <a href=''>Xóa Đơn Hàng</a>
+                    </div>
+                </div>
+                ";
+                
                     if(!empty($allOrder)){
                         foreach($allOrder as $order){
                         if($order['received'] == 0){

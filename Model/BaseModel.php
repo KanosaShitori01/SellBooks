@@ -59,7 +59,6 @@
             $sql = "UPDATE $tb SET $setData WHERE id=$id";
             else 
             $sql = "UPDATE $tb SET $setData WHERE $key=$value";
-            // echo $sql;
             return $this->Query($sql) ?? "";
         }
         // 4. Thêm dữ liệu 

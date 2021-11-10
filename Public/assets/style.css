@@ -183,7 +183,7 @@ input, button {
   position: relative;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1000px) {
   .heading_page .heading_page__headmain .heading_page__headmain__functions .heading_page__headmain__functions__function.cart {
     display: none;
   }
@@ -401,6 +401,12 @@ input, button {
 .main_page .main_page__slider .main_page__slider__card {
   width: 100%;
   height: 500px;
+}
+
+@media (min-width: 1600px) {
+  .main_page .main_page__slider .main_page__slider__card {
+    height: 800px;
+  }
 }
 
 .main_page .main_page__slider .main_page__slider__card img {
@@ -637,6 +643,12 @@ input, button {
   background: rgba(172, 193, 233, 0.3);
 }
 
+@media (min-width: 1600px) {
+  .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__intestine__products .main_page__content__product {
+    width: calc(20% - 10px);
+  }
+}
+
 @media (max-width: 1000px) {
   .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__intestine__products .main_page__content__product {
     width: calc(33% - 8px);
@@ -708,6 +720,8 @@ input, button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   color: #0b0c30;
 }
 
@@ -719,6 +733,13 @@ input, button {
   margin-right: 1em;
 }
 
+@media (max-width: 800px) {
+  .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__pic {
+    height: 450px;
+    margin-right: 1px;
+  }
+}
+
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__pic img {
   width: 100%;
   height: 100%;
@@ -726,6 +747,18 @@ input, button {
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content {
   width: 70%;
+}
+
+@media (max-width: 1000px) {
+  .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content {
+    width: 60%;
+  }
+}
+
+@media (max-width: 600px) {
+  .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content {
+    width: 100%;
+  }
 }
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .sp {
@@ -747,7 +780,7 @@ input, button {
   color: #2e3070;
   width: auto;
   word-break: keep-all;
-  height: 170px;
+  min-height: 170px;
   overflow-y: auto;
 }
 
@@ -764,9 +797,26 @@ input, button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__buy .infor__content__buy__quant {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 800px) {
+  .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__buy .infor__content__buy__submit {
+    width: 100%;
+  }
 }
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__buy .btn_ok {
@@ -778,6 +828,13 @@ input, button {
   cursor: pointer;
   font-size: 17px;
   background-color: #545ab8;
+}
+
+@media (max-width: 800px) {
+  .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__buy .btn_ok {
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
 }
 
 .main_page .main_page__part .main_page__content .main_page__box .main_page__content__intestine .main_page__content__infor .main_page__content__infor__content .infor__content__buy .btn_ok:hover {
@@ -843,6 +900,12 @@ input, button {
 @media (max-width: 1000px) {
   .main_page .main_page__part .main_page__content .cart .cart__content .cart__content__products {
     width: 100%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .main_page .main_page__part .main_page__content .cart .cart__content .cart__content__products {
+    margin-right: 0;
   }
 }
 
@@ -919,6 +982,12 @@ input, button {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+@media (max-width: 500px) {
+  .main_page .main_page__part .main_page__content .cart .cart__content .cart__content__products .cart__content__products__product .cart__content__product__right .cart__content__product__quantity {
+    margin-left: 10px;
+  }
 }
 
 .main_page .main_page__part .main_page__content .cart .cart__content .cart__content__products .cart__content__products__product .cart__content__product__right .cart__content__product__quantity a {
@@ -1147,9 +1216,22 @@ input, button {
   margin-bottom: 2em;
 }
 
+@media (max-width: 600px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+}
+
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab .tab__label {
   width: 22%;
   font-size: 20px;
+}
+
+@media (max-width: 600px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab .tab__label {
+    width: 100%;
+  }
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__infor .main_page__manager__infor__tab .tab__input {
@@ -1280,6 +1362,15 @@ input, button {
   overflow-y: auto;
 }
 
+@media (max-width: 800px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__products .main_page__manager__control__list__product {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    height: auto;
+    overflow-y: visible;
+  }
+}
+
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__products .main_page__manager__control__list__product .control__list__product__left {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1293,10 +1384,24 @@ input, button {
   height: 100%;
 }
 
+@media (max-width: 800px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__products .main_page__manager__control__list__product .control__list__product__left {
+    width: 100%;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+}
+
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__products .main_page__manager__control__list__product .control__list__product__left .main_page__manager__control__list__product_img {
   width: 30%;
   height: 100%;
   margin-right: 10px;
+}
+
+@media (min-width: 1600px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__products .main_page__manager__control__list__product .control__list__product__left .main_page__manager__control__list__product_img {
+    width: 20%;
+  }
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__products .main_page__manager__control__list__product .control__list__product__left .main_page__manager__control__list__product_img.news {
@@ -1322,7 +1427,24 @@ input, button {
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__products .main_page__manager__control__list__product .control__list__product__left .main_page__manager__control__list__product_infor p.descrip {
   width: 100%;
   word-break: keep-all;
+  height: 120px;
   overflow: auto;
+}
+
+@media (max-width: 800px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__products .main_page__manager__control__list__product .control__list__product__left .main_page__manager__control__list__product_infor p.descrip {
+    margin-top: 10px;
+    background-color: rgba(102, 130, 184, 0.4);
+    padding: 5px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 800px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__products .main_page__manager__control__list__product .control__list__product__right {
+    width: 100%;
+    margin-top: 1.4em;
+  }
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__products .main_page__manager__control__list__product .control__list__product__right a {
@@ -1440,8 +1562,22 @@ input, button {
           justify-content: space-between;
 }
 
+@media (max-width: 800px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__boxs {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+}
+
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__boxs .main_page__manager__control__list__box {
   width: calc(50% - 10px);
+}
+
+@media (max-width: 600px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__boxs .main_page__manager__control__list__box {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__list .main_page__manager__control__list__boxs .main_page__manager__control__list__box .main_page__manager__control__boxs__function {
@@ -1521,6 +1657,14 @@ input, button {
   margin-bottom: 10px;
 }
 
+@media (max-width: 600px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__orders .main_page__manager__control__order {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    height: auto;
+  }
+}
+
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__orders .main_page__manager__control__order .main_page__manager__control__infor {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1530,9 +1674,24 @@ input, button {
           align-items: center;
 }
 
+@media (max-width: 600px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__orders .main_page__manager__control__order .main_page__manager__control__infor {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    width: 100%;
+  }
+}
+
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__orders .main_page__manager__control__order .main_page__manager__control__infor .main_page__manager__control__infor__img {
   height: 180px;
   width: 140px;
+}
+
+@media (max-width: 600px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__orders .main_page__manager__control__order .main_page__manager__control__infor .main_page__manager__control__infor__img {
+    width: 100%;
+    height: 300px;
+  }
 }
 
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__orders .main_page__manager__control__order .main_page__manager__control__infor .main_page__manager__control__infor__img img {
@@ -1544,17 +1703,39 @@ input, button {
   margin-left: 1em;
 }
 
+@media (max-width: 600px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__orders .main_page__manager__control__order .main_page__manager__control__infor .main_page__manager__control__infor__text {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__orders .main_page__manager__control__order .main_page__manager__control__infor .main_page__manager__control__infor__text p {
   color: #161846;
   font-weight: 700;
   padding: 2px;
 }
 
+@media (max-width: 600px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__orders .main_page__manager__control__order .main_page__manager__control__done {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
 .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__orders .main_page__manager__control__order .main_page__manager__control__done a {
+  display: block;
   padding: 10px 1em;
   background-color: #161846;
   margin-right: 1em;
   color: white;
+}
+
+@media (max-width: 600px) {
+  .main_page .main_page__part .main_page__content .main_page__manager .main_page__manager__box .main_page__manager__content .main_page__manager__control .main_page__manager__control__orders .main_page__manager__control__order .main_page__manager__control__done a {
+    margin-right: 0;
+    text-align: center;
+  }
 }
 
 .main_page .main_page__part .main_page__content .pay_box {

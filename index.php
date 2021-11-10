@@ -391,42 +391,42 @@ function FindAuthor($id, $author){
                 <?php 
                     if(!isset($_GET['controller'])){
                         DeleteErr();
-                        // echo '
-                        //     <div class="main_page__box">
-                        //         <div class="main_page__content__title">
-                        //             <p>Sách Mới</p>
-                        //         </div>
-                        //         <div class="main_page__content__intestine">
-                        //             <div class="main_page__content__intestine__products">';
-                        //             $count = 0;
-                        //                 foreach($newProducts as $prod){
-                        //                     echo "
-                        //                     <div class='main_page__content__product'>
-                        //                         <a href='?controller=products&action=show&id=${prod['id']}'><div class='main_page__content__product__pic'>
-                        //                             <img src='${prod['image']}' alt='' srcset=''>
-                        //                         </div>
-                        //                         <div class='main_page__content__product__content'>
-                        //                             <div class='product__content__name sp'>
-                        //                                 <p>${prod['name']}</p>
-                        //                             </div>
-                        //                             <div class='product__content__author sp'>
-                        //                                 <p>".FindAuthor($prod['id_author'], $Author)."</p>
-                        //                             </div>
-                        //                             <div class='product__content__price money sp'>
-                        //                                 <p class='price'>${prod['price']}</p>
-                        //                             </div>
-                        //                         </div></a>
-                        //                     </div>
-                        //                     ";
-                        //                     $count++;
-                        //                     if($count > 14){
-                        //                         break;
-                        //                     }
-                        //                 }
-                        // echo       '</div>
-                        //         </div>
-                        //     </div>
-                        // ';
+                        echo '
+                            <div class="main_page__box">
+                                <div class="main_page__content__title">
+                                    <p>Sách Mới</p>
+                                </div>
+                                <div class="main_page__content__intestine">
+                                    <div class="main_page__content__intestine__products">';
+                                    $count = 0;
+                                        foreach($newProducts as $prod){
+                                            echo "
+                                            <div class='main_page__content__product'>
+                                                <a href='?controller=products&action=show&id=${prod['id']}'><div class='main_page__content__product__pic'>
+                                                    <img src='${prod['image']}' alt='' srcset=''>
+                                                </div>
+                                                <div class='main_page__content__product__content'>
+                                                    <div class='product__content__name sp'>
+                                                        <p>${prod['name']}</p>
+                                                    </div>
+                                                    <div class='product__content__author sp'>
+                                                        <p>".FindAuthor($prod['id_author'], $Author)."</p>
+                                                    </div>
+                                                    <div class='product__content__price money sp'>
+                                                        <p class='price'>${prod['price']}</p>
+                                                    </div>
+                                                </div></a>
+                                            </div>
+                                            ";
+                                            $count++;
+                                            if($count > 14){
+                                                break;
+                                            }
+                                        }
+                        echo       '</div>
+                                </div>
+                            </div>
+                        ';
                         foreach($Category as $cate){
                             DeleteErr();
                             echo '
@@ -567,15 +567,19 @@ function FindAuthor($id, $author){
                                         </div>
                                         <form action='?controller=products&action=show&id=${infor_prod['id']}' method='post'>
                                         <div class='infor__content__buy sp'>
-                                            <label>Số lượng : </label>
-                                            <div class='snipper'>
-                                                <div class='prev'><i class='fas fa-minus'></i></div>
-                                                <div class='next'><i class='fas fa-plus'></i></div>
-                                                <input type='number' value='1' name='quantity'
-                                                oninput='OnlyNum(this, ${infor_prod['quantity']})'>   
+                                            <div class='infor__content__buy__quant'>
+                                                <label>Số lượng : </label>
+                                                <div class='snipper'>
+                                                    <div class='prev'><i class='fas fa-minus'></i></div>
+                                                    <div class='next'><i class='fas fa-plus'></i></div>
+                                                    <input type='number' value='1' name='quantity'
+                                                    oninput='OnlyNum(this, ${infor_prod['quantity']})'>   
+                                                </div>
                                             </div>
-                                            <input name='submit_buy' type='submit' class='btn_ok' value='Đặt Mua' /> 
-                                            <input name='submit_buy' type='submit' class='btn_ok' value='Thêm Vào Giỏ Hàng' /> 
+                                            <div class='infor__content__buy__submit'>
+                                                <input name='submit_buy' type='submit' class='btn_ok' value='Đặt Mua' /> 
+                                                <input name='submit_buy' type='submit' class='btn_ok' value='Thêm Vào Giỏ Hàng' />
+                                            </div>
                                         </div>
                                         <div class='error_content'>
                                             <p>${infor_prod['error']}</p>

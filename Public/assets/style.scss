@@ -49,6 +49,9 @@ input{
 input, button{
     outline: none;
 }
+@mixin respon_1600{
+    @media(min-width: 1600px) { @content };
+}
 @mixin respon_1200{
     @media(max-width: 1200px) { @content };
 }
@@ -171,7 +174,7 @@ input, button{
                 }
                 &.cart{
                     position: relative;
-                    @include respon_1100(){
+                    @include respon_1000(){
                         display: none;
                     }
                     .cart_m{
@@ -361,6 +364,9 @@ input, button{
         .main_page__slider__card{
             width: 100%;
             height: 500px;
+            @include respon_1600(){
+                height: 800px;
+            }
             img{
                 width: 100%;
                 height: 100%;
@@ -542,6 +548,9 @@ input, button{
                             margin-left: 10px;
                             margin-bottom: 10px;
                             background: rgba(172, 193, 233, 0.3);
+                            @include respon_1600(){
+                                width: calc(20% - 10px);
+                            }
                             @include respon_1000(){
                                 width: calc(33% - 8px);
                             }
@@ -593,11 +602,15 @@ input, button{
                     .main_page__content__infor{
                         max-width: 100%;
                         display: flex;
-                        // flex-wrap: wrap;
+                        flex-wrap: wrap;
                         color: rgb(11, 12, 48);
                         .main_page__content__infor__pic{
                             flex: 1;
                             height: 400px;
+                            @include respon_800(){
+                                height: 450px;
+                                margin-right: 1px;
+                            }
                             margin-right: 1em;
                             img{
                                 width: 100%;
@@ -606,6 +619,12 @@ input, button{
                         }
                         .main_page__content__infor__content{
                             width: 70%;
+                            @include respon_1000(){
+                                width: 60%;
+                            }
+                            @include respon_600(){
+                                width: 100%;
+                            }
                             .sp{
                                 padding: 10px;
                             }
@@ -622,7 +641,7 @@ input, button{
                                 color: rgb(46, 48, 112);
                                 width: auto;
                                 word-break: keep-all;
-                                height: 170px;
+                                min-height: 170px;
                                 overflow-y: auto;
                             }
                             .infor__content__price{
@@ -636,9 +655,23 @@ input, button{
                             }
                             .infor__content__buy{
                                 display: flex;
+                                flex-wrap: wrap;
                                 align-items: center;
+                                .infor__content__buy__quant{
+                                    display: flex;
+                                    align-items: center;
+                                }
+                                .infor__content__buy__submit{
+                                    @include respon_800(){
+                                        width: 100%;
+                                    }
+                                }
                                 .btn_ok{
                                     margin-left: 1em;
+                                    @include respon_800(){
+                                        margin-left: 0;
+                                        margin-bottom: 10px;
+                                    }
                                     padding: 1em 2em;
                                     border: none;
                                     outline: none;
@@ -694,6 +727,9 @@ input, button{
                             width: 100%;
                         }
                         margin-right: 10px;
+                        @include respon_1000(){
+                            margin-right: 0;
+                        }
                         padding: 10px;
                         background-color: rgba(207, 223, 253, 0.6);
                         .cart__content__products__product{
@@ -743,6 +779,9 @@ input, button{
                                     display: flex;
                                     position: relative;
                                     justify-content: center;
+                                    @include respon_500(){
+                                        margin-left: 10px;
+                                    }
                                     a{
                                         padding: 5px;
                                         text-decoration: none;
@@ -896,10 +935,15 @@ input, button{
                                 display: flex;
                                 align-items: center;
                                 margin-bottom: 2em;
+                                @include respon_600(){
+                                    flex-wrap: wrap;
+                                }
                                 .tab__label{
                                     width: 22%;
-                                    // background-color: red;
                                     font-size: 20px;
+                                    @include respon_600(){
+                                        width: 100%;
+                                    }
                                 }
                                 .tab__input{
                                     flex: 1;
@@ -997,15 +1041,27 @@ input, button{
                                         margin-bottom: 1em;
                                         height: 230px;
                                         overflow-y: auto;
+                                        @include respon_800(){
+                                            flex-wrap: wrap;
+                                            height: auto;
+                                            overflow-y: visible;
+                                        }
                                         // background: red;
                                         .control__list__product__left{
                                             display: flex;
                                             align-items: center;
                                             flex: 1;
+                                            @include respon_800(){
+                                                width: 100%;
+                                                flex-wrap: wrap;
+                                            }
                                             height: 100%;
                                             // overflow-y: hidden;
                                             .main_page__manager__control__list__product_img{
                                                 width: 30%;
+                                                @include respon_1600(){
+                                                    width: 20%;
+                                                }
                                                 height: 100%;
                                                 margin-right: 10px;
                                                 &.news{
@@ -1027,11 +1083,22 @@ input, button{
                                                 p.descrip{
                                                     width: 100%;
                                                     word-break: keep-all;
+                                                    height: 120px;
                                                     overflow: auto;
+                                                    @include respon_800(){
+                                                        margin-top: 10px;
+                                                        background-color: rgba(102, 130, 184, .4);
+                                                        padding: 5px;
+                                                        font-size: 15px;
+                                                    }
                                                 }
                                             }
                                         }
                                         .control__list__product__right{
+                                            @include respon_800(){
+                                                width: 100%;
+                                                margin-top: 1.4em;
+                                            }
                                             a{
                                                 padding: 10px 1em;
                                                 color: rgb(13, 15, 68);
@@ -1121,9 +1188,16 @@ input, button{
                                 }
                                 .main_page__manager__control__list__boxs{
                                     display: flex;
+                                    @include respon_800(){
+                                        flex-wrap: wrap;
+                                    }
                                     justify-content: space-between;
                                     .main_page__manager__control__list__box{
                                         width: calc(50% - 10px);
+                                        @include respon_600(){
+                                            width: 100%;
+                                            margin-bottom: 10px;
+                                        }
                                         .main_page__manager__control__boxs__function{
                                             display: flex;  
                                             input{
@@ -1194,12 +1268,24 @@ input, button{
                                     align-items: center;
                                     background-color: rgba(129, 157, 214, 0.7);
                                     margin-bottom: 10px;
+                                    @include respon_600(){
+                                        flex-wrap: wrap;
+                                        height: auto;
+                                    }
                                     .main_page__manager__control__infor{
                                         display: flex;
+                                        @include respon_600(){
+                                            flex-wrap: wrap;
+                                            width: 100%;
+                                        }
                                         align-items: center;
                                         .main_page__manager__control__infor__img{
                                             height: 180px;
                                             width: 140px;
+                                            @include respon_600(){
+                                                width: 100%;
+                                                height: 300px;
+                                            }
                                             img{
                                                 width: 100%;
                                                 height: 100%;
@@ -1207,6 +1293,10 @@ input, button{
                                         }
                                         .main_page__manager__control__infor__text{
                                             margin-left: 1em;
+                                            @include respon_600(){
+                                                width: 100%;
+                                                margin-top: 10px;
+                                            }
                                             p{
                                                 color:rgb(22, 24, 70);
                                                 font-weight: 700;
@@ -1215,10 +1305,19 @@ input, button{
                                         }
                                     }
                                     .main_page__manager__control__done{
+                                        @include respon_600(){
+                                            width: 100%;
+                                            margin-top: 10px;
+                                        }
                                         a{
+                                            display: block;
                                             padding: 10px 1em;
                                             background-color: rgb(22, 24, 70);
                                             margin-right: 1em;
+                                            @include respon_600(){
+                                                margin-right: 0;
+                                                text-align: center;
+                                            }
                                             color: white;
                                         }
                                     }

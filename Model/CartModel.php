@@ -26,12 +26,18 @@
             $Data = $this->Find(self::TABLE, "", "id_user", $id_u, true);
             // var_dump($Data);
             if(!empty($Data)){
+                $dataProd = [];
                 foreach($Data as $cartdata){
-                    if($cartdata["quantity"] > 0)
-                    $this->Update(self::TABLE, "", "id_products", $id, ["quantity" => $Data[0]["quantity"]+=$quan]);
-                    if($cartdata['id_products'] !== $id)
-                    $this->toAdd(self::TABLE, $setProductKey);
+                    array_push($dataProd, $cartdata['id_products']);
+                    if($cartdata["quantity"] > 0 && $cartdata['id_products'] == $Product['id']){
+                        $cartUp = $cartdata['quantity'] + $quan;
+                        $this->Update(self::TABLE, "", "id_products", $id, ["quantity" => $cartUp]);   
+                        break;
+                    }
                 }        
+                if(!in_array($id, $dataProd)) {
+                    $this->toAdd(self::TABLE, $setProductKey);
+                }
                 return true;    
             }
             else {

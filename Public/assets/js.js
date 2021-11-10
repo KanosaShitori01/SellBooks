@@ -94,15 +94,17 @@ cate.onchange = () => {
 }
 let titleList = document.querySelector(".title_list");
 let mainList = document.querySelector(".main_list");
-titleList.onclick = () => {
-    put = !put;
-    let arro = document.querySelector(".arro");
-    if(put){
-        arro.style.transform = "rotate(0deg)";
-        mainList.style.height = "0";
-    }else{
-        arro.style.transform = "rotate(180deg)";
-        mainList.style.height = "auto";
-    }
-    
+if(titleList != undefined){
+    titleList.addEventListener("click", () => {
+        put = !put;
+        let arro = document.querySelector(".arro");
+        if(put){
+            arro.style.transform = "rotate(0deg)";
+            mainList.style.height = "0";
+        }else{
+            arro.style.transform = "rotate(180deg)";
+            mainList.style.height = "auto";
+        }
+        
+    });
 }
