@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 11, 2021 lúc 06:05 AM
+-- Thời gian đã tạo: Th10 11, 2021 lúc 02:47 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
--- Phiên bản PHP: 7.3.31
+-- Phiên bản PHP: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -103,9 +103,7 @@ CREATE TABLE `carts` (
 INSERT INTO `carts` (`id`, `name`, `image`, `price`, `quantity`, `id_products`, `id_user`, `orderU`, `error`) VALUES
 (77, 'Phật Giáo và Cuộc Sống\r\n', 'Public/img/phatgiaovacuocsong.jpg', 60000, 3, 2, 32, 0, ''),
 (78, 'Thiền Tông Toàn Thư - Trọn bộ 101 cuốn (Sách chữ Hán)', 'Public/img/TTTT.jpg', 100000, 4, 3, 32, 0, ''),
-(131, 'BBB', 'Images/51732458_349799595866584_7385372397785841664_n.jpg', 588888, 2, 19, 31, 0, ''),
-(133, 'ABBBA', 'Images/51732458_349799595866584_7385372397785841664_n.jpg', 588888, 3, 19, 33, 0, ''),
-(134, 'AHAH', 'Images/51654161_2285612815051709_6172019225855524864_n.jpg', 333333, 1, 18, 31, 0, '');
+(133, 'ABBBA', 'Images/51732458_349799595866584_7385372397785841664_n.jpg', 588888, 3, 19, 33, 0, '');
 
 -- --------------------------------------------------------
 
@@ -150,14 +148,10 @@ CREATE TABLE `myorder` (
 --
 
 INSERT INTO `myorder` (`id`, `id_user`, `id_product`, `name_user`, `quantity`, `totalmoney`, `address`, `tel`, `gmail`, `received`) VALUES
-(43, 0, 20, 'Hoho', 2, 1080000, 'KFOSKFOASKOASDKAOSDKASODKAOSDKASOD', '0392103129', 'openniceqn09@gmail.com', 0),
-(44, 0, 19, 'Hoho', 2, 1177780, 'KFOSKFOASKOASDKAOSDKASODKAOSDKASOD', '0392103129', 'openniceqn09@gmail.com', 0),
-(45, 32, 19, 'Hoho', 1, 588888, 'KFOSKFOASKOASDKAOSDKASODKAOSDKASOD', '0392103129', 'openniceqn09@gmail.com', 0),
-(46, 44, 19, 'Hoho', 1, 588888, 'KFOSKFOASKOASDKAOSDKASODKAOSDKASOD', '0392103129', 'openniceqn09@gmail.com', 0),
-(47, 23, 19, 'Hoho', 1, 588888, 'KFOSKFOASKOASDKAOSDKASODKAOSDKASOD', '0392103129', 'openniceqn09@gmail.com', 0),
-(48, 83, 19, 'Hoho', 1, 588888, 'KFOSKFOASKOASDKAOSDKASODKAOSDKASOD', '0392103129', 'openniceqn09@gmail.com', 0),
-(49, 61, 19, 'Hoho', 1, 588888, 'KFOSKFOASKOASDKAOSDKASODKAOSDKASOD', '0392103129', 'openniceqn09@gmail.com', 0),
-(50, 70, 19, 'Hoho', 1, 588888, 'KFOSKFOASKOASDKAOSDKASODKAOSDKASOD', '0392103129', 'openniceqn09@gmail.com', 0);
+(55, 31, 18, 'HELLOcc', 1, 333333, 'The way into your heart', '0337294740', 'surushitoriqn1@gmail.com', 0),
+(56, 31, 19, 'HELLO23333', 1, 588888, 'Tỉnh/Thành Phố: , Quận/Huyện: , Xã/Thị Trấn: , Địa chỉ giao hàng: The way into your heart', '0337294740', 'surushitoriqn1@gmail.com', 0),
+(57, 31, 18, 'HELLO', 1, 333333, 'Tỉnh/Thành Phố: 1, Quận/Huyện: 1, Xã/Thị Trấn: 10441, Địa chỉ giao hàng: The way into your heart', '0337294740', 'surushitoriqn1@gmail.com', 0),
+(58, 31, 19, 'HELLO', 1, 588888, 'Tỉnh/Thành Phố: 1, Quận/Huyện: 1, Xã/Thị Trấn: 10441, Địa chỉ giao hàng: The way into your heart', '0337294740', 'surushitoriqn1@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -2664,7 +2658,243 @@ INSERT INTO `sumconnect` (`id`, `res`, `sess`) VALUES
 (2430, 1636604758, 'th6eeu1kavdireheq0o6pktk1b'),
 (2431, 1636604758, 'th6eeu1kavdireheq0o6pktk1b'),
 (2432, 1636605863, 'th6eeu1kavdireheq0o6pktk1b'),
-(2433, 1636605863, 'th6eeu1kavdireheq0o6pktk1b');
+(2433, 1636605863, 'th6eeu1kavdireheq0o6pktk1b'),
+(2434, 1636624751, '7c7os8p49r1misgg8eevh265p1'),
+(2435, 1636624751, '7c7os8p49r1misgg8eevh265p1'),
+(2436, 1636624780, '7c7os8p49r1misgg8eevh265p1'),
+(2437, 1636624795, '7c7os8p49r1misgg8eevh265p1'),
+(2438, 1636624985, '7c7os8p49r1misgg8eevh265p1'),
+(2439, 1636625009, '7c7os8p49r1misgg8eevh265p1'),
+(2440, 1636625531, '7c7os8p49r1misgg8eevh265p1'),
+(2441, 1636625553, '7c7os8p49r1misgg8eevh265p1'),
+(2442, 1636625565, '7c7os8p49r1misgg8eevh265p1'),
+(2443, 1636625574, '7c7os8p49r1misgg8eevh265p1'),
+(2444, 1636625588, '7c7os8p49r1misgg8eevh265p1'),
+(2445, 1636625604, '7c7os8p49r1misgg8eevh265p1'),
+(2446, 1636625616, '7c7os8p49r1misgg8eevh265p1'),
+(2447, 1636625646, '7c7os8p49r1misgg8eevh265p1'),
+(2448, 1636625662, '7c7os8p49r1misgg8eevh265p1'),
+(2449, 1636625667, '7c7os8p49r1misgg8eevh265p1'),
+(2450, 1636625819, '7c7os8p49r1misgg8eevh265p1'),
+(2451, 1636625847, '7c7os8p49r1misgg8eevh265p1'),
+(2452, 1636625924, '7c7os8p49r1misgg8eevh265p1'),
+(2453, 1636626360, '7c7os8p49r1misgg8eevh265p1'),
+(2454, 1636626362, '7c7os8p49r1misgg8eevh265p1'),
+(2455, 1636626364, '7c7os8p49r1misgg8eevh265p1'),
+(2456, 1636626365, '7c7os8p49r1misgg8eevh265p1'),
+(2457, 1636626366, '7c7os8p49r1misgg8eevh265p1'),
+(2458, 1636626366, '7c7os8p49r1misgg8eevh265p1'),
+(2459, 1636626368, '7c7os8p49r1misgg8eevh265p1'),
+(2460, 1636626946, '7c7os8p49r1misgg8eevh265p1'),
+(2461, 1636626950, '7c7os8p49r1misgg8eevh265p1'),
+(2462, 1636626973, '7c7os8p49r1misgg8eevh265p1'),
+(2463, 1636626985, '7c7os8p49r1misgg8eevh265p1'),
+(2464, 1636627033, '7c7os8p49r1misgg8eevh265p1'),
+(2465, 1636627039, '7c7os8p49r1misgg8eevh265p1'),
+(2466, 1636627045, '7c7os8p49r1misgg8eevh265p1'),
+(2467, 1636627056, '7c7os8p49r1misgg8eevh265p1'),
+(2468, 1636627070, '7c7os8p49r1misgg8eevh265p1'),
+(2469, 1636627123, '7c7os8p49r1misgg8eevh265p1'),
+(2470, 1636627144, '7c7os8p49r1misgg8eevh265p1'),
+(2471, 1636627152, '7c7os8p49r1misgg8eevh265p1'),
+(2472, 1636627159, '7c7os8p49r1misgg8eevh265p1'),
+(2473, 1636627166, '7c7os8p49r1misgg8eevh265p1'),
+(2474, 1636627175, '7c7os8p49r1misgg8eevh265p1'),
+(2475, 1636627178, '7c7os8p49r1misgg8eevh265p1'),
+(2476, 1636627181, '7c7os8p49r1misgg8eevh265p1'),
+(2477, 1636627238, '7c7os8p49r1misgg8eevh265p1'),
+(2478, 1636627261, '7c7os8p49r1misgg8eevh265p1'),
+(2479, 1636627310, '7c7os8p49r1misgg8eevh265p1'),
+(2480, 1636627356, '7c7os8p49r1misgg8eevh265p1'),
+(2481, 1636627367, '7c7os8p49r1misgg8eevh265p1'),
+(2482, 1636627423, '7c7os8p49r1misgg8eevh265p1'),
+(2483, 1636627441, '7c7os8p49r1misgg8eevh265p1'),
+(2484, 1636627455, '7c7os8p49r1misgg8eevh265p1'),
+(2485, 1636627463, '7c7os8p49r1misgg8eevh265p1'),
+(2486, 1636627470, '7c7os8p49r1misgg8eevh265p1'),
+(2487, 1636627499, '7c7os8p49r1misgg8eevh265p1'),
+(2488, 1636627505, '7c7os8p49r1misgg8eevh265p1'),
+(2489, 1636627509, '7c7os8p49r1misgg8eevh265p1'),
+(2490, 1636627555, '7c7os8p49r1misgg8eevh265p1'),
+(2491, 1636627570, '7c7os8p49r1misgg8eevh265p1'),
+(2492, 1636627570, '7c7os8p49r1misgg8eevh265p1'),
+(2493, 1636627573, '7c7os8p49r1misgg8eevh265p1'),
+(2494, 1636627575, '7c7os8p49r1misgg8eevh265p1'),
+(2495, 1636627578, '7c7os8p49r1misgg8eevh265p1'),
+(2496, 1636627578, '7c7os8p49r1misgg8eevh265p1'),
+(2497, 1636627579, '7c7os8p49r1misgg8eevh265p1'),
+(2498, 1636627581, '7c7os8p49r1misgg8eevh265p1'),
+(2499, 1636627608, '7c7os8p49r1misgg8eevh265p1'),
+(2500, 1636627837, '7c7os8p49r1misgg8eevh265p1'),
+(2501, 1636627868, '7c7os8p49r1misgg8eevh265p1'),
+(2502, 1636627870, '7c7os8p49r1misgg8eevh265p1'),
+(2503, 1636627873, '7c7os8p49r1misgg8eevh265p1'),
+(2504, 1636627876, '7c7os8p49r1misgg8eevh265p1'),
+(2505, 1636627883, '7c7os8p49r1misgg8eevh265p1'),
+(2506, 1636627906, '7c7os8p49r1misgg8eevh265p1'),
+(2507, 1636627909, '7c7os8p49r1misgg8eevh265p1'),
+(2508, 1636627911, '7c7os8p49r1misgg8eevh265p1'),
+(2509, 1636627935, '8s2hgve8icuu60jl21309en3aa'),
+(2510, 1636627935, '8s2hgve8icuu60jl21309en3aa'),
+(2511, 1636627946, '8s2hgve8icuu60jl21309en3aa'),
+(2512, 1636627947, '8s2hgve8icuu60jl21309en3aa'),
+(2513, 1636627949, '8s2hgve8icuu60jl21309en3aa'),
+(2514, 1636627954, '8s2hgve8icuu60jl21309en3aa'),
+(2515, 1636627957, '8s2hgve8icuu60jl21309en3aa'),
+(2516, 1636627964, '8s2hgve8icuu60jl21309en3aa'),
+(2517, 1636627980, '8s2hgve8icuu60jl21309en3aa'),
+(2518, 1636627980, '8s2hgve8icuu60jl21309en3aa'),
+(2519, 1636627985, '7c7os8p49r1misgg8eevh265p1'),
+(2520, 1636628042, '7c7os8p49r1misgg8eevh265p1'),
+(2521, 1636628076, '7c7os8p49r1misgg8eevh265p1'),
+(2522, 1636628094, '7c7os8p49r1misgg8eevh265p1'),
+(2523, 1636628102, '7c7os8p49r1misgg8eevh265p1'),
+(2524, 1636628107, '7c7os8p49r1misgg8eevh265p1'),
+(2525, 1636628113, '7c7os8p49r1misgg8eevh265p1'),
+(2526, 1636628125, '7c7os8p49r1misgg8eevh265p1'),
+(2527, 1636628132, '7c7os8p49r1misgg8eevh265p1'),
+(2528, 1636628142, '7c7os8p49r1misgg8eevh265p1'),
+(2529, 1636628161, '7c7os8p49r1misgg8eevh265p1'),
+(2530, 1636628400, '7c7os8p49r1misgg8eevh265p1'),
+(2531, 1636628406, '7c7os8p49r1misgg8eevh265p1'),
+(2532, 1636628407, '7c7os8p49r1misgg8eevh265p1'),
+(2533, 1636628509, '7c7os8p49r1misgg8eevh265p1'),
+(2534, 1636628512, '7c7os8p49r1misgg8eevh265p1'),
+(2535, 1636628517, '7c7os8p49r1misgg8eevh265p1'),
+(2536, 1636628519, '7c7os8p49r1misgg8eevh265p1'),
+(2537, 1636628525, '7c7os8p49r1misgg8eevh265p1'),
+(2538, 1636628527, '7c7os8p49r1misgg8eevh265p1'),
+(2539, 1636628528, '7c7os8p49r1misgg8eevh265p1'),
+(2540, 1636628530, '7c7os8p49r1misgg8eevh265p1'),
+(2541, 1636628532, '7c7os8p49r1misgg8eevh265p1'),
+(2542, 1636628672, '7c7os8p49r1misgg8eevh265p1'),
+(2543, 1636628682, '7c7os8p49r1misgg8eevh265p1'),
+(2544, 1636628686, '7c7os8p49r1misgg8eevh265p1'),
+(2545, 1636628688, '7c7os8p49r1misgg8eevh265p1'),
+(2546, 1636628694, '7c7os8p49r1misgg8eevh265p1'),
+(2547, 1636628696, '7c7os8p49r1misgg8eevh265p1'),
+(2548, 1636628699, '7c7os8p49r1misgg8eevh265p1'),
+(2549, 1636628701, '7c7os8p49r1misgg8eevh265p1'),
+(2550, 1636628703, '7c7os8p49r1misgg8eevh265p1'),
+(2551, 1636628703, '7c7os8p49r1misgg8eevh265p1'),
+(2552, 1636628704, '7c7os8p49r1misgg8eevh265p1'),
+(2553, 1636628705, '7c7os8p49r1misgg8eevh265p1'),
+(2554, 1636628716, '7c7os8p49r1misgg8eevh265p1'),
+(2555, 1636628719, '7c7os8p49r1misgg8eevh265p1'),
+(2556, 1636628720, '7c7os8p49r1misgg8eevh265p1'),
+(2557, 1636628727, '8s2hgve8icuu60jl21309en3aa'),
+(2558, 1636628773, '8s2hgve8icuu60jl21309en3aa'),
+(2559, 1636629511, '7c7os8p49r1misgg8eevh265p1'),
+(2560, 1636629594, '7c7os8p49r1misgg8eevh265p1'),
+(2561, 1636629649, '7c7os8p49r1misgg8eevh265p1'),
+(2562, 1636629977, '7c7os8p49r1misgg8eevh265p1'),
+(2563, 1636630027, '7c7os8p49r1misgg8eevh265p1'),
+(2564, 1636630029, '7c7os8p49r1misgg8eevh265p1'),
+(2565, 1636630029, '7c7os8p49r1misgg8eevh265p1'),
+(2566, 1636630042, '7c7os8p49r1misgg8eevh265p1'),
+(2567, 1636630047, '7c7os8p49r1misgg8eevh265p1'),
+(2568, 1636630062, '7c7os8p49r1misgg8eevh265p1'),
+(2569, 1636630065, '7c7os8p49r1misgg8eevh265p1'),
+(2570, 1636630076, '7c7os8p49r1misgg8eevh265p1'),
+(2571, 1636630106, '7c7os8p49r1misgg8eevh265p1'),
+(2572, 1636630109, '7c7os8p49r1misgg8eevh265p1'),
+(2573, 1636630111, '7c7os8p49r1misgg8eevh265p1'),
+(2574, 1636630113, '7c7os8p49r1misgg8eevh265p1'),
+(2575, 1636630137, '7c7os8p49r1misgg8eevh265p1'),
+(2576, 1636630143, '7c7os8p49r1misgg8eevh265p1'),
+(2577, 1636630143, '7c7os8p49r1misgg8eevh265p1'),
+(2578, 1636631101, '7c7os8p49r1misgg8eevh265p1'),
+(2579, 1636631140, '7c7os8p49r1misgg8eevh265p1'),
+(2580, 1636631142, '7c7os8p49r1misgg8eevh265p1'),
+(2581, 1636631144, '7c7os8p49r1misgg8eevh265p1'),
+(2582, 1636631146, '7c7os8p49r1misgg8eevh265p1'),
+(2583, 1636631146, '7c7os8p49r1misgg8eevh265p1'),
+(2584, 1636631146, '7c7os8p49r1misgg8eevh265p1'),
+(2585, 1636631147, '7c7os8p49r1misgg8eevh265p1'),
+(2586, 1636631155, '7c7os8p49r1misgg8eevh265p1'),
+(2587, 1636631157, '7c7os8p49r1misgg8eevh265p1'),
+(2588, 1636631159, '7c7os8p49r1misgg8eevh265p1'),
+(2589, 1636631201, '7c7os8p49r1misgg8eevh265p1'),
+(2590, 1636631219, '7c7os8p49r1misgg8eevh265p1'),
+(2591, 1636631230, '7c7os8p49r1misgg8eevh265p1'),
+(2592, 1636631240, '7c7os8p49r1misgg8eevh265p1'),
+(2593, 1636631293, '7c7os8p49r1misgg8eevh265p1'),
+(2594, 1636631309, '7c7os8p49r1misgg8eevh265p1'),
+(2595, 1636631328, '7c7os8p49r1misgg8eevh265p1'),
+(2596, 1636631328, '7c7os8p49r1misgg8eevh265p1'),
+(2597, 1636631349, '7c7os8p49r1misgg8eevh265p1'),
+(2598, 1636631352, '7c7os8p49r1misgg8eevh265p1'),
+(2599, 1636631355, '7c7os8p49r1misgg8eevh265p1'),
+(2600, 1636631357, '7c7os8p49r1misgg8eevh265p1'),
+(2601, 1636631360, '7c7os8p49r1misgg8eevh265p1'),
+(2602, 1636631361, '7c7os8p49r1misgg8eevh265p1'),
+(2603, 1636631361, '7c7os8p49r1misgg8eevh265p1'),
+(2604, 1636631363, '7c7os8p49r1misgg8eevh265p1'),
+(2605, 1636631374, '7c7os8p49r1misgg8eevh265p1'),
+(2606, 1636631448, '7c7os8p49r1misgg8eevh265p1'),
+(2607, 1636631448, '7c7os8p49r1misgg8eevh265p1'),
+(2608, 1636631472, '7c7os8p49r1misgg8eevh265p1'),
+(2609, 1636631474, '7c7os8p49r1misgg8eevh265p1'),
+(2610, 1636631548, '7c7os8p49r1misgg8eevh265p1'),
+(2611, 1636631567, '7c7os8p49r1misgg8eevh265p1'),
+(2612, 1636631584, '7c7os8p49r1misgg8eevh265p1'),
+(2613, 1636631598, '7c7os8p49r1misgg8eevh265p1'),
+(2614, 1636631602, '7c7os8p49r1misgg8eevh265p1'),
+(2615, 1636631607, '7c7os8p49r1misgg8eevh265p1'),
+(2616, 1636631618, '7c7os8p49r1misgg8eevh265p1'),
+(2617, 1636631631, '7c7os8p49r1misgg8eevh265p1'),
+(2618, 1636631645, '7c7os8p49r1misgg8eevh265p1'),
+(2619, 1636631656, '7c7os8p49r1misgg8eevh265p1'),
+(2620, 1636631668, '7c7os8p49r1misgg8eevh265p1'),
+(2621, 1636631670, '7c7os8p49r1misgg8eevh265p1'),
+(2622, 1636631748, '7c7os8p49r1misgg8eevh265p1'),
+(2623, 1636631752, '7c7os8p49r1misgg8eevh265p1'),
+(2624, 1636631753, '7c7os8p49r1misgg8eevh265p1'),
+(2625, 1636631755, '7c7os8p49r1misgg8eevh265p1'),
+(2626, 1636631755, '7c7os8p49r1misgg8eevh265p1'),
+(2627, 1636631755, '7c7os8p49r1misgg8eevh265p1'),
+(2628, 1636631757, '7c7os8p49r1misgg8eevh265p1'),
+(2629, 1636635054, '7c7os8p49r1misgg8eevh265p1'),
+(2630, 1636635159, '7c7os8p49r1misgg8eevh265p1'),
+(2631, 1636635162, '7c7os8p49r1misgg8eevh265p1'),
+(2632, 1636635164, '7c7os8p49r1misgg8eevh265p1'),
+(2633, 1636635200, '7c7os8p49r1misgg8eevh265p1'),
+(2634, 1636635221, '7c7os8p49r1misgg8eevh265p1'),
+(2635, 1636635231, '7c7os8p49r1misgg8eevh265p1'),
+(2636, 1636635353, '7c7os8p49r1misgg8eevh265p1'),
+(2637, 1636635646, '7c7os8p49r1misgg8eevh265p1'),
+(2638, 1636635662, '7c7os8p49r1misgg8eevh265p1'),
+(2639, 1636635665, '7c7os8p49r1misgg8eevh265p1'),
+(2640, 1636635703, '7c7os8p49r1misgg8eevh265p1'),
+(2641, 1636635717, '7c7os8p49r1misgg8eevh265p1'),
+(2642, 1636635720, '7c7os8p49r1misgg8eevh265p1'),
+(2643, 1636635722, '7c7os8p49r1misgg8eevh265p1'),
+(2644, 1636635724, '7c7os8p49r1misgg8eevh265p1'),
+(2645, 1636635724, '7c7os8p49r1misgg8eevh265p1'),
+(2646, 1636635724, '7c7os8p49r1misgg8eevh265p1'),
+(2647, 1636635727, '7c7os8p49r1misgg8eevh265p1'),
+(2648, 1636635735, '7c7os8p49r1misgg8eevh265p1'),
+(2649, 1636635751, '7c7os8p49r1misgg8eevh265p1'),
+(2650, 1636635751, '7c7os8p49r1misgg8eevh265p1'),
+(2651, 1636635753, '7c7os8p49r1misgg8eevh265p1'),
+(2652, 1636635755, '7c7os8p49r1misgg8eevh265p1'),
+(2653, 1636635756, '7c7os8p49r1misgg8eevh265p1'),
+(2654, 1636635758, '7c7os8p49r1misgg8eevh265p1'),
+(2655, 1636635758, '7c7os8p49r1misgg8eevh265p1'),
+(2656, 1636635758, '7c7os8p49r1misgg8eevh265p1'),
+(2657, 1636635760, '7c7os8p49r1misgg8eevh265p1'),
+(2658, 1636635769, '7c7os8p49r1misgg8eevh265p1'),
+(2659, 1636635775, '7c7os8p49r1misgg8eevh265p1'),
+(2660, 1636636150, '7c7os8p49r1misgg8eevh265p1'),
+(2661, 1636636150, '7c7os8p49r1misgg8eevh265p1'),
+(2662, 1636636150, '7c7os8p49r1misgg8eevh265p1'),
+(2663, 1636636152, '7c7os8p49r1misgg8eevh265p1'),
+(2664, 1636636154, '7c7os8p49r1misgg8eevh265p1'),
+(2665, 1636636156, '7c7os8p49r1misgg8eevh265p1'),
+(2666, 1636636158, '7c7os8p49r1misgg8eevh265p1'),
+(2667, 1636636158, '7c7os8p49r1misgg8eevh265p1'),
+(2668, 1636636158, '7c7os8p49r1misgg8eevh265p1'),
+(2669, 1636636160, '7c7os8p49r1misgg8eevh265p1');
 
 -- --------------------------------------------------------
 
@@ -2709,8 +2939,16 @@ CREATE TABLE `usonline` (
 --
 
 INSERT INTO `usonline` (`session`, `time`) VALUES
-('th6eeu1kavdireheq0o6pktk1b', 1636605863),
-('th6eeu1kavdireheq0o6pktk1b', 1636605863);
+('7c7os8p49r1misgg8eevh265p1', 1636636150),
+('7c7os8p49r1misgg8eevh265p1', 1636636150),
+('7c7os8p49r1misgg8eevh265p1', 1636636150),
+('7c7os8p49r1misgg8eevh265p1', 1636636152),
+('7c7os8p49r1misgg8eevh265p1', 1636636154),
+('7c7os8p49r1misgg8eevh265p1', 1636636156),
+('7c7os8p49r1misgg8eevh265p1', 1636636158),
+('7c7os8p49r1misgg8eevh265p1', 1636636158),
+('7c7os8p49r1misgg8eevh265p1', 1636636158),
+('7c7os8p49r1misgg8eevh265p1', 1636636160);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -2802,7 +3040,7 @@ ALTER TABLE `author`
 -- AUTO_INCREMENT cho bảng `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
@@ -2814,7 +3052,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT cho bảng `myorder`
 --
 ALTER TABLE `myorder`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT cho bảng `news`
@@ -2832,7 +3070,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT cho bảng `sumconnect`
 --
 ALTER TABLE `sumconnect`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2434;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2670;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
