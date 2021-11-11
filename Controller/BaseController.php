@@ -45,7 +45,8 @@
                     $mail->Password = 'sxcmggxcigpfxooa';                           // SMTP password
                     $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
                     $mail->Port = 587;                                    // TCP port to connect to
-                
+                    $mail->IsHTML(true);
+                    $mail->CharSet = 'UTF-8';
                     //Recipients
                     $mail->setFrom('tranchauqn9@gmail.com', 'Kinh Sach Kim Quy');
                     $mail->addAddress(''.$gmail_to, 'Guest');   
@@ -53,7 +54,11 @@
 
                     $mail->Subject = "$title";
                     $mail->Body    = "$content";
-                  
+                    $mail->SMTPOptions=array('ssl'=>array(
+                        'verify_peer'=>false,
+                        'verify_peer_name'=>false,
+                        'allow_self_signed'=>false
+                    ));
                 
                     $mail->send();
                     return "YES";

@@ -31,30 +31,39 @@
             (empty($myOrder)) ? header("location: ./") : "";
             if(isset($_POST['pay_btn'])){
                 $dis = "disabled";
+                $content = "";
+                $code = rand(111,999);
+                $allTotal = 0;
                 if(!is_numeric($_POST['fullname'])){
                     foreach($myOrder as $order){
                         $total = $order['price'] * $order['quantity'];
                         $tel = (!empty($checkGuest)) ? $userInfor['tel'] : $_POST['tel'];
                         $gmail = (!empty($checkGuest)) ? $userInfor['gmail'] : $_POST['gmail'];
                         $user = (!empty($checkGuest)) ? $_SESSION['user'] : rand(11,99);
-                        $address = "Tỉnh/Thành Phố: ".$_POST['tinhtp'].", Quận/Huyện: ".$_POST['quanH'].", Xã/Thị Trấn: ".$_POST['xaTR'].", Địa chỉ giao hàng: ".$_POST['address'];
                         $this->payController->addOrder([
                             "id_user" => $user,
                             "id_product" => $order['id_products'],
                             "name_user" => $_POST['fullname'],
                             "quantity" => $order['quantity'],
                             "totalmoney" => $total,
-                            "address" => $address,
+                            "address" => $_POST['address'],
                             "tel" => $tel,
                             "gmail" => $gmail,
                             "received" => 'false'
                         ]);
-                        // var_dump($address);
-                        $this->sendCodeMail($gmail, "NEW ORDER OF GUEST KINHSACHKIMQUY", 
-                        "Tên người mua: ".$_POST['fullname'].", Tên sách: ${order['name']}, Số lượng: ${order['quantity']}, Địa chỉ: ".$address.",
-                        Số điện thoại: ${userInfor['tel']}, Gmail: ${userInfor['gmail']}, Tổng tiền: $total đ."
-                        );
+                        $allTotal += $total;
+                        $content .= "<p>Tên người mua: ".$_POST['fullname']."</p>
+                        <p>Tên sách: ${order['name']}</p>
+                        <p>Số lượng: ${order['quantity']}</p>
+                        Địa chỉ: ".$_POST['address']."
+                        <p>Số điện thoại: <span class='price'>${tel}</span></p> 
+                        <p>Gmail: ${gmail}</p>
+                        <p>Tổng tiền: $total đ.</p> 
+                        <hr>";
                     }
+                    $this->sendCodeMail($gmail, "NEW ORDER OF GUEST KINHSACHKIMQUY $code", 
+                       $content."<h1>Tổng Tiền: $allTotal</h1>"
+                    );
                     if(!empty($checkGuest)) {
                         ($this->cartController->deleteCartUser("id_user", $_SESSION['user'])) ? $check = true : "";
                     }else{
@@ -108,39 +117,10 @@
                         </div>
                         <div class='pay_box__report__input'>
                             <div class='pay_box__report__input__label'>
-                                <label>Tỉnh/Thành Phố: </label>
-                            </div>
-                            <div class='pay_box__report__input__tab'>
-                                <select name='tinhtp' id='province'>
-                                </select>
-                                <input type='text' value='$tinh' name='vv' required />
-                            </div>
-                        </div>
-                        <div class='pay_box__report__input'>
-                            <div class='pay_box__report__input__label'>
-                                <label>Quận/Huyện: </label>
-                            </div>
-                            <div class='pay_box__report__input__tab'>
-                                <select name='quanH' id='quan'>
-                                </select>
-                            </div>
-                        </div>
-                        <div class='pay_box__report__input'>
-                            <div class='pay_box__report__input__label'>
-                                <label>Xã/Thị Trấn: </label>
-                            </div>
-                            <div class='pay_box__report__input__tab'>
-                                <select name='xaTR' id='xa'>
-                        
-                                </select>
-                            </div>
-                        </div>
-                        <div class='pay_box__report__input'>
-                            <div class='pay_box__report__input__label'>
                                 <label>Địa chỉ giao hàng: </label>
                             </div>
                             <div class='pay_box__report__input__tab'>
-                                <input type='text' placeholder='Nhập địa chỉ giao hàng...' name='address' required />
+                                <input type='text' placeholder='Vui lòng nhập tên thành phố, tên đường, số nhà, vv...' name='address' required />
                             </div>
                         </div>
                     </div>

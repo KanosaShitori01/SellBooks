@@ -396,6 +396,9 @@ input, button{
         width: 100%;
         margin-top: 2em;
         padding: 0 1em;
+        @include respon_400(){
+            padding: 0;
+        }
         display: flex;
         .main_page__left{
             width: 23%;
@@ -593,6 +596,10 @@ input, button{
                                 .product__content__name{
                                     font-weight: 700;
                                     font-size: 20px;
+                                    @include respon_400(){
+                                        width: 300px;
+                                        word-break: keep-all;
+                                    }
                                 }
                                 .product__content__author{
                                     font-size: 18px;
@@ -707,6 +714,9 @@ input, button{
                     padding: 1em 0;
                     border-bottom: 2px solid rgb(27, 40, 75);
                     margin-bottom: 1em;
+                    @include respon_400(){
+                        text-align: center;
+                    }
                 }
                 .cart__content{
                     width: 100%;
@@ -718,6 +728,9 @@ input, button{
                         width: 100%;
                         margin-bottom: 1em;
                         display: flex;
+                        @include respon_400(){
+                            justify-content: center;
+                        }
                         a{
                             color: white;
                         }
@@ -996,10 +1009,17 @@ input, button{
                             .main_page__manager__card{
                                 margin-bottom: 1em;
                                 display: flex;
+                                @include respon_600(){
+                                    flex-wrap: wrap;
+                                }
                                 background-color: rgba(35, 63, 124, .4);
                                 .main_page__manager__card__img{
                                     width: 10%;
                                     height: 120px;
+                                    @include respon_600(){
+                                        width: 100%;
+                                        height: 300px;
+                                    }
                                     img{
                                         width: 100%;
                                         height: 100%;
@@ -1012,13 +1032,38 @@ input, button{
                                     align-items: center;
                                     padding: 10px;
                                     font-size: 20px;
+                                    @include respon_600(){
+                                        flex-wrap: wrap;
+                                    }
                                     .main_page__manager__card__content__text{
                                         color: rgb(37, 44, 107);
                                         font-weight: 600;
+                                        @include respon_600(){
+                                            width: 100%;
+                                        }
                                     }
                                     .main_page__manager__card__content__process{
                                         color: rgb(151, 255, 151);
                                         margin-right: 10px;
+                                        @include respon_600(){
+                                            margin-top: 1px;
+                                        }
+                                        .cancel_order_btn{
+                                            @include respon_600(){
+                                                display: block;
+                                                margin-left: 0;
+                                                margin-top: 10px;
+                                                // width: 100%;
+                                            }
+                                            margin-left: 10px;
+                                            color: rgb(56, 12, 12);
+                                            background-color: rgb(102, 130, 184);
+                                            padding: 10px;
+                                            &:hover{
+                                                background-color: rgb(106, 146, 228);
+                                                color: white;
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -1342,10 +1387,21 @@ input, button{
                 .pay_box__title{
                     display: flex;
                     justify-content: space-between;
+                    @include respon_600(){
+                        flex-wrap: wrap;
+                        justify-content: center;
+                    }
                     a{
                         padding: 10px;
                         background-color: rgb(11, 12, 48);
-                        color: white;   
+                        color: white;  
+                        display: block; 
+                        @include respon_600(){
+                            width: 100%;
+                        }               
+                    }
+                    @include respon_400(){
+                        justify-content: center;
                     }
                 }
                 .pay_box__report{
@@ -1354,9 +1410,12 @@ input, button{
                         display: flex;
                         padding: 10px;
                         align-items: center;
+                        @include respon_600(){
+                            flex-wrap: wrap;
+                        }
                         .pay_box__report__input__tab{
                             flex: 1;
-                            input{
+                            input, select{
                                 width: 100%;
                                 padding: 10px;
                                 font-size: 18px;
@@ -1364,6 +1423,10 @@ input, button{
                         }
                         .pay_box__report__input__label{
                             width: 16%;
+                            @include respon_600(){
+                                width: 100%;
+                                margin-bottom: 10px;
+                            }
                         }
                     }
                 }
@@ -1391,18 +1454,27 @@ input, button{
                         }
                         .total{
                             margin-top: 1em;
+                            @include respon_600(){
+                                font-size: 20px;
+                            }
                         }
                     }
                 }
                 .pay_box__btn{
                     display: flex;
                     justify-content: flex-end;
+                    @include respon_600(){
+                        justify-content: flex-start;
+                    }
                     input{
                         width: 100%;
                         font-size: 25px;
                         padding: 1em 3em;
                         color: white;
                         background-color: rgb(37, 39, 116);     
+                        @include respon_600(){
+                            font-size: 20px;
+                        }
                         cursor: pointer;
                         margin-top: 3em;
                         &:hover{

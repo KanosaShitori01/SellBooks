@@ -152,6 +152,26 @@
             $output = "";
             $myCart = $this->orderController->findOrder("id_user", $_SESSION['user']);
             $dataOrder = [];
+            if(isset($_GET['cancelorder'])){
+                $id = $_GET['cancelorder'];
+                $findOrder = $this->orderController->findOrder("id", $id);
+                if(!empty($findOrder)){
+                    $dataOrder = $findOrder[0];
+                    $productsOf = ($this->productController->findProductBID($dataOrder['id_product'])[0]) ?? "";
+                    var_dump($this->sendCodeMail($this->user['gmail'], "${dataOrder['name_user']} đã huỷ đơn hàng", "
+                    <h1>Thông tin đơn hàng :</h1> 
+                    <p>Tên sách: ${productsOf['name']}</p>
+                    <p>Giá: ${productsOf['price']}</p>
+                    <p>Số lượng: ${dataOrder['quantity']}</p>
+                    <p>Thành tiền: ${dataOrder['totalmoney']}</p>
+                    Địa chỉ: ${dataOrder['address']}
+                    <p>Gmail: ${dataOrder['gmail']}</p>
+                    <p>Số điện thoại: ${dataOrder['tel']}</p>
+                    "));
+                    $this->orderController->CancelOrder($id);
+                    header("location: ?controller=user&action=myorder");
+                }else header("location: ?controller=user&action=myorder");
+            }
             if(!empty($myCart)){
                 foreach($myCart as $cart){
                     array_push($dataOrder, $cart);
@@ -185,6 +205,7 @@
                                     </div>
                                     <div class='main_page__manager__card__content__process'>
                                         $process
+                                        <a href='?controller=user&action=myorder&cancelorder=${order['id']}' class='cancel_order_btn'>Hủy Đơn Hàng</a>
                                     </div>
                                 </div>
                             </div>
@@ -820,27 +841,7 @@
                 <div class='main_page__manager__control__count'>
                     <h2>Tổng số đơn hàng: $countOrd</h2>
                 </div>
-                <div class='main_page__manager__control__orders'>
-                <div class='main_page__manager__control__order'>
-                    <div class='main_page__manager__control__infor'>
-                        <div class='main_page__manager__control__infor__img'>
-                            <img src='' />
-                        </div>
-                        <div class='main_page__manager__control__infor__text'>
-                            <p>Tên Người Đặt: </p>
-                            <p>Tên Sách: </p>
-                            <p>Số Lượng: </p>
-                            <p>Tổng Tiền: <span class='price'></span></p>
-                            <p>Địa chỉ: </p>
-                            <p>Số điện thoại: </p>
-                            <p>Gmail:</p>
-                        </div>
-                    </div>
-                    <div class='main_page__manager__control__done'>
-                        <a href=''>Xóa Đơn Hàng</a>
-                    </div>
-                </div>
-                ";
+                <div class='main_page__manager__control__orders'>";
                 
                     if(!empty($allOrder)){
                         foreach($allOrder as $order){
