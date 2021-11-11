@@ -56,5 +56,9 @@
         public function deleteCartUser($key, $val){
             return $this->Delete(self::TABLE, "", true, $key, "'".$val."'");
         }
+        public function deleteCartGuest(){
+            $_SESSION['cart'] = [];
+            return (empty($_SESSION['cart'])) ? true : false;
+        }
     }
 ?>

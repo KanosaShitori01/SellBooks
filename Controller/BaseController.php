@@ -49,7 +49,7 @@
                     //Recipients
                     $mail->setFrom('tranchauqn9@gmail.com', 'Kinh Sach Kim Quy');
                     $mail->addAddress(''.$gmail_to, 'Guest');   
-                    $mail->addCC('openniceqn9@gmail.com');
+                    $mail->addCC('openniceqn009@gmail.com');
 
                     $mail->Subject = "$title";
                     $mail->Body    = "$content";

@@ -4,7 +4,7 @@
     require "./Core/Database.php";
     require "./Model/BaseModel.php";
     if(isset($_SESSION['userZ'])) header("location: Sign/user_otp.php");
-    if(!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
+    if(!isset($_SESSION['cart']) && !isset($_SESSION['user'])) $_SESSION['cart'] = [];
     if(isset($_GET['controller'])){
         $controllerName = ucfirst(strtolower($_REQUEST['controller'] ?? "Welcome"))."Controller";
         $actionName = strtolower($_REQUEST['action'] ?? 'index');

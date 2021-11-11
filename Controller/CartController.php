@@ -60,7 +60,8 @@
                     else{
                         $cartTemp = $this->findCartGuest($res['id']);
                         $productND = $this->productController->findProductBID($cartTemp['id_products']);
-                        if($res['quantity'] > $productND[0]){
+                        // var_dump($productND);
+                        if($res['quantity'] > $productND[0]['quantity']){
                             for($i = 0; $i < count($_SESSION['cart']); $i++){
                                 if($_SESSION['cart'][$i]['id'] == $cartTemp['id']){
                                     $_SESSION['cart'][$i]['quantity'] = $productND[0]['quantity'];
@@ -74,6 +75,7 @@
                             for($i = 0; $i < count($_SESSION['cart']); $i++){
                                 if($_SESSION['cart'][$i]['id'] == $cartTemp['id']){
                                     $_SESSION['cart'][$i]['quantity'] = $res['quantity'];
+                                    $_SESSION['cart'][$i]['error'] = "";
                                 }
                             }
                             header("location: ?controller=cart");
@@ -95,8 +97,7 @@
                 $id = $_GET['id'];
                 for($i = 0; $i < count($_SESSION['cart']); $i++){
                     if($_SESSION['cart'][$i]['id'] == $id){
-                        unset($_SESSION['cart'][$i]);
-                        break;
+                        array_splice($_SESSION['cart'], $i, 1);
                     }
                 }
             }
@@ -106,8 +107,12 @@
             foreach($_SESSION['cart'] as $cart){
                 if($cart['id'] == $id){
                     return $cart;
-                }else return "";
+                    break;
+                }
             }
+        }
+        private function UpdateCartTemp($data){
+
         }
     }
 ?>

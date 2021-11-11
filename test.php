@@ -6,7 +6,33 @@
     //     "id_user" => 31,
     //     "id_products" => 1
     // ]));
-	
+	$arr = [
+        [
+            "ID" => 1,
+            "name" => "A"
+        ],
+        [
+            "ID" => 2,
+            "name" => "B"
+        ],
+        [
+            "ID" => 3,
+            "name" => "C"
+        ],
+        [
+            "ID" => 4,
+            "name" => "D"
+        ],
+        [
+            "ID" => 5,
+            "name" => "E"
+        ]
+    ];
+    array_splice($arr, 2, 1);
+    unset($arr);
+    if(!isset($arr)){
+        echo "OKE";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

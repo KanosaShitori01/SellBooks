@@ -105,11 +105,35 @@
                     "id_products" => $prod['id'],
                     "id_user" => "",
                     "orderU" => "",
-                    "error" => ""
+                    "error" => "",
+                    "max" => ""
                 ];
-                $_SESSION['cart'][] = $cartBox;
+                if($this->checkCartTemp($prod['id'], $quantity, $prod['quantity'], $cartBox) === false) {
+                    return header("location: ?controller=products&action=show&id=$id");
+                }
+                   
             }
-            header("location: ?controller=cart");
+            return header("location: ?controller=cart");
+        }
+        private function checkCartTemp($id, $quantity, $maxquant, $box){
+            $check = 0;
+            for($i = 0; $i < count($_SESSION['cart']); $i++){
+                if($_SESSION['cart'][$i]['id_products'] == $id){
+                    $newquant = $quantity + $_SESSION['cart'][$i]['quantity'];
+                    if($newquant > $maxquant) {
+                        $this->failBuy($id, $this->ErrBuy);
+                        return false;
+                    }
+                    else{
+                        $_SESSION['cart'][$i]['quantity'] = $newquant;
+                        $check = 1;
+                    } 
+                    break;
+                }
+            }
+            if($check == 0){
+                $_SESSION['cart'][] = $box;
+            }
         }
     }
 ?>

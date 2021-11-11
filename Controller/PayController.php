@@ -15,8 +15,17 @@
         }
         public function index(){
             $check = false;
-            $myOrder = $this->cartController->findCart("id_user", $_SESSION['user']);
-            $userInfor = $this->userController->findUserQ("id", $_SESSION['user'])[0];
+            $checkGuest = (isset($_SESSION['user'])) ? "disabled" : "";
+            if(isset($_SESSION['user'])){
+                $myOrder = $this->cartController->findCart("id_user", $_SESSION['user']);
+                $userInfor = $this->userController->findUserQ("id", $_SESSION['user'])[0];
+            }else{
+                $myOrder = $_SESSION['cart'];
+                $userInfor = [
+                    "tel" => "",
+                    "gmail" => ""
+                ];
+            }
             $dis = "";
             $error = "";
             (empty($myOrder)) ? header("location: ./") : "";
@@ -25,26 +34,32 @@
                 if(!is_numeric($_POST['fullname'])){
                     foreach($myOrder as $order){
                         $total = $order['price'] * $order['quantity'];
+                        $tel = (!empty($checkGuest)) ? $userInfor['tel'] : $_POST['tel'];
+                        $gmail = (!empty($checkGuest)) ? $userInfor['gmail'] : $_POST['gmail'];
+                        $user = (!empty($checkGuest)) ? $_SESSION['user'] : rand(11,99);
                         $this->payController->addOrder([
-                            "id_user" => $_SESSION['user'],
+                            "id_user" => $user,
                             "id_product" => $order['id_products'],
                             "name_user" => $_POST['fullname'],
                             "quantity" => $order['quantity'],
                             "totalmoney" => $total,
                             "address" => $_POST['address'],
-                            "tel" => $userInfor['tel'],
-                            "gmail" => $userInfor['gmail'],
+                            "tel" => $tel,
+                            "gmail" => $gmail,
                             "received" => 'false'
                         ]);
-                        $this->sendCodeMail($userInfor['gmail'], "NEW ORDER OF GUEST KINHSACHKIMQUY", 
+                        $this->sendCodeMail($gmail, "NEW ORDER OF GUEST KINHSACHKIMQUY", 
                         "Tên người mua: ".$_POST['fullname'].", Tên sách: ${order['name']}, Số lượng: ${order['quantity']}, Địa chỉ: ".$_POST['address'].",
                         Số điện thoại: ${userInfor['tel']}, Gmail: ${userInfor['gmail']}, Tổng tiền: $total đ."
                         );
                     }
-                   ($this->cartController->deleteCartUser("id_user", $_SESSION['user'])) ? $check = true : "";
+                    if(!empty($checkGuest)) {
+                        ($this->cartController->deleteCartUser("id_user", $_SESSION['user'])) ? $check = true : "";
+                    }else{
+                        ($this->cartController->deleteCartGuest()) ? $check = true : "";
+                    }
                 }
                 else $error = "(*) Vui lòng nhập thông tin hợp lệ";
-                // var_dump($_POST['total_quan']);
             }
             if(isset($_POST['pay_btn_cancel'])){
                 header("location: ?controller=cart");
@@ -78,7 +93,7 @@
                                 <label>Số điện thoại: </label>
                             </div>
                             <div class='pay_box__report__input__tab'>
-                                <input type='tel' disabled value='${userInfor['tel']}' maxlength='10' name='tel' required />
+                                <input type='tel' placeholder='Vui lòng nhập số điện thoại' $checkGuest value='${userInfor['tel']}' maxlength='10' name='tel' required />
                             </div>
                         </div>
                         <div class='pay_box__report__input'>
@@ -86,7 +101,7 @@
                                 <label>Gmail: </label>
                             </div>
                             <div class='pay_box__report__input__tab'>
-                                <input type='gmail' disabled value='${userInfor['gmail']}' name='gmail' required />
+                                <input type='gmail' placeholder='Vui lòng nhập gmail' $checkGuest value='${userInfor['gmail']}' name='gmail' required />
                             </div>
                         </div>
                         <div class='pay_box__report__input'>
