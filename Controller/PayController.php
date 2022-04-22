@@ -113,7 +113,6 @@
                             <div class='pay_box__report__input__tab'>
                                 <select name='tinhtp' id='province'>
                                 </select>
-                                <input type='text' value='$tinh' name='vv' required />
                             </div>
                         </div>
                         <div class='pay_box__report__input'>
